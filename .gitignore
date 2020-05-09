@@ -1,0 +1,15 @@
+## Ignore dependencies
+**/node_modules
+
+# Ignore build
+**/build
+**/.env
+
+# Ignore stats
+/stats
+
+# Ignore OS Metadata
+**/.DS_Store
+
+# Ignore Workspace Settings
+**/.vscode
