@@ -1,6 +1,6 @@
 const { pathToSrc } = require('../etc/paths');
 
-const babelConfig = {
+const babelDevConfig = {
   presets: ['@babel/preset-env'],
   plugins: [
     [
@@ -16,4 +16,12 @@ const babelConfig = {
   ]
 };
 
-module.exports = babelConfig;
+
+const babelProdConfig = {
+  ...babelDevConfig
+};
+
+module.exports = {
+  babelDevConfig,
+  babelProdConfig
+};

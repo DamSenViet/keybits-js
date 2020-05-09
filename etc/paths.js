@@ -1,11 +1,11 @@
 "use strict";
 const path = require('path');
 
-// etc folder, not exported
-const pwd = path.resolve(__dirname);
+// parent folder of paths.js, not exported
+const parent = path.resolve(__dirname);
 
 // path to directories
-const pathToRoot = path.resolve(pwd, "..");
+const pathToRoot = path.resolve(parent, "..");
 const pathToConfig = path.resolve(pathToRoot, "config");
 const pathToEtc = path.resolve(pathToRoot, "etc");
 const pathToSrc = path.resolve(pathToRoot, "src");
@@ -15,7 +15,7 @@ const pathToNodeModules = path.resolve(pathToRoot, "node_modules");
 // paths to specific files
 const pathToBabelConfig = path.resolve(pathToConfig, "babel.config.js");
 const pathToWebpackConfig = path.resolve(pathToConfig, "webpack.config.js");
-const pathToSrcIndex = path.resolve(pathToSrc, "index.js")
+const pathToSrcIndex = path.resolve(pathToSrc, "index.ts")
 const pathToPathsJs = path.resolve(pathToEtc, "paths.js");
 
 
