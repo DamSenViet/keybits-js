@@ -1,3 +1,4 @@
+"use strict";
 const { pathToSrc } = require('../etc/paths');
 
 const babelDevConfig = {

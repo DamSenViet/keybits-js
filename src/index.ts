@@ -1,1 +1,1 @@
-let test:string = "test"
+let test:string = "test";

@@ -1,3 +1,4 @@
+"use strict";
 const fse = require('fs-extra');
 const signale = require('signale');
 

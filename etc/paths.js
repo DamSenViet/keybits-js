@@ -13,7 +13,9 @@ const pathToBuild = path.resolve(pathToRoot, "build");
 const pathToNodeModules = path.resolve(pathToRoot, "node_modules");
 
 // paths to specific files
+const pathToEnv = path.resolve(pathToRoot, ".env");
 const pathToBabelConfig = path.resolve(pathToConfig, "babel.config.js");
+const pathToEnvConfig = path.resolve(pathToConfig, "env.config.js");
 const pathToWebpackConfig = path.resolve(pathToConfig, "webpack.config.js");
 const pathToSrcIndex = path.resolve(pathToSrc, "index.ts")
 const pathToPathsJs = path.resolve(pathToEtc, "paths.js");
@@ -26,8 +28,11 @@ module.exports = {
   pathToSrc,
   pathToBuild,
   pathToNodeModules,
+
+  pathToEnv,
   pathToBabelConfig,
+  pathToEnvConfig,
   pathToWebpackConfig,
   pathToSrcIndex,
-  pathToPathsJs
+  pathToPathsJs,
 };

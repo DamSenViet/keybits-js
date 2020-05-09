@@ -30,35 +30,20 @@ const argv = yargs
   .conflicts("umcompressed", "compressed")
   .parse();
 
-const signale = require('signale');
-const webpack = require('webpack');
-const {
-  webpackDevConfig,
-  webpackProdConfig
-} = require('../config/webpack.config');
-const webpackFormatMessages = require('webpack-format-messages');
+const env = require('../etc/env');
+env.load();
+let buildSetting = argv.env;
+if (!argv.development && !argv.production) // if no argument, use default set by .env file
+  buildSetting = null;
+else {
+  if (argv.development) buildSetting = "development";
+  else if (argv.production) buildSetting = "production";
+  process.env.NODE_ENV = buildSetting
+}
+env.correct();
+env.check();
 
-const compiler = webpack(webpackDevConfig);
-
-// setup hooks
-compiler.hooks.done.tap('done', (stats) => {
-  const messages = webpackFormatMessages(stats);
-
-  if (!messages.errors.length && !messages.warnings.length) {
-    signale.success(`Application compiled`);
-  }
-
-  if (messages.errors.length) {
-    signale.fatal('Application failed to compile.');
-    messages.errors.forEach(e => console.log(e));
-    return;
-  }
-
-  if (messages.warnings.length) {
-    signale.warn('Application compiled with warnings.');
-    messages.warnings.forEach(w => console.log(w));
-  }
-});
+const compiler = require('../etc/compiler');
 
 // async IIFE
 (async () => {

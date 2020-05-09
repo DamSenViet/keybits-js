@@ -1,7 +1,7 @@
 {
   "name": "key-labs-serial",
   "version": "0.0.0",
-  "description": "A file format for serializing and deserializing KeyLabs formatted json files.",
+  "description": "A library to serialize and deserializing Key Labs formatted json files.",
   "main": "index.js",
   "scripts": {
     "watch": "node scripts/watch.js",
@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/DamSenViet/key-labs-serial#readme",
   "dependencies": {
+    "clear": "^0.1.0"
+  },
+  "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-modules-commonjs": "^7.9.6",
     "@babel/plugin-transform-runtime": "^7.9.6",
@@ -26,6 +29,7 @@
     "@babel/runtime": "^7.9.6",
     "babel-loader": "^8.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
+    "dotenv": "^8.2.0",
     "fs-extra": "^9.0.0",
     "signale": "^1.4.0",
     "ts-loader": "^7.0.3",
