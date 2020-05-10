@@ -1,11 +1,29 @@
 {
+  "include": [
+    "src/**/*.ts"
+  ],
   "compilerOptions": {
+    // ### PROJECT OPTIONS
     "module": "ES6",
-    "target": "ES5",
-    "removeComments": false,
+    "target": "ES6",
+    "outDir": "./build/esm/",
+    // lib needs to be independent
     "allowJs": false,
-    "noImplicitAny": true,
-    "preserveConstEnums": true,
+    "removeComments": false,
+    // webpack needs this to generate source maps
     "sourceMap": true,
+    // "declaration": true,
+    "lib": [
+      "ES6",
+      "DOM"
+    ],
+
+    // ### STRICT CHECKS
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "strictFunctionTypes": true,
+
+    // ### ADVANCED
+    "preserveConstEnums": true,
   },
 }

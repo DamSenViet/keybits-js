@@ -1,6 +1,8 @@
 "use strict";
 const {
   pathToBuild,
+  pathToBuildCJS,
+  pathToBuildUMD,
   pathToNodeModules,
   pathToSrcIndex,
 } = require('../etc/paths');
@@ -11,16 +13,30 @@ const {
 
 
 const entry = pathToSrcIndex;
+
 const output = {
-  filename: "script.js",
+  library: "KeyLabsSerial",
   path: pathToBuild,
+  filename: "index.js",
 };
 
+const outputCJS = {
+  ...output,
+  libraryTarget: "commonjs",
+  path: pathToBuildCJS,
+};
+
+const outputUMD = {
+  ...output,
+  libraryTarget: "umd",
+  path: pathToBuildUMD,
+};
 
 const babelLoaderDev = {
   loader: 'babel-loader',
   options: babelDevConfig
 };
+
 
 const babelLoaderProd = {
   ...babelLoaderDev,
@@ -57,29 +73,47 @@ const rulesProd = [
 ];
 
 
-const webpackDevConfig = {
+const webpackDevConfigCJS = {
+  target: "node",
   mode: "development",
   devtool: "source-map",
   entry,
-  output,
+  output: outputCJS,
   module: {
     rules: rulesDev
   },
 };
 
 
-const webpackProdConfig = {
+const webpackProdConfigCJS = {
+  target: "node",
   mode: "production",
   devtool: false,
   entry,
-  output,
+  output: outputCJS,
   module: {
     rules: rulesProd
   },
 };
 
 
+const webpackDevConfigUMD = {
+  ...webpackDevConfigCJS,
+  target: "web",
+  output: outputUMD,
+};
+
+
+const webpackProdConfigUMD = {
+  ...webpackProdConfigCJS,
+  target: "web",
+  output: outputUMD,
+};
+
+
 module.exports = {
-  webpackDevConfig,
-  webpackProdConfig
+  webpackDevConfigCJS,
+  webpackProdConfigCJS,
+  webpackDevConfigUMD,
+  webpackProdConfigUMD,
 };

@@ -3,14 +3,20 @@ const signale = require('signale');
 const clear = require('clear');
 const webpack = require('webpack');
 const {
-  webpackDevConfig,
-  webpackProdConfig,
+  webpackDevConfigCJS,
+  webpackProdConfigCJS,
+  webpackDevConfigUMD,
+  webpackProdConfigUMD,
 } = require('../config/webpack.config');
 const webpackFormatMessages = require('webpack-format-messages');
 const { ifProdVal } = require('./env');
 const { NODE_ENV } = process.env;
 
-let webpackConfig = ifProdVal(webpackProdConfig, webpackDevConfig);
+let webpackConfig = ifProdVal(
+  // use multi configuration, compiles two different sets
+  [webpackProdConfigCJS, webpackProdConfigUMD],
+  [webpackDevConfigCJS, webpackDevConfigUMD]
+);
 const compiler = webpack(webpackConfig);
 
 compiler.hooks.watchRun.tap('wow', () => {

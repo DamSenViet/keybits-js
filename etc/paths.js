@@ -10,6 +10,9 @@ const pathToConfig = path.resolve(pathToRoot, "config");
 const pathToEtc = path.resolve(pathToRoot, "etc");
 const pathToSrc = path.resolve(pathToRoot, "src");
 const pathToBuild = path.resolve(pathToRoot, "build");
+const pathToBuildCJS = path.resolve(pathToBuild, "cjs");
+const pathToBuildES6 = path.resolve(pathToBuild, "es6");
+const pathToBuildUMD = path.resolve(pathToBuild, "umd");
 const pathToNodeModules = path.resolve(pathToRoot, "node_modules");
 
 // paths to specific files
@@ -27,6 +30,9 @@ module.exports = {
   pathToEtc,
   pathToSrc,
   pathToBuild,
+  pathToBuildCJS,
+  pathToBuildES6,
+  pathToBuildUMD,
   pathToNodeModules,
 
   pathToEnv,
