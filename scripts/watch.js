@@ -11,18 +11,7 @@ const argv = yargs
     describe: "Use production environment",
     type: "boolean"
   })
-  .option("uncompressed", {
-    alias: "u",
-    describe: "Produce only uncompressed",
-    type: "boolean"
-  })
-  .option("compressed", {
-    alias: "c",
-    describe: "Produce only compressed",
-    type: "boolean"
-  })
   .conflicts("development", "production")
-  .conflicts("umcompressed", "compressed")
   .parse();
 
 const env = require('../etc/env');

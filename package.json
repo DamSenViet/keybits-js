@@ -2,7 +2,9 @@
   "name": "key-labs-serial",
   "version": "0.0.0",
   "description": "A library to serialize and deserializing Key Labs formatted json files.",
-  "main": "build/script.node.js",
+  "main": "build/cjs/index..js",
+  "module": "build/es6/index.js",
+  "browser": "build/umd/build.js",
   "scripts": {
     "watch": "node scripts/watch.js",
     "clean": "node scripts/clean.js",

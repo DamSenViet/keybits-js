@@ -15,19 +15,22 @@ const {
 const entry = pathToSrcIndex;
 
 const output = {
-  library: "KeyLabsSerial",
   path: pathToBuild,
   filename: "index.js",
 };
 
+// for node environments
 const outputCJS = {
   ...output,
   libraryTarget: "commonjs",
   path: pathToBuildCJS,
 };
 
+// for browser environments
 const outputUMD = {
   ...output,
+  // global name in browser
+  library: "KeyLabsSerial",
   libraryTarget: "umd",
   path: pathToBuildUMD,
 };
