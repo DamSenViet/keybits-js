@@ -1,13 +1,15 @@
 {
   "include": [
-    "src/**/*.ts"
+    "./src/**/*.ts"
   ],
   "compilerOptions": {
     // ### PROJECT OPTIONS
+    //  module type to compile into
     "module": "ES6",
+    // target javascript version
     "target": "ES6",
     "outDir": "./build/esm/",
-    // lib needs to be independent
+    // lib needs to be all ts
     "allowJs": false,
     "removeComments": false,
     // webpack needs this to generate source maps
@@ -21,7 +23,10 @@
     // ### STRICT CHECKS
     "alwaysStrict": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictPropertyInitialization": true,
     "strictFunctionTypes": true,
+    "strictNullChecks": true,
 
     // ### ADVANCED
     "preserveConstEnums": true,

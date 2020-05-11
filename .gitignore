@@ -3,10 +3,8 @@
 
 # Ignore build
 **/build
+**/dist
 **/.env
-
-# Ignore stats
-/stats
 
 # Ignore OS Metadata
 **/.DS_Store

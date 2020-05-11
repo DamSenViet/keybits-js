@@ -66,13 +66,21 @@ const tsRuleProd = {
 };
 
 
+const sourceMapRule = {
+  enforce: "pre",
+  test: /\.js$/i,
+  loader: "source-map-loader"
+};
+
 const rulesDev = [
   tsRuleDev,
+  sourceMapRule,
 ];
 
 
 const rulesProd = [
   tsRuleProd,
+  sourceMapRule,
 ];
 
 
