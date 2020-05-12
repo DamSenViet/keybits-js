@@ -1,4 +1,5 @@
 import Point from "~/Geometry/Point";
+import { intersect } from "mathjs";
 
 class Line {
 
@@ -7,29 +8,19 @@ class Line {
     this.end = new Point(end);
   }
 
-
   toJSON = () => {
-    return [this.start.toJSON(), this.end.toJSON()];
+    const { start, end } = this;
+    return [start.toJSON(), end.toJSON()];
   }
 
+  intersection(line) {
+    const { start, end } = this;
+    return intersect(start.toJSON(), end.toJSON(),
+    line.start.toJSON(), line.end.toJSON());
+  }
 
-  // returns true iff the line from (a,b)->(c,d) intersects with (p,q)->(r,s)
-  static intersects(la, lb) {
-
-    let [a, b] = [la.start.x, la.start.y];
-    let [c, d] = [la.end.x, la.end.y];
-    let [p, q] = [lb.start.x, lb.end.y];
-    let [r, s] = [lb.end.x, lb.end.y];
-    var det, gamma, lambda;
-    det = (c - a) * (s - q) - (r - p) * (d - b);
-    if (det === 0) {
-      return false;
-    }
-    else {
-      lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
-      gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
-      return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
-    }
+  intersects(line) {
+    return Boolean(this.intersection(line).length);
   }
 }
 

@@ -6,6 +6,7 @@ class StrictPoint extends Point {
   }
 
   validate = () => {
+    const { x, y } = this;
     for (let val of [x, y]) {
       if (val % 0.25 !== 0) throw RangeError();
     }

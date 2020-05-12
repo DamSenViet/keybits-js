@@ -1,5 +1,5 @@
 // import Keyboard from  "~/Keyboard";
-import Geometry from "~/Geometry/Line";
+import Geometry from "~/Geometry/";
 // import Point from "~/Point";
 // import utils from "~/utils";
 

@@ -3,7 +3,6 @@ import Point from "./Point"
 import StrictPoint from "./StrictPoint";
 import StrictPolygon from "./StrictPolygon";
 
-
 export default {
   Line,
   Point,
