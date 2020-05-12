@@ -1,10 +1,11 @@
 // import Keyboard from  "~/Keyboard";
-// import Key from "~/Key";
-import Point from "~/Point";
-// import Polygon from "~/Polygon";
+import Geometry from "~/Geometry/Line";
+// import Point from "~/Point";
 // import utils from "~/utils";
 
-
+export default {
+  Geometry
+}
 export {
-  Point
+  Geometry
 };
