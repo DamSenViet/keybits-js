@@ -47,40 +47,30 @@ const babelLoaderProd = {
 };
 
 
-const tsRuleDev = {
-  test: /\.tsx?$/i,
+const jsRuleDev = {
+  test: /\.m?js$/i,
   use: [
     babelLoaderDev,
-    'ts-loader',
   ],
   exclude: pathToNodeModules,
 };
 
 
-const tsRuleProd = {
-  ...tsRuleDev,
+const jsRuleProd = {
+  ...jsRuleDev,
   use: [
     babelLoaderProd,
-    'ts-loader'
   ]
 };
 
 
-const sourceMapRule = {
-  enforce: "pre",
-  test: /\.js$/i,
-  loader: "source-map-loader"
-};
-
 const rulesDev = [
-  tsRuleDev,
-  sourceMapRule,
+  jsRuleDev,
 ];
 
 
 const rulesProd = [
-  tsRuleProd,
-  sourceMapRule,
+  jsRuleProd,
 ];
 
 
