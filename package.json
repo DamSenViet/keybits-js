@@ -8,9 +8,7 @@
   "scripts": {
     "watch": "node scripts/watch.js",
     "clean": "node scripts/clean.js",
-    "build": "node scripts/build.js",
-    "docs:dev": "npx vuepress dev docs",
-    "docs:build": "npx vuepress build docs"
+    "build": "node scripts/build.js"
   },
   "repository": {
     "type": "git",
@@ -37,7 +35,6 @@
     "signale": "^1.4.0",
     "ts-loader": "^7.0.3",
     "typescript": "^3.8.3",
-    "vuepress": "^1.4.1",
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.7.0",
     "webpack-format-messages": "^2.0.6",
