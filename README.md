@@ -1,6 +1,6 @@
-# Key Labs Serial
+# Key Labs JavaScript
 
-A library to serialize and deserialize KeyLabs formatted json files.
+A JavaScript library for interacting with Key Labs data structures and files.
 
 ## Installation
 
