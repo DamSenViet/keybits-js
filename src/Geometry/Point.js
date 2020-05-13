@@ -1,14 +1,15 @@
-import { MissingConstructorError } from "~/Errors";
+import Validatable from "~/Validatable";
 
-class Point {
+class Point extends Validatable {
   constructor([x, y]) {
+    super();
+    if (arguments.length <= 0) return;
     this.x = x;
     this.y = y;
   }
 
   copy() {
-    const { x, y } = this;
-    return new Point([x, y]);
+    return new Point(this.toJSON());
   }
 
   equals(point) {
@@ -21,9 +22,6 @@ class Point {
     const { x, y } = this;
     return [x, y];
   }
-
-
-  validate() { return true; }
 }
 
 

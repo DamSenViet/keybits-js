@@ -1,10 +1,13 @@
+import Validatable from "~/Validatable";
 import StrictPoint from "~/Geometry/StrictPoint";
-import Line from "~/Geometry/Line";
+import StrictLine from "~/Geometry/Line";
 
 // cyclical
 // composed of all right angles
-class StrictPolygon {
+class StrictPolygon extends Validatable {
   constructor([...points]) {
+    super();
+    if (arguments.length === 0) return;
     this.points = new Array();
     for (let point of points) {
       this.points.push(new StrictPoint(point));
@@ -12,8 +15,7 @@ class StrictPolygon {
   }
 
   copy() {
-    const { points } = this;
-    return new Polygon(points.map(point => point.copy()));
+    return new Polygon(this.toJSON());
   }
 
   equals(polygon) {
@@ -42,7 +44,7 @@ class StrictPolygon {
     const { points } = this;
     return  points.map((currPoint, i) => {
       const nextPoint = points[(i + 1) % points.length];
-      return new Line([currPoint.toJSON(), nextPoint.toJSON()]);
+      return new StrictLine([currPoint.toJSON(), nextPoint.toJSON()]);
     });
   }
 
@@ -61,20 +63,10 @@ class StrictPolygon {
     for (let i = 0; i < points.length; ++i) {
       const currPoint = points[i];
       const nextPoint = points[(i + 1) % points.length];
-      // not a right angle if both change, exactly 1 changes
+      // not a right angle if both change, only x xor y can be changed
       const xChanged = (currPoint.x === nextPoint.x);
       const yChanged =  (currPoint.y === nextPoint.y);
       if (!Boolean(xChanged ^ yChanged)) throw new Error();
-    }
-  }
-
-  get isValid() {
-    try {
-      this.validate();
-      return true;
-    }
-    catch (error) {
-      return false;
     }
   }
 }
