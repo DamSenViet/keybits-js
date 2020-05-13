@@ -1,11 +1,16 @@
 import Validatable from "~/Validatable";
+import {
+  bignumber,
+  equal,
+  add
+} from "mathjs";
 
 class Point extends Validatable {
   constructor([x, y]) {
     super();
     if (arguments.length <= 0) return;
-    this.x = x;
-    this.y = y;
+    this.x = bignumber(x);
+    this.y = bignumber(y);
   }
 
   copy() {
@@ -14,13 +19,23 @@ class Point extends Validatable {
 
   equals(point) {
     const { x, y } = this;
-    x === point.x;
-    y === point.y;
+    return equal(x, point.x) && equal(y, point.y);
   }
 
   toJSON() {
     const { x, y } = this;
-    return [x, y];
+    // maintain precision
+    return [x.toString(), y.toString()];
+  }
+
+  move([x, y]) {
+    this.x = bignumber(x);
+    this.y = bignumber(y);
+  }
+
+  shift([x, y]) {
+    this.x = add(this.x, x);
+    this.y = add(this.y, y);
   }
 }
 

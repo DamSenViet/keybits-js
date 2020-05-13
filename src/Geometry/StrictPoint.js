@@ -1,4 +1,8 @@
 import Point from "~/Geometry/Point";
+import {
+  equal,
+  mod
+} from "mathjs";
 
 class StrictPoint extends Point {
   constructor(...params) {
@@ -8,7 +12,7 @@ class StrictPoint extends Point {
   validate() {
     const { x, y } = this;
     for (let val of [x, y]) {
-      if (val % 0.25 !== 0) throw RangeError();
+      if (!equal(mod(val, 0.25), 0)) throw RangeError();
     }
   }
 }

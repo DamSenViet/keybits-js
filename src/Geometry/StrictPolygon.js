@@ -1,6 +1,7 @@
 import Validatable from "~/Validatable";
 import StrictPoint from "~/Geometry/StrictPoint";
 import StrictLine from "~/Geometry/Line";
+import { equal } from "mathjs";
 
 // cyclical
 // composed of all right angles
@@ -64,8 +65,8 @@ class StrictPolygon extends Validatable {
       const currPoint = points[i];
       const nextPoint = points[(i + 1) % points.length];
       // not a right angle if both change, only x xor y can be changed
-      const xChanged = (currPoint.x === nextPoint.x);
-      const yChanged =  (currPoint.y === nextPoint.y);
+      const xChanged = (equal(currPoint.x, nextPoint.x));
+      const yChanged =  (equal(currPoint.y, nextPoint.y));
       if (!Boolean(xChanged ^ yChanged)) throw new Error();
     }
   }

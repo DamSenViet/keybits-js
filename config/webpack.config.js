@@ -30,7 +30,7 @@ const outputCJS = {
 const outputUMD = {
   ...output,
   // global name in browser
-  library: "KeyLabsSerial",
+  library: "keylabs",
   libraryTarget: "umd",
   path: pathToBuildUMD,
 };

@@ -7,9 +7,8 @@ class StrictLine extends Line {
 
   validate() {
     const { start, end } = this;
-    for (let point of [start, end]) {
-      point.validate();
-    }
+    start.validate();
+    end.validate();
   }
 }
 
