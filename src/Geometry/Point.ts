@@ -2,22 +2,27 @@ import Validatable from "../Validatable";
 import {
   bignumber,
   equal,
-  add
+  add,
 } from "mathjs";
 
-class Point extends Validatable {
-  public x;
-  public y;
+export type PointString = [string, string];
+export type PointNumber = [number, number];
+export type PointAll = PointString | PointNumber;
+export type PointJSON = PointString;
 
-  constructor([x, y]) {
+class Point extends Validatable {
+  public x: any = bignumber("0");
+  public y: any = bignumber("0");
+
+  constructor([x, y]: any) {
     super();
     if (arguments.length <= 0) return;
     this.x = bignumber(x);
     this.y = bignumber(y);
   }
 
-  copy() {
-    return new Point(this.toJSON());
+  copy(): Point {
+    return this.constructor(this.toJSON());
   }
 
   equals(point) {

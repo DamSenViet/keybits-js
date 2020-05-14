@@ -76,9 +76,9 @@ const rulesProd = [
 ];
 
 
-// const resolve = {
-//   extensions: [".ts", ".js"],
-// };
+const resolve = {
+  extensions: [".ts", ".js"],
+};
 
 const webpackDevConfigCJS = {
   target: "node",
@@ -89,7 +89,7 @@ const webpackDevConfigCJS = {
   module: {
     rules: rulesDev
   },
-  // resolve,
+  resolve,
 };
 
 
@@ -102,7 +102,7 @@ const webpackProdConfigCJS = {
   module: {
     rules: rulesProd
   },
-  // resolve,
+  resolve,
 };
 
 

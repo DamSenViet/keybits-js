@@ -2,13 +2,20 @@ import Validatable from "../Validatable";
 import StrictPoint from "./StrictPoint";
 import StrictLine from "./Line";
 import { equal } from "mathjs";
+// types
+import { PointString, PointNumber, PointAll, PointJSON } from "./Point";
+
+export type PolygonString = Array<PointString>;
+export type PolygonNumber = Array<PointNumber>;
+export type PolygonAll = Array<PointAll>;
+export type PolygonJSON = [PointJSON, PointJSON];
 
 // cyclical
 // composed of all right angles
 class StrictPolygon extends Validatable {
-  public points;
+  public points: any;
 
-  constructor([...points]) {
+  constructor([...points]: any) {
     super();
     if (arguments.length === 0) return;
     this.points = new Array();
@@ -58,7 +65,7 @@ class StrictPolygon extends Validatable {
     for (let outer of lines) {
       for (let inner of lines) {
         if (outer === inner) continue;
-        if (Line.intersects(outer, inner)) throw new Error();
+        if (outer.intersects(inner)) throw new Error();
       }
     }
 
@@ -67,8 +74,8 @@ class StrictPolygon extends Validatable {
       const currPoint = points[i];
       const nextPoint = points[(i + 1) % points.length];
       // not a right angle if both change, only x xor y can be changed
-      const xChanged = (equal(currPoint.x, nextPoint.x));
-      const yChanged =  (equal(currPoint.y, nextPoint.y));
+      let xChanged: any = equal(currPoint.x, nextPoint.x);
+      let yChanged: any = equal(currPoint.y, nextPoint.y);
       if (!Boolean(xChanged ^ yChanged)) throw new Error();
     }
   }

@@ -1,8 +1,14 @@
 {
   "include": [
-    "./src/index.ts"
+    "./src/index.ts",
+    "./src/**/*.d.ts"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./tests"
   ],
   "compilerOptions": {
+    "declaration": true,
     // ### PROJECT OPTIONS
     //  module type to compile into
     "module": "ES6",
@@ -17,7 +23,7 @@
     // "declaration": true,
     "lib": [
       "ES6",
-      "DOM"
+      "DOM",
     ],
     "moduleResolution": "node"
 

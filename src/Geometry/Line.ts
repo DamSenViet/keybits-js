@@ -1,12 +1,19 @@
 import Validatable from "../Validatable";
 import Point from "./Point";
 import { intersect } from "mathjs";
+// types
+import { PointString, PointNumber, PointAll, PointJSON } from "./Point";
+
+export type StringLine = [PointString, PointString];
+export type LineNumber = [PointNumber, PointNumber];
+export type LineAll = [PointAll, PointAll];
+export type LineJSON = [PointJSON, PointJSON];
 
 class Line extends Validatable {
-  public start;
-  public end;
+  public start: any;
+  public end: any;
 
-  constructor([start, end]) {
+  constructor([start, end]: any) {
     super();
     if (arguments.length <= 0) return;
     this.start = new Point(start);
