@@ -1,13 +1,10 @@
-import Point from "~/Geometry/Point";
+import Point from "./Point";
 import {
   equal,
   mod
 } from "mathjs";
 
 class StrictPoint extends Point {
-  constructor(...params) {
-    super(...params);
-  }
 
   validate() {
     const { x, y } = this;

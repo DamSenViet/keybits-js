@@ -1,9 +1,6 @@
-import Line from "~/Geometry/Line";
+import Line from "./Line";
 
 class StrictLine extends Line {
-  constructor(...params) {
-   super(...params);
-  }
 
   validate() {
     const { start, end } = this;

@@ -1,4 +1,4 @@
-import Validatable from "~/Validatable";
+import Validatable from "../Validatable";
 import {
   bignumber,
   equal,
@@ -6,6 +6,9 @@ import {
 } from "mathjs";
 
 class Point extends Validatable {
+  public x;
+  public y;
+
   constructor([x, y]) {
     super();
     if (arguments.length <= 0) return;

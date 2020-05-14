@@ -1,8 +1,6 @@
 class Validatable {
 
-  validate() {
-    return true;
-  }
+  validate(): void {}
 
   get isValid() {
     try {

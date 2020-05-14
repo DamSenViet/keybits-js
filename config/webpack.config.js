@@ -48,9 +48,10 @@ const babelLoaderProd = {
 
 
 const jsRuleDev = {
-  test: /\.m?js$/i,
+  test: /\.tsx?$/i,
   use: [
     babelLoaderDev,
+    'ts-loader',
   ],
   exclude: pathToNodeModules,
 };
@@ -60,7 +61,8 @@ const jsRuleProd = {
   ...jsRuleDev,
   use: [
     babelLoaderProd,
-  ]
+    'ts-loader',
+  ],
 };
 
 
@@ -74,6 +76,10 @@ const rulesProd = [
 ];
 
 
+// const resolve = {
+//   extensions: [".ts", ".js"],
+// };
+
 const webpackDevConfigCJS = {
   target: "node",
   mode: "development",
@@ -83,6 +89,7 @@ const webpackDevConfigCJS = {
   module: {
     rules: rulesDev
   },
+  // resolve,
 };
 
 
@@ -95,6 +102,7 @@ const webpackProdConfigCJS = {
   module: {
     rules: rulesProd
   },
+  // resolve,
 };
 
 

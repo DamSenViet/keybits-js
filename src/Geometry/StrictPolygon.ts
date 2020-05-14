@@ -1,11 +1,13 @@
-import Validatable from "~/Validatable";
-import StrictPoint from "~/Geometry/StrictPoint";
-import StrictLine from "~/Geometry/Line";
+import Validatable from "../Validatable";
+import StrictPoint from "./StrictPoint";
+import StrictLine from "./Line";
 import { equal } from "mathjs";
 
 // cyclical
 // composed of all right angles
 class StrictPolygon extends Validatable {
+  public points;
+
   constructor([...points]) {
     super();
     if (arguments.length === 0) return;
@@ -16,7 +18,7 @@ class StrictPolygon extends Validatable {
   }
 
   copy() {
-    return new Polygon(this.toJSON());
+    return new StrictPolygon(this.toJSON());
   }
 
   equals(polygon) {

@@ -1,8 +1,11 @@
-import Validatable from "~/Validatable";
-import Point from "~/Geometry/Point";
-import {intersect } from "mathjs";
+import Validatable from "../Validatable";
+import Point from "./Point";
+import { intersect } from "mathjs";
 
 class Line extends Validatable {
+  public start;
+  public end;
+
   constructor([start, end]) {
     super();
     if (arguments.length <= 0) return;
