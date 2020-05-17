@@ -1,8 +1,10 @@
 class Validatable {
 
-  validate() {}
+  public validate(): void {
+    return;
+  }
 
-  get isValid() {
+  public get isValid(): boolean {
     try {
       this.validate();
       return true;

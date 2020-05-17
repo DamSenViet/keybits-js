@@ -6,7 +6,7 @@ import {
 
 class StrictPoint extends Point {
 
-  validate() {
+  public validate(): void {
     const { x, y } = this;
     for (let val of [x, y]) {
       if (!equal(mod(val, 0.25), 0)) throw RangeError();

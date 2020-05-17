@@ -13,18 +13,18 @@ class Line extends Validatable {
   public start: any;
   public end: any;
 
-  constructor([start, end]: any) {
+  public constructor([start, end]: any) {
     super();
     if (arguments.length <= 0) return;
     this.start = new Point(start);
     this.end = new Point(end);
   }
 
-  copy() {
+  public copy(): Line {
     return new Line(this.toJSON());
   }
 
-  equals(line) {
+  public equals(line) {
     const { start, end } = this;
     return (
       (start.equals(line.start) && end.equals(line.end())) ||
@@ -32,12 +32,12 @@ class Line extends Validatable {
     );
   }
 
-  toJSON() {
+  public toJSON() {
     const { start, end } = this;
     return [start.toJSON(), end.toJSON()];
   }
 
-  intersection(line) {
+  public intersection(line) {
     const { start, end } = this;
     return intersect(
       [start.x, start.y],
@@ -47,7 +47,7 @@ class Line extends Validatable {
     );
   }
 
-  intersects(line) {
+  public intersects(line): boolean {
     return Boolean(this.intersection(line));
   }
 }

@@ -15,7 +15,7 @@ export type PolygonJSON = [PointJSON, PointJSON];
 class StrictPolygon extends Validatable {
   public points: any;
 
-  constructor([...points]: any) {
+  public constructor([...points]: any) {
     super();
     if (arguments.length === 0) return;
     this.points = new Array();
@@ -24,11 +24,11 @@ class StrictPolygon extends Validatable {
     }
   }
 
-  copy() {
+  public copy() {
     return new StrictPolygon(this.toJSON());
   }
 
-  equals(polygon) {
+  public equals(polygon) {
     const { points } = this
     if (points.length !== polygon.points.length) return false;
     const forward = this.toJSON().flat(Infinity);
@@ -45,12 +45,12 @@ class StrictPolygon extends Validatable {
     return false;
   }
 
-  toJSON() {
+  public toJSON() {
     const { points } = this;
     return points.map(point => point.toJSON());
   }
 
-  get lines() {
+  public get lines() {
     const { points } = this;
     return  points.map((currPoint, i) => {
       const nextPoint = points[(i + 1) % points.length];
@@ -58,7 +58,7 @@ class StrictPolygon extends Validatable {
     });
   }
 
-  validate() {
+  public validate(): void {
     const { points, lines } = this;
 
     // checking for line intersects
