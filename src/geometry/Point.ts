@@ -21,7 +21,7 @@ class Point extends Validatable {
   public x: any = bignumber("0");
   public y: any = bignumber("0");
 
-  public constructor([x, y]: any) {
+  public constructor([x, y]: any = undefined) {
     super();
     if (arguments.length <= 0) return;
     this.x = bignumber(x);

@@ -13,7 +13,7 @@ class Line extends Validatable {
   public start: any;
   public end: any;
 
-  public constructor([start, end]: any) {
+  public constructor([start, end]: any = undefined) {
     super();
     if (arguments.length <= 0) return;
     this.start = new Point(start);

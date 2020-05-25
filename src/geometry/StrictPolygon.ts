@@ -15,7 +15,7 @@ export type PolygonJSON = [PointJSON, PointJSON];
 class StrictPolygon extends Validatable {
   public points: any;
 
-  public constructor([...points]: any) {
+  public constructor([...points]: any = undefined) {
     super();
     if (arguments.length === 0) return;
     this.points = new Array();
@@ -73,7 +73,7 @@ class StrictPolygon extends Validatable {
     for (let i = 0; i < points.length; ++i) {
       const currPoint = points[i];
       const nextPoint = points[(i + 1) % points.length];
-      // not a right angle if both change, only x xor y can be changed
+      // not a right angle if both change, only x xor y can be different
       let xChanged: any = equal(currPoint.x, nextPoint.x);
       let yChanged: any = equal(currPoint.y, nextPoint.y);
       if (!Boolean(xChanged ^ yChanged)) throw new Error();

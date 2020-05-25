@@ -1,12 +1,13 @@
 // import Keyboard from  "~/Keyboard";
 // import Point from "~/Point";
 // import utils from "~/utils";
-import * as Geometry from "./Geometry";
-import Point from "./Geometry/Point";
-import StrictPoint from "./Geometry/StrictPoint";
-import Line from "./Geometry/Line";
-import StrictLine from "./Geometry/StrictLine";
-import StrictPolygon from "./Geometry/StrictPolygon";
+import * as geometry from "./geometry";
+import Point from "./geometry/Point";
+import StrictPoint from "./geometry/StrictPoint";
+import Line from "./geometry/Line";
+import StrictLine from "./geometry/StrictLine";
+import StrictPolygon from "./geometry/StrictPolygon";
+import Profiles from "./Profiles";
 
 // if (
 //   typeof window !== 'undefined' &&
@@ -18,18 +19,20 @@ import StrictPolygon from "./Geometry/StrictPolygon";
 // };
 
 export default {
-  Geometry,
+  geometry,
   Point,
   StrictPoint,
   Line,
   StrictLine,
-  StrictPolygon
+  StrictPolygon,
+  Profiles
 }
 export {
-  Geometry,
+  geometry,
   Point,
   StrictPoint,
   Line,
   StrictLine,
-  StrictPolygon
+  StrictPolygon,
+  Profiles
 };
