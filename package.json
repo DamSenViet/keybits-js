@@ -2,18 +2,20 @@
   "name": "key-labs-serial",
   "version": "0.0.0",
   "description": "A library to serialize and deserializing Key Labs formatted json files.",
-  "main": "build/cjs/index..js",
-  "module": "src/index.js",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
   "browser": "build/umd/build.js",
   "scripts": {
-    "watch": "node scripts/watch.js",
     "clean": "node scripts/clean.js",
+    "watch": "node scripts/watch.js",
+    "watch:esm": "tsc -w",
     "build": "node scripts/build.js",
-    "test": "npx jest --passWithNoTests"
+    "build:esm": "tsc",
+    "test": "jest --passWithNoTests"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DamSenViet/key-labs-serial.git"
+    "url": "git+https://github.com/DamSenViet/key-labs-serial.git"
   },
   "author": "Key Labs",
   "license": "MIT",
