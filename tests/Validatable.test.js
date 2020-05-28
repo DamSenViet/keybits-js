@@ -1,6 +1,4 @@
-const {
-  Validatable,
- } = require("../build/cjs");
+const { Validatable } = require("../build/cjs");
 
 test('constructor', () => {
   expect(() => {

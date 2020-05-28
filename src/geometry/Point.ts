@@ -1,5 +1,5 @@
 import Validatable from "../Validatable";
-import { Decimal } from "decimal.js";
+import Decimal from "decimal.js";
 
 Decimal.set({ precision: 64, rounding: 1});
 
@@ -13,11 +13,12 @@ class Point extends Validatable {
   public x: Decimal = new Decimal("0");
   public y: Decimal = new Decimal("0");
 
-  public constructor([x, y]: PointAll = undefined) {
+  public constructor([x, y]: PointAll) {
     super();
     if (arguments.length <= 0) return;
-    this.x = new Decimal(x);
-    this.y = new Decimal(y);
+    // toString allows compatibility with other math libraries
+    this.x = new Decimal(x.toString());
+    this.y = new Decimal(y.toString());
   }
 
   public copy(): Point {
@@ -36,13 +37,13 @@ class Point extends Validatable {
   }
 
   public move([x, y]: PointAll): void {
-    this.x = new Decimal(x);
-    this.y = new Decimal(y);
+    this.x = new Decimal(x.toString());
+    this.y = new Decimal(y.toString());
   }
 
   public shift([x, y]: PointAll): void {
-    this.x = this.x.add(x);
-    this.y = this.y.add(y);
+    this.x = this.x.add(x.toString());
+    this.y = this.y.add(y.toString());
   }
 }
 
