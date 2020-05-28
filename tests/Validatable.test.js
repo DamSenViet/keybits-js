@@ -1,13 +1,17 @@
-import Validatable from "../build/cjs";
+const {
+  Validatable,
+ } = require("../build/cjs");
 
 test('constructor', () => {
-  expect(new Validatable()).not.toThrow();
+  expect(() => {
+    new Validatable();
+  }).not.toThrow();
 });
 
 test('validate', () => {
   expect(() => {
     let validatable = new Validatable();
-    validatable.validatate();
+    validatable.validate();
   }).not.toThrow();
 });
 

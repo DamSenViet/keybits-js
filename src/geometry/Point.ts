@@ -1,56 +1,48 @@
 import Validatable from "../Validatable";
-import {
-  config,
-  bignumber,
-  equal,
-  add,
-} from "mathjs";
+import { Decimal } from "decimal.js";
 
-// explicit config, defaults from mathjs
-config({
-  number: 'BigNumber',
-  precision: 64
-});
+Decimal.set({ precision: 64, rounding: 1});
 
 export type PointString = [string, string];
 export type PointNumber = [number, number];
-export type PointAll = PointString | PointNumber;
+export type PointDecimal = [Decimal, Decimal];
+export type PointAll = PointString | PointNumber | PointDecimal;
 export type PointJSON = PointString;
 
 class Point extends Validatable {
-  public x: any = bignumber("0");
-  public y: any = bignumber("0");
+  public x: Decimal = new Decimal("0");
+  public y: Decimal = new Decimal("0");
 
-  public constructor([x, y]: any = undefined) {
+  public constructor([x, y]: PointAll = undefined) {
     super();
     if (arguments.length <= 0) return;
-    this.x = bignumber(x);
-    this.y = bignumber(y);
+    this.x = new Decimal(x);
+    this.y = new Decimal(y);
   }
 
   public copy(): Point {
     return this.constructor(this.toJSON());
   }
 
-  public equals(point) {
+  public equals(point): boolean {
     const { x, y } = this;
-    return equal(x, point.x) && equal(y, point.y);
+    return x.equals(point.x) && y.equals(point.y);
   }
 
-  public toJSON() {
+  public toJSON(): PointJSON {
     const { x, y } = this;
     // maintain precision
     return [x.toString(), y.toString()];
   }
 
-  public move([x, y]) {
-    this.x = bignumber(x);
-    this.y = bignumber(y);
+  public move([x, y]: PointAll): void {
+    this.x = new Decimal(x);
+    this.y = new Decimal(y);
   }
 
-  public shift([x, y]) {
-    this.x = add(this.x, x);
-    this.y = add(this.y, y);
+  public shift([x, y]: PointAll): void {
+    this.x = this.x.add(x);
+    this.y = this.y.add(y);
   }
 }
 

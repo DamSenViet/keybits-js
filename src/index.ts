@@ -8,6 +8,7 @@ import Line from "./geometry/Line";
 import StrictLine from "./geometry/StrictLine";
 import StrictPolygon from "./geometry/StrictPolygon";
 import Profiles from "./Profiles";
+import Validatable from "./Validatable";
 
 // if (
 //   typeof window !== 'undefined' &&
@@ -25,7 +26,8 @@ export default {
   Line,
   StrictLine,
   StrictPolygon,
-  Profiles
+  Profiles,
+  Validatable
 }
 export {
   geometry,
@@ -34,5 +36,6 @@ export {
   Line,
   StrictLine,
   StrictPolygon,
-  Profiles
+  Profiles,
+  Validatable
 };

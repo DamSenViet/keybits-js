@@ -21,7 +21,7 @@
     "sourceMap": true,
     // "declaration": true,
     "lib": [
-      "ES6",
+      "ESNext",
       "DOM",
     ],
     "moduleResolution": "node"
