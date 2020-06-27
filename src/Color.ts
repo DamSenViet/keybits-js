@@ -19,10 +19,14 @@ class Color {
   public constructor(options: Color | ColorOptions) {
     if (arguments.length <= 0) return;
     if (
-      !(options instanceof Color) &&
-      options.constructor.name !== "Object"
+      typeof options !== "object" ||
+      (!(options instanceof Color) &&
+      options.constructor.name !== "Object")
     ) throw new TypeError();
     const { r, g, b } = options;
+    if (r == null) throw new TypeError();
+    if (g == null) throw new TypeError();
+    if (b == null) throw new TypeError();
     this.r = r;
     this.g = g;
     this.b = b;

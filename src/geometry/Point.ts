@@ -1,49 +1,66 @@
-import Validatable from "../Validatable";
-import Decimal from "decimal.js";
+import { Decimal } from "decimal.js";
+Decimal.set({ precision: 64, rounding: 1 });
 
-Decimal.set({ precision: 64, rounding: 1});
+export interface PointOptions {
+  x: Decimal,
+  y: Decimal,
+}
 
-export type PointString = [string, string];
-export type PointNumber = [number, number];
-export type PointDecimal = [Decimal, Decimal];
-export type PointAll = PointString | PointNumber | PointDecimal;
-export type PointJSON = PointString;
+export interface PointJSON {
+  x: string,
+  y: string,
+}
 
-class Point extends Validatable {
-  public x: Decimal = new Decimal("0");
-  public y: Decimal = new Decimal("0");
+class Point {
+  protected _x: Decimal = new Decimal("0");
+  protected _y: Decimal = new Decimal("0");
 
-  public constructor([x, y]: PointAll) {
-    super();
+  public constructor(options: Point | PointOptions) {
     if (arguments.length <= 0) return;
+    if (typeof options !== "object") throw new TypeError();
+    const { x, y } = options;
     // toString allows compatibility with other math libraries
-    this.x = new Decimal(x.toString());
-    this.y = new Decimal(y.toString());
+    if (x != null) this.x = new Decimal(x);
+    if (y != null) this.y = new Decimal(y);
   }
 
-  public copy(): Point {
-    return this.constructor(this.toJSON());
+  // property getter/setters
+  public get x(): Decimal {
+    const { _x } = this;
+    return _x;
   }
 
-  public equals(point): boolean {
+  public set x(x: Decimal) {
+    if (!(x instanceof Decimal)) throw new TypeError();
+    this._x = x;
+  }
+
+  public get y(): Decimal {
+    const { _y } = this;
+    return _y;
+  }
+
+  public set y(y: Decimal) {
+    if (!(y instanceof Decimal)) throw new TypeError();
+    this._y = y;
+  }
+
+  // methods
+  public equals(point: Point): boolean {
     const { x, y } = this;
     return x.equals(point.x) && y.equals(point.y);
   }
 
+  public fromJSON(json: PointJSON) {
+  }
+
   public toJSON(): PointJSON {
     const { x, y } = this;
-    // maintain precision
-    return [x.toString(), y.toString()];
-  }
-
-  public move([x, y]: PointAll): void {
-    this.x = new Decimal(x.toString());
-    this.y = new Decimal(y.toString());
-  }
-
-  public shift([x, y]: PointAll): void {
-    this.x = this.x.add(x.toString());
-    this.y = this.y.add(y.toString());
+    // maintain precision with strings
+    return {
+      x: x.toString(),
+      y: y.toString(),
+    };
   }
 }
 

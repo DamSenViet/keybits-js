@@ -1,76 +1,110 @@
-import Validatable from "../Validatable";
-import Point from "./Point";
+import Point, { PointJSON } from "./Point";
 import { Decimal } from "decimal.js";
-// types
-import { PointAll, PointJSON } from "./Point";
 
-export type LineAll = [PointAll, PointAll];
-export type LineJSON = [PointJSON, PointJSON];
+export interface LineOptions {
+  start: Point,
+  end: Point,
+}
 
-class Line extends Validatable {
-  public start: Point;
-  public end: Point;
+export interface LineJSON {
+  start: PointJSON,
+  end: PointJSON,
+}
 
-  public constructor([start, end]: LineAll = undefined) {
-    super();
+class Line {
+  protected _start: Point = new Point({
+    x: new Decimal("0"),
+    y: new Decimal("0"),
+  });
+  protected _end: Point = new Point({
+    x: new Decimal("0"),
+    y: new Decimal("0"),
+  });
+
+  public constructor(options: Line | LineOptions) {
     if (arguments.length <= 0) return;
-    this.start = new Point(start);
-    this.end = new Point(end);
+    if (typeof options !== "object") throw new TypeError();
+    const { start, end } = options;
+    if (start != null) this.start = new Point(start);
+    if (end != null) this.end = new Point(end);
   }
 
-  public copy(): Line {
-    return new Line(this.toJSON());
+  public get start(): Point {
+    const { _start } = this;
+    return _start;
   }
 
-  public equals(line): boolean {
-    const { start, end } = this;
-    return (start.equals(line.start) && end.equals(line.end)) ||
-      (start.equals(line.end) && end.equals(line.start));
+  public set start(start: Point) {
+    if (!(start instanceof Point)) throw new TypeError();
+    this._start = start;
+  }
+
+  public get end(): Point {
+    const { _end } = this;
+    return _end;
+  }
+
+  // @ts-ignore
+  public set end(end: Point) {
+    if (!(end instanceof Point)) throw new TypeError();
+    this._end = end;
+  }
+
+  public equals(line: Line): boolean {
+    const { _start, _end } = this;
+    return (_start.equals(line.start) && _end.equals(line.end)) ||
+      (_start.equals(line.end) && _end.equals(line.start));
+  }
+
+  public fromJSON(json: LineJSON) {
   }
 
   public toJSON(): LineJSON {
-    const { start, end } = this;
-    return [start.toJSON(), end.toJSON()];
+    const { _start, _end } = this;
+    return {
+      start: _start.toJSON(),
+      end: _end.toJSON(),
+    };
   }
 
   // line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
   // https://stackoverflow.com/a/60368757/8625882
   public intersection(line: Line): null | Point {
-    const { start, end } = this;
+    const { _start, _end } = this;
     // lines cannot be of length 0
-    if (start.equals(end) || line.start.equals(line.end)) {
+    if (_start.equals(_end) || line.start.equals(line.end)) {
       return null;
     }
 
     const denominator = Decimal.sub(
       line.end.y.sub(line.start.y)
-        .mul(end.x.sub(start.x)),
+        .mul(_end.x.sub(_start.x)),
       line.end.x.sub(line.start.x)
-        .mul(end.y.sub(start.y))
+        .mul(_end.y.sub(_start.y))
     );
 
     if (denominator.isZero()) return null;
 
     const ua = Decimal.sub(
       line.end.x.sub(line.start.x)
-        .mul(start.y.sub(line.start.y)),
+        .mul(_start.y.sub(line.start.y)),
       line.end.y.sub(line.start.y)
-        .mul(start.x.sub(line.start.x))
+        .mul(_start.x.sub(line.start.x))
     ).div(denominator);
     const ub = Decimal.sub(
-      end.x.sub(start.x)
-        .mul(start.y.sub(line.start.y)),
-      end.y.sub(start.y)
-        .mul(start.x.sub(line.start.x))
+      _end.x.sub(_start.x)
+        .mul(_start.y.sub(line.start.y)),
+      _end.y.sub(_start.y)
+        .mul(_start.x.sub(line.start.x))
     ).div(denominator)
 
     // is the intersection along the segments
     const isAlongSegment = (ua.gte(0) && ua.lte(1) && ub.gte(0) && ub.lte(1));
-    if (!isAlongSegment) return
+    if (!isAlongSegment) return null;
 
-    const x = start.x.add(ua.mul(end.x.sub(start.x)));
-    const y = start.y.add(ua.mul(end.y.sub(start.y)));
-    return new Point([x, y]);
+    const x = _start.x.add(ua.mul(_end.x.sub(_start.x)));
+    const y = _start.y.add(ua.mul(_end.y.sub(_start.y)));
+    return new Point({ x, y });
   }
 
   public intersects(line): boolean {

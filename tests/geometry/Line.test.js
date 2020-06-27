@@ -31,11 +31,6 @@ test('constructor', () => {
   }).not.toThrow();
 });
 
-
-test('copy', () => {
-
-});
-
 test('equals', () => {
 
 });
