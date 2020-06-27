@@ -1,7 +1,0 @@
-test('constructor', () => {
-
-});
-
-test('validate', () => {
-
-});

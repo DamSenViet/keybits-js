@@ -23,19 +23,26 @@
     "url": "https://github.com/DamSenViet/keybits-js/issues"
   },
   "homepage": "https://github.com/DamSenViet/keybits-js#readme",
-  "dependencies": {},
+  "dependencies": {
+    "ajv": "^6.12.2",
+    "ajv-keywords": "^3.5.0"
+  },
+  "peerDependencies": {
+    "decimal.js": "^10.2.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/runtime": "^7.9.6",
+    "@types/jest": "^26.0.3",
     "babel-loader": "^8.1.0",
     "clear": "^0.1.0",
-    "decimal.js": "^10.2.0",
     "dotenv": "^8.2.0",
     "fs-extra": "^9.0.0",
     "jest": "^26.0.1",
     "signale": "^1.4.0",
+    "ts-jest": "^26.1.1",
     "ts-loader": "^7.0.4",
     "typescript": "^3.9.2",
     "webpack": "^4.43.0",
