@@ -1,7 +1,7 @@
 {
-  "name": "key-labs-serial",
+  "name": "keybits-serial",
   "version": "0.0.0",
-  "description": "A library to serialize and deserializing Key Labs formatted json files.",
+  "description": "A library to serialize and deserializing keybits formatted json files.",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "browser": "build/umd/build.js",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DamSenViet/key-labs-serial.git"
+    "url": "git+https://github.com/DamSenViet/keybits-js.git"
   },
-  "author": "Key Labs",
+  "author": "DamSenViet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DamSenViet/key-labs-serial/issues"
+    "url": "https://github.com/DamSenViet/keybits-js/issues"
   },
-  "homepage": "https://github.com/DamSenViet/key-labs-serial#readme",
+  "homepage": "https://github.com/DamSenViet/keybits-js#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.9.6",
