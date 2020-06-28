@@ -1,5 +1,5 @@
+import Decimal from "decimal.js";
 import Point, { PointJSON } from "./Point";
-import { Decimal } from "decimal.js";
 
 export interface LineOptions {
   start: Point,
@@ -11,7 +11,7 @@ export interface LineJSON {
   end: PointJSON,
 }
 
-class Line {
+export default class Line {
   protected _start: Point = new Point({
     x: new Decimal("0"),
     y: new Decimal("0"),
@@ -54,17 +54,6 @@ class Line {
     const { _start, _end } = this;
     return (_start.equals(line.start) && _end.equals(line.end)) ||
       (_start.equals(line.end) && _end.equals(line.start));
-  }
-
-  public fromJSON(json: LineJSON) {
-  }
-
-  public toJSON(): LineJSON {
-    const { _start, _end } = this;
-    return {
-      start: _start.toJSON(),
-      end: _end.toJSON(),
-    };
   }
 
   // line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
@@ -110,6 +99,15 @@ class Line {
   public intersects(line): boolean {
     return Boolean(this.intersection(line));
   }
-}
 
-export default Line;
+  public fromJSON(json: LineJSON) {
+  }
+
+  public toJSON(): LineJSON {
+    const { _start, _end } = this;
+    return {
+      start: _start.toJSON(),
+      end: _end.toJSON(),
+    };
+  }
+}

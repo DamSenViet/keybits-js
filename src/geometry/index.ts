@@ -1,20 +1,14 @@
 import Line from "./Line";
 import Point from "./Point"
-import StrictPoint from "./StrictPoint";
-import StrictLine from "./StrictLine";
-import StrictPolygon from "./StrictPolygon";
+import Polygon from "./Polygon";
 
 export default {
   Line,
   Point,
-  StrictLine,
-  StrictPoint,
-  StrictPolygon
+  Polygon,
 };
 export {
   Line,
   Point,
-  StrictLine,
-  StrictPoint,
-  StrictPolygon
+  Polygon,
 };

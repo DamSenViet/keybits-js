@@ -1,5 +1,4 @@
-import { Decimal } from "decimal.js";
-Decimal.set({ precision: 64, rounding: 1 });
+import Decimal from "decimal.js";
 
 export interface PointOptions {
   x: Decimal,
@@ -11,7 +10,7 @@ export interface PointJSON {
   y: string,
 }
 
-class Point {
+export default class Point {
   protected _x: Decimal = new Decimal("0");
   protected _y: Decimal = new Decimal("0");
 
@@ -63,6 +62,3 @@ class Point {
     };
   }
 }
-
-
-export default Point;

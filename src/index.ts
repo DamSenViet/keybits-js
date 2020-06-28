@@ -1,6 +1,3 @@
-// import Keyboard from  "~/Keyboard";
-// import Point from "~/Point";
-// import utils from "~/utils";
 import * as geometry from "./geometry";
 import Point from "./geometry/Point";
 import StrictPoint from "./geometry/StrictPoint";
@@ -9,14 +6,8 @@ import StrictLine from "./geometry/StrictLine";
 import StrictPolygon from "./geometry/StrictPolygon";
 import Profiles from "./Profiles";
 
-// if (
-//   typeof window !== 'undefined' &&
-//   {}.toString.call(window) === '[object Window]'
-// ) {
-//   window.keylabs = {
-//     Geometry,
-//   };
-// };
+import Decimal from "decimal.js";
+Decimal.set({ precision: 64, rounding: 1 });
 
 export default {
   geometry,
