@@ -1,27 +1,29 @@
+import Ajv from "ajv";
+import lineSchema from "./Line.schema";
 import Decimal from "decimal.js";
-import Point, { PointJSON } from "./Point";
+import Point, { PointOptions, PointJSON } from "./Point";
 
 export interface LineOptions {
-  start: Point,
-  end: Point,
-}
+  start?: PointOptions,
+  end?: PointOptions,
+};
 
 export interface LineJSON {
   start: PointJSON,
   end: PointJSON,
-}
+};
 
 export default class Line {
   protected _start: Point = new Point({
-    x: new Decimal("0"),
-    y: new Decimal("0"),
+    x: new Decimal(0),
+    y: new Decimal(0),
   });
   protected _end: Point = new Point({
-    x: new Decimal("0"),
-    y: new Decimal("0"),
+    x: new Decimal(0),
+    y: new Decimal(0),
   });
 
-  public constructor(options: Line | LineOptions) {
+  public constructor(options?: Line | LineOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
     const { start, end } = options;
@@ -29,6 +31,7 @@ export default class Line {
     if (end != null) this.end = new Point(end);
   }
 
+  // property getters and setters
   public get start(): Point {
     const { _start } = this;
     return _start;
@@ -44,55 +47,55 @@ export default class Line {
     return _end;
   }
 
-  // @ts-ignore
   public set end(end: Point) {
     if (!(end instanceof Point)) throw new TypeError();
     this._end = end;
   }
 
+  // methods
   public equals(line: Line): boolean {
-    const { _start, _end } = this;
-    return (_start.equals(line.start) && _end.equals(line.end)) ||
-      (_start.equals(line.end) && _end.equals(line.start));
+    const { start, end } = this;
+    return (start.equals(line.start) && end.equals(line.end)) ||
+      (start.equals(line.end) && end.equals(line.start));
   }
 
   // line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
   // https://stackoverflow.com/a/60368757/8625882
   public intersection(line: Line): null | Point {
-    const { _start, _end } = this;
+    const { start, end } = this;
     // lines cannot be of length 0
-    if (_start.equals(_end) || line.start.equals(line.end)) {
+    if (start.equals(end) || line.start.equals(line.end)) {
       return null;
     }
 
     const denominator = Decimal.sub(
       line.end.y.sub(line.start.y)
-        .mul(_end.x.sub(_start.x)),
+        .mul(end.x.sub(start.x)),
       line.end.x.sub(line.start.x)
-        .mul(_end.y.sub(_start.y))
+        .mul(end.y.sub(start.y))
     );
 
     if (denominator.isZero()) return null;
 
     const ua = Decimal.sub(
       line.end.x.sub(line.start.x)
-        .mul(_start.y.sub(line.start.y)),
+        .mul(start.y.sub(line.start.y)),
       line.end.y.sub(line.start.y)
-        .mul(_start.x.sub(line.start.x))
+        .mul(start.x.sub(line.start.x))
     ).div(denominator);
     const ub = Decimal.sub(
-      _end.x.sub(_start.x)
-        .mul(_start.y.sub(line.start.y)),
-      _end.y.sub(_start.y)
-        .mul(_start.x.sub(line.start.x))
+      end.x.sub(start.x)
+        .mul(start.y.sub(line.start.y)),
+        end.y.sub(start.y)
+        .mul(start.x.sub(line.start.x))
     ).div(denominator)
 
     // is the intersection along the segments
     const isAlongSegment = (ua.gte(0) && ua.lte(1) && ub.gte(0) && ub.lte(1));
     if (!isAlongSegment) return null;
 
-    const x = _start.x.add(ua.mul(_end.x.sub(_start.x)));
-    const y = _start.y.add(ua.mul(_end.y.sub(_start.y)));
+    const x = start.x.add(ua.mul(end.x.sub(start.x)));
+    const y = start.y.add(ua.mul(end.y.sub(start.y)));
     return new Point({ x, y });
   }
 
@@ -100,7 +103,18 @@ export default class Line {
     return Boolean(this.intersection(line));
   }
 
-  public fromJSON(json: LineJSON) {
+  public fromJSON(lineJSON: LineJSON): Line {
+    // verify with ajv
+    const ajv = new Ajv();
+    if (!ajv.validate(lineSchema, lineJSON)) throw new TypeError();
+    const { start: startJSON, end: endJSON } = lineJSON;
+    this.start = Point.fromJSON(startJSON);
+    this.end = Point.fromJSON(endJSON);
+    return this;
+  }
+
+  public static fromJSON(lineJSON: LineJSON): Line {
+    return new Line().fromJSON(lineJSON);
   }
 
   public toJSON(): LineJSON {
@@ -110,4 +124,8 @@ export default class Line {
       end: _end.toJSON(),
     };
   }
-}
+
+  public static toJSON(line: Line): LineJSON {
+    return line.toJSON();
+  }
+};

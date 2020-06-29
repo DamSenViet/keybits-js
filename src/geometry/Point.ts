@@ -1,20 +1,22 @@
+import Ajv from "ajv";
+import pointSchema from "./Point.schema";
 import Decimal from "decimal.js";
 
 export interface PointOptions {
-  x: Decimal,
-  y: Decimal,
-}
+  x?: Decimal,
+  y?: Decimal,
+};
 
 export interface PointJSON {
   x: string,
   y: string,
-}
+};
 
 export default class Point {
-  protected _x: Decimal = new Decimal("0");
-  protected _y: Decimal = new Decimal("0");
+  protected _x: Decimal = new Decimal(0);
+  protected _y: Decimal = new Decimal(0);
 
-  public constructor(options: Point | PointOptions) {
+  public constructor(options?: Point | PointOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
     const { x, y } = options;
@@ -50,7 +52,18 @@ export default class Point {
     return x.equals(point.x) && y.equals(point.y);
   }
 
-  public fromJSON(json: PointJSON) {
+  public fromJSON(pointJSON: PointJSON): Point {
+    // verify with ajv
+    const ajv = new Ajv();
+    if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError();
+    const { x: xJSON, y: yJSON } = pointJSON;
+    this.x = new Decimal(xJSON);
+    this.y = new Decimal(yJSON);
+    return this;
+  }
+
+  public static fromJSON(pointJSON: PointJSON): Point {
+    return new Point().fromJSON(pointJSON);
   }
 
   public toJSON(): PointJSON {
@@ -61,4 +74,8 @@ export default class Point {
       y: y.toString(),
     };
   }
-}
+
+  public static toJSON(point: Point): PointJSON {
+    return point.toJSON();
+  }
+};
