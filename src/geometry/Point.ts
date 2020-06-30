@@ -12,6 +12,9 @@ export interface PointJSON {
   y: string,
 };
 
+/**
+ * Immutable Point
+ */
 export default class Point {
   protected _x: Decimal = new Decimal(0);
   protected _y: Decimal = new Decimal(0);
@@ -21,29 +24,26 @@ export default class Point {
     if (typeof options !== "object") throw new TypeError();
     const { x, y } = options;
     // toString allows compatibility with other math libraries
-    if (x != null) this.x = new Decimal(x);
-    if (y != null) this.y = new Decimal(y);
+    if (x != null) {
+      if (!(x instanceof Decimal)) throw new TypeError();
+      this._x = new Decimal(x);
+    }
+    if (y != null) {
+      if (!(y instanceof Decimal)) throw new TypeError();
+      this._y = new Decimal(y);
+    }
+    Object.freeze(this);
   }
 
-  // property getter/setters
+  // property
   public get x(): Decimal {
     const { _x } = this;
     return _x;
   }
 
-  public set x(x: Decimal) {
-    if (!(x instanceof Decimal)) throw new TypeError();
-    this._x = x;
-  }
-
   public get y(): Decimal {
     const { _y } = this;
     return _y;
-  }
-
-  public set y(y: Decimal) {
-    if (!(y instanceof Decimal)) throw new TypeError();
-    this._y = y;
   }
 
   // methods
@@ -52,18 +52,13 @@ export default class Point {
     return x.equals(point.x) && y.equals(point.y);
   }
 
-  public fromJSON(pointJSON: PointJSON): Point {
-    // verify with ajv
+  public static fromJSON(pointJSON: PointJSON): Point {
     const ajv = new Ajv();
     if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError();
     const { x: xJSON, y: yJSON } = pointJSON;
-    this.x = new Decimal(xJSON);
-    this.y = new Decimal(yJSON);
-    return this;
-  }
-
-  public static fromJSON(pointJSON: PointJSON): Point {
-    return new Point().fromJSON(pointJSON);
+    const x = new Decimal(xJSON);
+    const y = new Decimal(yJSON);
+    return new Point({ x, y });
   }
 
   public toJSON(): PointJSON {
@@ -73,9 +68,5 @@ export default class Point {
       x: x.toString(),
       y: y.toString(),
     };
-  }
-
-  public static toJSON(point: Point): PointJSON {
-    return point.toJSON();
   }
 };

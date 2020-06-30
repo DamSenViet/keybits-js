@@ -13,6 +13,9 @@ export interface LineJSON {
   end: PointJSON,
 };
 
+/**
+ * Immutable Line
+ */
 export default class Line {
   protected _start: Point = new Point({
     x: new Decimal(0),
@@ -27,29 +30,26 @@ export default class Line {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
     const { start, end } = options;
-    if (start != null) this.start = new Point(start);
-    if (end != null) this.end = new Point(end);
+    if (start != null) {
+      if (!(start instanceof Point)) throw new TypeError();
+      this._start = new Point(start);
+    }
+    if (end != null) {
+      if (!(end instanceof Point)) throw new TypeError();
+      this._end = new Point(end);
+    }
+    Object.freeze(this);
   }
 
-  // property getters and setters
+  // property getters
   public get start(): Point {
     const { _start } = this;
     return _start;
   }
 
-  public set start(start: Point) {
-    if (!(start instanceof Point)) throw new TypeError();
-    this._start = start;
-  }
-
   public get end(): Point {
     const { _end } = this;
     return _end;
-  }
-
-  public set end(end: Point) {
-    if (!(end instanceof Point)) throw new TypeError();
-    this._end = end;
   }
 
   // methods
@@ -86,7 +86,7 @@ export default class Line {
     const ub = Decimal.sub(
       end.x.sub(start.x)
         .mul(start.y.sub(line.start.y)),
-        end.y.sub(start.y)
+      end.y.sub(start.y)
         .mul(start.x.sub(line.start.x))
     ).div(denominator)
 
@@ -103,18 +103,14 @@ export default class Line {
     return Boolean(this.intersection(line));
   }
 
-  public fromJSON(lineJSON: LineJSON): Line {
+  public static fromJSON(lineJSON: LineJSON): Line {
     // verify with ajv
     const ajv = new Ajv();
     if (!ajv.validate(lineSchema, lineJSON)) throw new TypeError();
     const { start: startJSON, end: endJSON } = lineJSON;
-    this.start = Point.fromJSON(startJSON);
-    this.end = Point.fromJSON(endJSON);
-    return this;
-  }
-
-  public static fromJSON(lineJSON: LineJSON): Line {
-    return new Line().fromJSON(lineJSON);
+    const start = Point.fromJSON(startJSON);
+    const end = Point.fromJSON(endJSON);
+    return new Line({ start, end });
   }
 
   public toJSON(): LineJSON {
@@ -123,9 +119,5 @@ export default class Line {
       start: _start.toJSON(),
       end: _end.toJSON(),
     };
-  }
-
-  public static toJSON(line: Line): LineJSON {
-    return line.toJSON();
   }
 };

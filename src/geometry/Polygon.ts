@@ -12,6 +12,9 @@ export interface PolygonJSON {
   points: Array<PointJSON>
 };
 
+/**
+ * Immutable Simple Polygon
+ */
 export default class Polygon {
   protected _points: Array<Point> = new Array<Point>(
     new Point({ x: new Decimal(0), y: new Decimal(0) }),
@@ -23,35 +26,36 @@ export default class Polygon {
   constructor(options?: Polygon | PolygonOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
-    const { points } = options;
-    if (points != null) this.points = (<Array<Point | PointOptions>>points)
-      .map(point => new Point(point));
+    let { points } = options;
+    if (points != null) {
+      points = (<Array<Point | PointOptions>>points)
+        .map(point => new Point(point));
+      if (!(points instanceof Array)) throw new TypeError();
+      for (const point of points) {
+        if (!(point instanceof Point)) throw new TypeError();
+      }
+      // ordered points cannot construct intersecting lines
+      const lines: Array<Line> = new Array<Line>();
+      for (let i = 0; i < points.length; ++i) {
+        const start = points[i];
+        const end = points[(i + 1) % points.length]
+        lines.push(new Line({ start, end }));
+      }
+      for (const lineA of lines) {
+        for (const lineB of lines) {
+          if (lineA === lineB) continue;
+          if (lineA.intersects(lineB)) throw new TypeError();
+        }
+      }
+      this._points = <Array<Point>>points;
+    }
+    Object.freeze(this);
+    Object.freeze(this._points);
   }
 
   // property getters/setters
   public get points(): Array<Point> {
     return this._points;
-  }
-
-  public set points(points: Array<Point>) {
-    if (!(points instanceof Array)) throw new TypeError();
-    for (const point of points) {
-      if (!(point instanceof Point)) throw new TypeError();
-    }
-    // ordered points cannot construct intersecting lines
-    const lines: Array<Line> = new Array<Line>();
-    for (let i = 0; i < points.length; ++i) {
-      const start = points[i];
-      const end = points[(i + 1) % points.length]
-      lines.push(new Line({ start, end }));
-    }
-    for (const lineA of lines) {
-      for (const lineB of lines) {
-        if (lineA === lineB) continue;
-        if (lineA.intersects(lineB)) throw new TypeError();
-      }
-    }
-    this._points = points;
   }
 
   // computed properties
@@ -99,22 +103,17 @@ export default class Polygon {
   public equals(polygon: Polygon): boolean {
     const { representations } = this;
     const representationsStrings = new Set(representations
-        .map(polygon => JSON.stringify(polygon)));
+      .map(polygon => JSON.stringify(polygon)));
     // compare string versions
     return representationsStrings.has(JSON.stringify(polygon));
   }
 
-  public fromJSON(polygonJSON: PolygonJSON): Polygon {
-    // verify with ajv
+  public static fromJSON(polygonJSON: PolygonJSON): Polygon {
     const ajv = new Ajv();
     if (!ajv.validate(polygonSchema, polygonJSON)) throw new TypeError();
     const { points: pointsJSON } = polygonJSON;
-    this.points = pointsJSON.map((pointJSON) => Point.fromJSON(pointJSON));
-    return this;
-  }
-
-  public static fromJSON(polygonJSON: PolygonJSON): Polygon {
-    return new Polygon().fromJSON(polygonJSON);
+    const points = pointsJSON.map((pointJSON) => Point.fromJSON(pointJSON));
+    return new Polygon({ points });
   }
 
   public toJSON(): PolygonJSON {
@@ -122,9 +121,5 @@ export default class Polygon {
     return {
       points: points.map(point => point.toJSON()),
     }
-  }
-
-  public static toJSON(polygon: Polygon): PolygonJSON {
-    return polygon.toJSON();
   }
 };
