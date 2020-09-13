@@ -18,40 +18,60 @@ export interface PointJSON {
 export default class Point {
   protected _x: Decimal = new Decimal(0);
   protected _y: Decimal = new Decimal(0);
-
+  
+  /**
+   * Instantiates a Point.
+   * @param options - A configuration Object with 'x' and 'y' as Decimals.
+   */
   public constructor(options?: Point | PointOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
     const { x, y } = options;
-    // toString allows compatibility with other math libraries
     if (x != null) {
       if (!(x instanceof Decimal)) throw new TypeError();
-      this._x = new Decimal(x);
+      this._x = x;
     }
     if (y != null) {
       if (!(y instanceof Decimal)) throw new TypeError();
-      this._y = new Decimal(y);
+      this._y = y;
     }
     Object.freeze(this);
   }
 
   // property
+  /**
+   * Gets the x component of the Point.
+   */
   public get x(): Decimal {
     const { _x } = this;
     return _x;
   }
 
+  /**
+   * Gets the y component of the Point.
+   */
   public get y(): Decimal {
     const { _y } = this;
     return _y;
   }
 
   // methods
+  /**
+   * Determines whether the invoking Point is equivalent to the passed Point.
+   * @param point - The Point to compare against
+   * @returns Whether the Points are equal representations
+   */
   public equals(point: Point): boolean {
     const { x, y } = this;
     return x.equals(point.x) && y.equals(point.y);
   }
 
+  /**
+   * Creates a Point from a JSON object. The JSON must match the Point schema
+   * for the method to succeed.
+   * @param pointJSON - The Point formatted JSON
+   * @returns The Point represented by the JSON
+   */
   public static fromJSON(pointJSON: PointJSON): Point {
     const ajv = new Ajv();
     if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError();
@@ -61,6 +81,10 @@ export default class Point {
     return new Point({ x, y });
   }
 
+  /**
+   * Creates a JSON object from the invoking Point.
+   * @returns The JSON representation of the Point
+   */
   public toJSON(): PointJSON {
     const { x, y } = this;
     // maintain precision with strings

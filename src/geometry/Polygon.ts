@@ -5,7 +5,7 @@ import Point, { PointOptions, PointJSON } from "./Point";
 import Line from "./Line";
 
 export interface PolygonOptions {
-  points?: Array<PointOptions>
+  points?: Array<Point>
 };
 
 export interface PolygonJSON {
@@ -23,13 +23,16 @@ export default class Polygon {
     new Point({ x: new Decimal(1), y: new Decimal(0) }),
   );
 
+  /**
+   * Instantiates a Polygon.
+   * @param options - A configuration Object with 'points' as an Array of
+   *  Points
+   */
   constructor(options?: Polygon | PolygonOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
     let { points } = options;
     if (points != null) {
-      points = (<Array<Point | PointOptions>>points)
-        .map(point => new Point(point));
       if (!(points instanceof Array)) throw new TypeError();
       for (const point of points) {
         if (!(point instanceof Point)) throw new TypeError();
@@ -54,11 +57,17 @@ export default class Polygon {
   }
 
   // property getters/setters
+  /**
+   * Gets the points that make up the polygon.
+   */
   public get points(): Array<Point> {
     return this._points;
   }
 
   // computed properties
+  /**
+   * Gets the computed width of the polygon.
+   */
   public get width(): Decimal {
     const { points } = this;
     let lowest: Decimal = new Decimal(Infinity);
@@ -70,6 +79,9 @@ export default class Polygon {
     return highest.sub(lowest).abs();
   }
 
+  /**
+   * Gets the computed height of the polygon.
+   */
   public get height(): Decimal {
     const { points } = this;
     let lowest: Decimal = new Decimal(Infinity);
@@ -81,8 +93,9 @@ export default class Polygon {
     return highest.sub(lowest).abs();
   }
 
-  // returns all equivalent representations of the polygon
-  // all polygons returned equals(this)
+  /**
+   * Gets all equivalent Polygon representations of the Polygon.
+   */
   public get representations(): Array<Polygon> {
     const { points } = this;
     const representations: Array<Polygon> = new Array<Polygon>();
@@ -100,6 +113,12 @@ export default class Polygon {
   }
 
   // methods
+  /**
+   * Determines whether the invoking Polygon is equivalent to the passed
+   * Polygon.
+   * @param polygon - The Polygon to compare against
+   * @returns Whether the polygons are equal representations
+   */
   public equals(polygon: Polygon): boolean {
     const { representations } = this;
     const representationsStrings = new Set(representations
@@ -108,6 +127,12 @@ export default class Polygon {
     return representationsStrings.has(JSON.stringify(polygon));
   }
 
+  /**
+   * Creates a polygon from a JSON object. The JSON must match the polygon
+   * schema for the method to succeed.
+   * @param polygonJSON - The polygon formatted JSON
+   * @returns The polygon represented by the JSON
+   */
   public static fromJSON(polygonJSON: PolygonJSON): Polygon {
     const ajv = new Ajv();
     if (!ajv.validate(polygonSchema, polygonJSON)) throw new TypeError();
@@ -116,10 +141,14 @@ export default class Polygon {
     return new Polygon({ points });
   }
 
+  /**
+   * Creates a JSON object from the invoking Polygon.
+   * @returns The JSON representation of the Polygon
+   */
   public toJSON(): PolygonJSON {
     const { points } = this;
     return {
       points: points.map(point => point.toJSON()),
-    }
+    };
   }
 };

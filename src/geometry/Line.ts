@@ -26,41 +26,62 @@ export default class Line {
     y: new Decimal(0),
   });
 
+  /**
+   * Instantiates a Line.
+   * @param options - A configuration Object with 'start' and 'end' as Points.
+   */
   public constructor(options?: Line | LineOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
     const { start, end } = options;
     if (start != null) {
       if (!(start instanceof Point)) throw new TypeError();
-      this._start = new Point(start);
+      this._start = start;
     }
     if (end != null) {
       if (!(end instanceof Point)) throw new TypeError();
-      this._end = new Point(end);
+      this._end = end;
     }
     Object.freeze(this);
   }
 
   // property getters
+  /**
+   * Gets the starting Point of the Line.
+   */
   public get start(): Point {
     const { _start } = this;
     return _start;
   }
 
+  /**
+   * Gets the ending Point of the Line.
+   */
   public get end(): Point {
     const { _end } = this;
     return _end;
   }
 
   // methods
+  /**
+   * Determines whether the invoking Line is equivalent to the passed Line.
+   * @param line - The Line to compare against
+   * @returns Whether the Lines are equal representations
+   */
   public equals(line: Line): boolean {
     const { start, end } = this;
     return (start.equals(line.start) && end.equals(line.end)) ||
       (start.equals(line.end) && end.equals(line.start));
   }
 
-  // line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
-  // https://stackoverflow.com/a/60368757/8625882
+  /**
+   * Returns the intersection between the invoking Line and the passed Line.
+   * @remarks
+   * line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
+   * https://stackoverflow.com/a/60368757/8625882
+   * @param line - The line to check for intersection against
+   * @returns The Point at which the lines intersect and null if they don't
+   */
   public intersection(line: Line): null | Point {
     const { start, end } = this;
     // lines cannot be of length 0
@@ -99,10 +120,20 @@ export default class Line {
     return new Point({ x, y });
   }
 
+  /**
+   * Determines whether the invoking Line has an intersection with the passed
+   * Line.
+   * @param line - The Line to check against
+   * @returns Whether there is an intersection
+   */
   public intersects(line): boolean {
     return Boolean(this.intersection(line));
   }
 
+  /**
+   * 
+   * @param lineJSON 
+   */
   public static fromJSON(lineJSON: LineJSON): Line {
     // verify with ajv
     const ajv = new Ajv();
