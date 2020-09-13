@@ -1,5 +1,5 @@
 {
-  "name": "keybits-serial",
+  "name": "keybits",
   "version": "0.0.0",
   "description": "A library to serialize and deserializing keybits formatted json files.",
   "main": "build/cjs/index.js",

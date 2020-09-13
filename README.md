@@ -1,6 +1,6 @@
-# Key Labs JavaScript
+# Keybits Javascript
 
-A JavaScript library for interacting with Key Labs data structures and files.
+A JavaScript library for interacting with Keybits data structures and files.
 
 ## Installation
 
