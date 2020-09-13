@@ -58,7 +58,7 @@ export default class Polygon {
 
   // property getters/setters
   /**
-   * Gets the points that make up the polygon.
+   * Gets the ordered Points that make up the Polygon.
    */
   public get points(): Array<Point> {
     return this._points;
@@ -66,7 +66,7 @@ export default class Polygon {
 
   // computed properties
   /**
-   * Gets the computed width of the polygon.
+   * Gets the computed width of the Polygon.
    */
   public get width(): Decimal {
     const { points } = this;
@@ -80,7 +80,7 @@ export default class Polygon {
   }
 
   /**
-   * Gets the computed height of the polygon.
+   * Gets the computed height of the Polygon.
    */
   public get height(): Decimal {
     const { points } = this;
@@ -114,10 +114,9 @@ export default class Polygon {
 
   // methods
   /**
-   * Determines whether the invoking Polygon is equivalent to the passed
-   * Polygon.
+   * Determines whether invoking Polygon is equivalent to passed Polygon.
    * @param polygon - The Polygon to compare against
-   * @returns Whether the polygons are equal representations
+   * @returns Whether the Polygons are equal representations
    */
   public equals(polygon: Polygon): boolean {
     const { representations } = this;
@@ -128,10 +127,10 @@ export default class Polygon {
   }
 
   /**
-   * Creates a polygon from a JSON object. The JSON must match the polygon
+   * Creates a Polygon from a JSON object. The JSON must match the Polygon
    * schema for the method to succeed.
    * @param polygonJSON - The polygon formatted JSON
-   * @returns The polygon represented by the JSON
+   * @returns The Polygon represented by the JSON
    */
   public static fromJSON(polygonJSON: PolygonJSON): Polygon {
     const ajv = new Ajv();
@@ -142,7 +141,7 @@ export default class Polygon {
   }
 
   /**
-   * Creates a JSON object from the invoking Polygon.
+   * Creates a JSON object from invoking Polygon.
    * @returns The JSON representation of the Polygon
    */
   public toJSON(): PolygonJSON {

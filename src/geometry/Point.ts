@@ -40,7 +40,7 @@ export default class Point {
 
   // property
   /**
-   * Gets the x component of the Point.
+   * Gets the x coordinate of the Point.
    */
   public get x(): Decimal {
     const { _x } = this;
@@ -48,7 +48,7 @@ export default class Point {
   }
 
   /**
-   * Gets the y component of the Point.
+   * Gets the y coordinate of the Point.
    */
   public get y(): Decimal {
     const { _y } = this;
@@ -57,7 +57,7 @@ export default class Point {
 
   // methods
   /**
-   * Determines whether the invoking Point is equivalent to the passed Point.
+   * Determines whether invoking Point is equivalent to the passed Point.
    * @param point - The Point to compare against
    * @returns Whether the Points are equal representations
    */
@@ -67,7 +67,7 @@ export default class Point {
   }
 
   /**
-   * Creates a Point from a JSON object. The JSON must match the Point schema
+   * Creates a Point from a JSON object. The JSON must match Point schema
    * for the method to succeed.
    * @param pointJSON - The Point formatted JSON
    * @returns The Point represented by the JSON
@@ -82,7 +82,7 @@ export default class Point {
   }
 
   /**
-   * Creates a JSON object from the invoking Point.
+   * Creates a JSON object from invoking Point.
    * @returns The JSON representation of the Point
    */
   public toJSON(): PointJSON {

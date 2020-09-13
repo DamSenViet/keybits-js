@@ -64,7 +64,7 @@ export default class Line {
 
   // methods
   /**
-   * Determines whether the invoking Line is equivalent to the passed Line.
+   * Determines whether invoking Line is equivalent to passed Line.
    * @param line - The Line to compare against
    * @returns Whether the Lines are equal representations
    */
@@ -75,11 +75,11 @@ export default class Line {
   }
 
   /**
-   * Returns the intersection between the invoking Line and the passed Line.
+   * Calculates the intersection between invoking Line and passed Line.
    * @remarks
    * line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
    * https://stackoverflow.com/a/60368757/8625882
-   * @param line - The line to check for intersection against
+   * @param line - The Line to check for intersection against
    * @returns The Point at which the lines intersect and null if they don't
    */
   public intersection(line: Line): null | Point {
@@ -121,8 +121,7 @@ export default class Line {
   }
 
   /**
-   * Determines whether the invoking Line has an intersection with the passed
-   * Line.
+   * Determines whether invoking Line has an intersection with passed Line.
    * @param line - The Line to check against
    * @returns Whether there is an intersection
    */
@@ -131,8 +130,10 @@ export default class Line {
   }
 
   /**
-   * 
-   * @param lineJSON 
+   * Creates a Line from a JSON object. The JSON must match Line schema
+   * for the method to succeed.
+   * @param lineJSON - The Line formatted JSON
+   * @returns The Line represented by the JSON
    */
   public static fromJSON(lineJSON: LineJSON): Line {
     // verify with ajv
@@ -144,6 +145,10 @@ export default class Line {
     return new Line({ start, end });
   }
 
+  /**
+   * Creates a JSON object from invoking  Line.
+   * @returns the JSON representation of the Line.
+   */
   public toJSON(): LineJSON {
     const { _start, _end } = this;
     return {
