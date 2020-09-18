@@ -8,8 +8,11 @@ export interface PointOptions {
 };
 
 export interface PointJSON {
-  x: string,
-  y: string,
+  className: "Point",
+  data: {
+    x: string,
+    y: string,
+  },
 };
 
 /**
@@ -18,7 +21,7 @@ export interface PointJSON {
 export default class Point {
   protected _x: Decimal = new Decimal(0);
   protected _y: Decimal = new Decimal(0);
-  
+
   /**
    * Instantiates a Point.
    * @param options - A configuration Object with 'x' and 'y' as Decimals.
@@ -75,7 +78,7 @@ export default class Point {
   public static fromJSON(pointJSON: PointJSON): Point {
     const ajv = new Ajv();
     if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError();
-    const { x: xJSON, y: yJSON } = pointJSON;
+    const { x: xJSON, y: yJSON } = pointJSON.data;
     const x = new Decimal(xJSON);
     const y = new Decimal(yJSON);
     return new Point({ x, y });
@@ -89,8 +92,11 @@ export default class Point {
     const { x, y } = this;
     // maintain precision with strings
     return {
-      x: x.toString(),
-      y: y.toString(),
+      className: "Point",
+      data: {
+        x: x.toString(),
+        y: y.toString(),
+      },
     };
   }
 };

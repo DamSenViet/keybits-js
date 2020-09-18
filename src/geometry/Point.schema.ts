@@ -1,9 +1,16 @@
 export default {
   type: "object",
-  required: ["x", "y",],
+  required: ["className", "data",],
   properties: {
-    x: { type: "string" },
-    y: { type: "string" },
+    className: { const: "Point" },
+    data: {
+      type: "object",
+      required: ["x", "y"],
+      properties: {
+        x: { type: "string" },
+        y: { type: "string" },
+      },
+    },
   },
   additionalProperties: false,
 };
