@@ -9,8 +9,11 @@ export interface LineOptions {
 };
 
 export interface LineJSON {
-  start: PointJSON,
-  end: PointJSON,
+  className: "Line",
+  data: {
+    start: PointJSON,
+    end: PointJSON,
+  },
 };
 
 /**
@@ -139,7 +142,7 @@ export default class Line {
     // verify with ajv
     const ajv = new Ajv();
     if (!ajv.validate(lineSchema, lineJSON)) throw new TypeError();
-    const { start: startJSON, end: endJSON } = lineJSON;
+    const { start: startJSON, end: endJSON } = lineJSON.data;
     const start = Point.fromJSON(startJSON);
     const end = Point.fromJSON(endJSON);
     return new Line({ start, end });
@@ -152,8 +155,11 @@ export default class Line {
   public toJSON(): LineJSON {
     const { _start, _end } = this;
     return {
-      start: _start.toJSON(),
-      end: _end.toJSON(),
+      className: "Line",
+      data: {
+        start: _start.toJSON(),
+        end: _end.toJSON(),
+      },
     };
   }
 };

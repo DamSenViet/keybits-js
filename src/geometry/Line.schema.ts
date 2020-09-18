@@ -2,9 +2,17 @@ import pointSchema from "./Point.schema";
 
 export default {
   type: "object",
-  required: ["start", "end"],
+  required: ["className", "data",],
   properties: {
-    start: pointSchema,
-    end: pointSchema,
-  }
+    className: { const: "Line" },
+    data: {
+      type: "object",
+      required: ["start", "end"],
+      properties: {
+        start: pointSchema,
+        end: pointSchema,
+      },
+    },
+  },
+  additionalProperties: false,
 };
