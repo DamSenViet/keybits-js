@@ -242,6 +242,33 @@ test('intersection', () => {
     const l2 = new Line();
     expect(l1.intersection(l2)).toBe(null);
   }).not.toThrow();
+  // touching at one point
+  expect(() => {
+    const l1 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(0),
+      }),
+      end: new Point({
+        x: new Decimal(0),
+        y: new Decimal(1),
+      }),
+    });
+    const l2 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(1),
+      }),
+      end: new Point({
+        x: new Decimal(1),
+        y: new Decimal(1),
+      }),
+    });
+    expect(l1.intersection(l2)).toEqual(new Point({
+      x: new Decimal(0),
+      y: new Decimal(1),
+    }));
+  }).not.toThrow();
   // overlapping, parallel
   expect(() => {
     const l1 = new Line();
@@ -305,6 +332,30 @@ test('intersects', () => {
     const l1 = new Line();
     const l2 = new Line();
     expect(l1.intersects(l2)).toBe(false);
+  }).not.toThrow();
+  // touching at one point
+  expect(() => {
+    const l1 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(0),
+      }),
+      end: new Point({
+        x: new Decimal(0),
+        y: new Decimal(1),
+      }),
+    });
+    const l2 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(1),
+      }),
+      end: new Point({
+        x: new Decimal(1),
+        y: new Decimal(1),
+      }),
+    });
+    expect(l1.intersects(l2)).toBe(true);
   }).not.toThrow();
   // overlapping, parallel
   expect(() => {
@@ -410,7 +461,7 @@ test('fromJSON', () => {
     };
     const line = Line.fromJSON(<LineJSON>lineJSON);
   }).toThrow(TypeError);
-  // missing end
+  // missing start
   expect(() => {
     const lineJSON = {
       className: "Line",
@@ -426,7 +477,7 @@ test('fromJSON', () => {
     };
     const line = Line.fromJSON(<LineJSON> lineJSON);
   }).toThrow(TypeError);
-  // missing start
+  // missing end
   expect(() => {
     const lineJSON = {
       className: "Line",

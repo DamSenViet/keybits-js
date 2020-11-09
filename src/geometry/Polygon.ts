@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import polygonSchema from "./Polygon.schema";
 import Decimal from "decimal.js";
-import Point, { PointOptions, PointJSON } from "./Point";
+import Point, { PointJSON } from "./Point";
 import Line from "./Line";
 
 export interface PolygonOptions {
@@ -9,7 +9,10 @@ export interface PolygonOptions {
 };
 
 export interface PolygonJSON {
-  points: Array<PointJSON>
+  className: "Polygon",
+  data: {
+    points: Array<PointJSON>
+  },
 };
 
 /**
@@ -37,7 +40,7 @@ export default class Polygon {
       for (const point of points) {
         if (!(point instanceof Point)) throw new TypeError();
       }
-      // ordered points cannot construct intersecting lines
+      // ordered points cannot construct crossing intersecting lines
       const lines: Array<Line> = new Array<Line>();
       for (let i = 0; i < points.length; ++i) {
         const start = points[i];
@@ -47,7 +50,16 @@ export default class Polygon {
       for (const lineA of lines) {
         for (const lineB of lines) {
           if (lineA === lineB) continue;
-          if (lineA.intersects(lineB)) throw new TypeError();
+          const intersection = lineA.intersection(lineB);
+          if (
+            intersection == null ||
+            intersection.equals(lineA.start) ||
+            intersection.equals(lineA.end) ||
+            intersection.equals(lineB.start) ||
+            intersection.equals(lineB.end)
+          ) continue;
+          // intersects, but not at start/end of the points, collision
+          throw new TypeError();
         }
       }
       this._points = <Array<Point>>points;
@@ -66,7 +78,7 @@ export default class Polygon {
 
   // computed properties
   /**
-   * Gets the computed width of the Polygon.
+   * Gets the computed bounding width of the Polygon.
    */
   public get width(): Decimal {
     const { points } = this;
@@ -80,7 +92,7 @@ export default class Polygon {
   }
 
   /**
-   * Gets the computed height of the Polygon.
+   * Gets the computed bounding height of the Polygon.
    */
   public get height(): Decimal {
     const { points } = this;
@@ -135,7 +147,7 @@ export default class Polygon {
   public static fromJSON(polygonJSON: PolygonJSON): Polygon {
     const ajv = new Ajv();
     if (!ajv.validate(polygonSchema, polygonJSON)) throw new TypeError();
-    const { points: pointsJSON } = polygonJSON;
+    const { points: pointsJSON } = polygonJSON.data;
     const points = pointsJSON.map((pointJSON) => Point.fromJSON(pointJSON));
     return new Polygon({ points });
   }
@@ -147,7 +159,10 @@ export default class Polygon {
   public toJSON(): PolygonJSON {
     const { points } = this;
     return {
-      points: points.map(point => point.toJSON()),
+      className: "Polygon",
+      data: {
+        points: points.map(point => point.toJSON()),
+      },
     };
   }
 };
