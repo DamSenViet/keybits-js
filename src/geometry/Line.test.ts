@@ -415,6 +415,58 @@ test('intersects', () => {
 });
 
 
+test('crossesOver', () => {
+  // touches but not crossing over
+  expect(() => {
+    const l1 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(0),
+      }),
+      end: new Point({
+        x: new Decimal(0),
+        y: new Decimal(1),
+      }),
+    });
+    const l2 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(1),
+      }),
+      end: new Point({
+        x: new Decimal(1),
+        y: new Decimal(1),
+      }),
+    });
+    expect(l1.crossesOver(l2)).toBe(false);
+  }).not.toThrow();
+  // crossing over
+  expect(() => {
+    const l1 = new Line({
+      start: new Point({
+        x: new Decimal(-7),
+        y: new Decimal(0),
+      }),
+      end: new Point({
+        x: new Decimal(7),
+        y: new Decimal(0),
+      }),
+    });
+    const l2 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(-7),
+      }),
+      end: new Point({
+        x: new Decimal(0),
+        y: new Decimal(7),
+      }),
+    });
+    expect(l1.intersects(l2)).toBe(true);
+  }).not.toThrow();
+});
+
+
 test('fromJSON', () => {
   // correct
   expect(() => {
@@ -476,7 +528,7 @@ test('fromJSON', () => {
         },
       },
     };
-    const line = Line.fromJSON(<LineJSON> lineJSON);
+    const line = Line.fromJSON(<LineJSON>lineJSON);
   }).toThrow(TypeError);
   // missing end
   expect(() => {
@@ -492,7 +544,7 @@ test('fromJSON', () => {
         },
       },
     };
-    const line = Line.fromJSON(<LineJSON> lineJSON);
+    const line = Line.fromJSON(<LineJSON>lineJSON);
   }).toThrow(TypeError);
 });
 

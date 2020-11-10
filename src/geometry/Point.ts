@@ -29,9 +29,10 @@ export default class Point {
    */
   protected _y: Decimal = new Decimal(0);
 
+
   /**
    * Instantiates a Point.
-   * @param options - A configuration Object with 'x' and 'y' as Decimals.
+   * @param options - a configuration Object with 'x' and 'y' as Decimals.
    */
   public constructor(options?: Point | PointOptions) {
     if (arguments.length <= 0) return;
@@ -48,38 +49,43 @@ export default class Point {
     Object.freeze(this);
   }
 
+
   /**
    * Gets the x coordinate of the Point.
+   * @returns the x coordinate
    */
   public x(): Decimal {
     const { _x } = this;
     return _x;
   }
 
+
   /**
    * Gets the y coordinate of the Point.
+   * @returns the y coordinate
    */
   public y(): Decimal {
     const { _y } = this;
     return _y;
   }
 
-  // methods
+
   /**
    * Determines whether invoking Point is equivalent to the passed Point.
-   * @param point - The Point to compare against
-   * @returns Whether the Points are equal representations
+   * @param point - the Point to compare against
+   * @returns whether the Points are equal representations
    */
   public equals(point: Point): boolean {
     const { _x, _y } = this;
     return _x.equals(point._x) && _y.equals(point._y);
   }
 
+
   /**
    * Creates a Point from a JSON object. The JSON must match Point schema
    * for the method to succeed.
-   * @param pointJSON - The Point formatted JSON
-   * @returns The Point represented by the JSON
+   * @param pointJSON - the Point formatted JSON
+   * @returns the Point represented by the JSON
    */
   public static fromJSON(pointJSON: PointJSON): Point {
     const ajv = new Ajv();
@@ -90,9 +96,10 @@ export default class Point {
     return new Point({ x, y });
   }
 
+
   /**
    * Creates a JSON object from invoking Point.
-   * @returns The JSON representation of the Point
+   * @returns the JSON representation of the Point
    */
   public toJSON(): PointJSON {
     const { _x, _y } = this;
