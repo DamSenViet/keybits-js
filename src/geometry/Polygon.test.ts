@@ -1,4 +1,5 @@
-import { Polygon, PolygonOptions, Point, PolygonJSON } from "../../../src/geometry";
+import Polygon, { PolygonJSON } from "./Polygon";
+import Point from "./Point";
 import Decimal from "decimal.js";
 
 test('constructor', () => {

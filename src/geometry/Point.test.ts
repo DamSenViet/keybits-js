@@ -1,4 +1,4 @@
-import { Point, PointJSON } from "../../../src/geometry";
+import Point, { PointJSON } from "./Point";
 import Decimal from "decimal.js";
 
 test('constructor', () => {
@@ -111,7 +111,7 @@ test('fromJSON', () => {
         y: "7",
       },
     };
-    const point = Point.fromJSON(<PointJSON> pointJSON);
+    const point = Point.fromJSON(<PointJSON>pointJSON);
   }).not.toThrow();
   expect(() => {
     // wrong className
@@ -122,7 +122,7 @@ test('fromJSON', () => {
         y: "7",
       },
     }
-    const point = Point.fromJSON(<PointJSON>  pointJSON);
+    const point = Point.fromJSON(<PointJSON>pointJSON);
   }).toThrow(TypeError);
   expect(() => {
     // missing y
@@ -132,7 +132,7 @@ test('fromJSON', () => {
         x: "7",
       },
     };
-    const point = Point.fromJSON(<PointJSON>  pointJSON);
+    const point = Point.fromJSON(<PointJSON>pointJSON);
   }).toThrow(TypeError);
   expect(() => {
     // missing x
@@ -142,7 +142,7 @@ test('fromJSON', () => {
         y: "7",
       },
     };
-    const point = Point.fromJSON(<PointJSON> pointJSON);
+    const point = Point.fromJSON(<PointJSON>pointJSON);
   }).toThrow(TypeError);
 });
 

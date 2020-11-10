@@ -1,4 +1,5 @@
-import { Line, LineJSON, Point } from "../../../src/geometry";
+import Line, { LineJSON } from "./Line";
+import Point from "./Point";
 import Decimal from "decimal.js";
 
 test('constructor', () => {
