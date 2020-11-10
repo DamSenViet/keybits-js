@@ -9,7 +9,7 @@ test('constructor', () => {
 });
 
 
-test('points', () => {
+test('getPoints', () => {
   expect(() => {
     const polygon = new Polygon();
     const points = [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
@@ -18,28 +18,28 @@ test('points', () => {
         y: new Decimal(coord[1]),
       })
     });
-    expect(polygon.points()).toEqual(points);
+    expect(polygon.getPoints()).toEqual(points);
   }).not.toThrow();
 });
 
 
-test('width', () => {
+test('getBoundingWidth', () => {
   expect(() => {
     const polygon = new Polygon();
-    expect(polygon.width().toNumber()).toEqual(1);
+    expect(polygon.getBoundingWidth().toNumber()).toEqual(1);
   }).not.toThrow();
 });
 
 
-test('height', () => {
+test('getBoundingHeight', () => {
   expect(() => {
     const polygon = new Polygon();
-    expect(polygon.height().toNumber()).toEqual(1);
+    expect(polygon.getBoundingHeight().toNumber()).toEqual(1);
   }).not.toThrow();
 });
 
 
-test('representations', () => {
+test('getRepresentations', () => {
 
 });
 
@@ -47,7 +47,14 @@ test('representations', () => {
 test('equals', () => {
   expect(() => {
     const polygon1 = new Polygon();
-    const polygon2 = new Polygon({});
+    const polygon2 = new Polygon({
+      points: [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
+        return new Point({
+          x: new Decimal(coord[0]),
+          y: new Decimal(coord[1]),
+        })
+      }),
+    });
     const polygon3 = new Polygon({
       points: [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
         return new Point({
@@ -60,6 +67,11 @@ test('equals', () => {
     expect(polygon1.equals(polygon3));
     expect(polygon2.equals(polygon3));
   }).not.toThrow();
+});
+
+
+test('overlaps', () => {
+
 });
 
 

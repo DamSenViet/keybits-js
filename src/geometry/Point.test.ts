@@ -6,14 +6,17 @@ test('constructor', () => {
     const point = new Point();
   }).not.toThrow();
   expect(() => {
+    // @ts-ignore
     const point = new Point({});
-  }).not.toThrow();
+  }).toThrow(TypeError);
   expect(() => {
+    // @ts-ignore
     const point = new Point({ x: new Decimal(7) });
-  }).not.toThrow();
+  }).toThrow(TypeError);
   expect(() => {
+    // @ts-ignore
     const point = new Point({ y: new Decimal(7) });
-  }).not.toThrow();
+  }).toThrow(TypeError);
   expect(() => {
     const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
   }).not.toThrow();
@@ -26,50 +29,26 @@ test('constructor', () => {
 });
 
 
-test('x', () => {
+test('getX', () => {
   expect(() => {
     const point = new Point();
-    expect(point.x().toNumber()).toBe(0);
-  }).not.toThrow();
-  expect(() => {
-    const point = new Point({});
-    expect(point.x().toNumber()).toBe(0);
-  }).not.toThrow();
-  expect(() => {
-    const point = new Point({ x: new Decimal(7) });
-    expect(point.x().toNumber()).toBe(7);
-  }).not.toThrow();
-  expect(() => {
-    const point = new Point({ y: new Decimal(7) });
-    expect(point.x().toNumber()).toBe(0);
+    expect(point.getX().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
-    expect(point.x().toNumber()).toBe(7);
+    expect(point.getX().toNumber()).toBe(7);
   }).not.toThrow();
 });
 
 
-test('y', () => {
+test('getY', () => {
   expect(() => {
     const point = new Point();
-    expect(point.y().toNumber()).toBe(0);
-  }).not.toThrow();
-  expect(() => {
-    const point = new Point({});
-    expect(point.y().toNumber()).toBe(0);
-  }).not.toThrow();
-  expect(() => {
-    const point = new Point({ x: new Decimal(7) });
-    expect(point.y().toNumber()).toBe(0);
-  }).not.toThrow();
-  expect(() => {
-    const point = new Point({ y: new Decimal(7) });
-    expect(point.y().toNumber()).toBe(7);
+    expect(point.getY().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
-    expect(point.y().toNumber()).toBe(7);
+    expect(point.getY().toNumber()).toBe(7);
   }).not.toThrow();
 });
 
@@ -77,7 +56,7 @@ test('y', () => {
 test('equals', () => {
   expect(() => {
     const p1 = new Point();
-    const p2 = new Point({});
+    const p2 = new Point({ x: new Decimal(0), y: new Decimal(0) });
     const p3 = new Point({ x: new Decimal(0), y: new Decimal(0) });
     expect(p1.equals(p2)).toBe(true);
     expect(p1.equals(p3)).toBe(true);
@@ -85,7 +64,7 @@ test('equals', () => {
   }).not.toThrow();
   expect(() => {
     const p1 = new Point();
-    const p2 = new Point({ x: new Decimal(7) });
+    const p2 = new Point({ x: new Decimal(7), y: new Decimal(0) });
     const p3 = new Point({ x: new Decimal(7), y: new Decimal(0) });
     expect(p1.equals(p2)).toBe(false);
     expect(p1.equals(p3)).toBe(false);
@@ -93,7 +72,7 @@ test('equals', () => {
   }).not.toThrow();
   expect(() => {
     const p1 = new Point();
-    const p2 = new Point({ y: new Decimal(7) });
+    const p2 = new Point({ y: new Decimal(7), x: new Decimal(0) });
     const p3 = new Point({ y: new Decimal(7), x: new Decimal(0) });
     expect(p1.equals(p2)).toBe(false);
     expect(p1.equals(p3)).toBe(false);

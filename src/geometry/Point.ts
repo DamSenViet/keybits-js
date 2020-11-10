@@ -3,8 +3,8 @@ import pointSchema from "./Point.schema";
 import Decimal from "decimal.js";
 
 export interface PointOptions {
-  x?: Decimal,
-  y?: Decimal,
+  x: Decimal,
+  y: Decimal,
 };
 
 export interface PointJSON {
@@ -37,16 +37,16 @@ export default class Point {
   public constructor(options?: Point | PointOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
-    const { x, y } = options;
-    if (x != null) {
-      if (!(x instanceof Decimal)) throw new TypeError();
-      this._x = x;
-    }
-    if (y != null) {
-      if (!(y instanceof Decimal)) throw new TypeError();
-      this._y = y;
-    }
-    Object.freeze(this);
+    let x: Decimal;
+    let y: Decimal;
+    if (options instanceof Point)
+      ({ _x: x, _y: y } = options as Point);
+    else
+      ({ x, y } = options as PointOptions);
+    if (!(x instanceof Decimal)) throw new TypeError();
+    this._x = x;
+    if (!(y instanceof Decimal)) throw new TypeError();
+    this._y = y;
   }
 
 
@@ -54,7 +54,7 @@ export default class Point {
    * Gets the x coordinate of the Point.
    * @returns the x coordinate
    */
-  public x(): Decimal {
+  public getX(): Decimal {
     const { _x } = this;
     return _x;
   }
@@ -64,7 +64,7 @@ export default class Point {
    * Gets the y coordinate of the Point.
    * @returns the y coordinate
    */
-  public y(): Decimal {
+  public getY(): Decimal {
     const { _y } = this;
     return _y;
   }

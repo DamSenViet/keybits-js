@@ -5,7 +5,7 @@ import Point, { PointJSON } from "./Point";
 import Line from "./Line";
 
 export interface PolygonOptions {
-  points?: Array<Point>
+  points: Array<Point>
 };
 
 export interface PolygonJSON {
@@ -37,38 +37,38 @@ export default class Polygon {
   constructor(options?: Polygon | PolygonOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
-    let { points } = options;
-    if (points != null) {
-      if (!(points instanceof Array)) throw new TypeError();
-      for (const point of points) {
-        if (!(point instanceof Point)) throw new TypeError();
-      }
-      if (points.length < 3) throw new TypeError();
-      // ordered points cannot construct crossing lines that cross over
-      const lines: Array<Line> = new Array<Line>();
-      for (let i = 0; i < points.length; ++i) {
-        const start: Point = points[i];
-        const end: Point = points[(i + 1) % points.length];
-        lines.push(new Line({ start, end }));
-      }
-      for (const lineA of lines) {
-        for (const lineB of lines) {
-          if (lineA === lineB) continue;
-          if (lineA.crossesOver(lineB))
-            throw new TypeError();
-        }
-      }
-      this._points = <Array<Point>>points.slice();
+    let points: Array<Point>;
+    if (options instanceof Polygon)
+      ({ _points: points } = options as Polygon);
+    else
+      ({ points } = options as PolygonOptions);
+    if (!(points instanceof Array)) throw new TypeError();
+    for (const point of points) {
+      if (!(point instanceof Point)) throw new TypeError();
     }
-    Object.freeze(this);
-    Object.freeze(this._points);
+    if (points.length < 3) throw new TypeError();
+    // ordered points cannot construct crossing lines that cross over
+    const lines: Array<Line> = new Array<Line>();
+    for (let i = 0; i < points.length; ++i) {
+      const start: Point = points[i];
+      const end: Point = points[(i + 1) % points.length];
+      lines.push(new Line({ start, end }));
+    }
+    for (const lineA of lines) {
+      for (const lineB of lines) {
+        if (lineA === lineB) continue;
+        if (lineA.crossesOver(lineB))
+          throw new TypeError();
+      }
+    }
+    this._points = <Array<Point>>points.slice();
   }
 
 
   /**
    * Gets the ordered Points that make up the Polygon.
    */
-  public points(): Array<Point> {
+  public getPoints(): Array<Point> {
     return this._points.slice();
   }
 
@@ -91,13 +91,13 @@ export default class Polygon {
   /**
    * Gets the computed bounding width of the Polygon.
    */
-  public width(): Decimal {
+  public getBoundingWidth(): Decimal {
     const { _points } = this;
     let lowest: Decimal = new Decimal(Infinity);
     let highest: Decimal = new Decimal(-Infinity);
     for (const point of _points) {
-      if (point.x().lt(lowest)) lowest = point.x();
-      if (point.x().gt(highest)) highest = point.x();
+      if (point.getX().lt(lowest)) lowest = point.getX();
+      if (point.getX().gt(highest)) highest = point.getX();
     }
     return highest.sub(lowest).abs();
   }
@@ -106,13 +106,13 @@ export default class Polygon {
   /**
    * Gets the computed bounding height of the Polygon.
    */
-  public height(): Decimal {
+  public getBoundingHeight(): Decimal {
     const { _points } = this;
     let lowest: Decimal = new Decimal(Infinity);
     let highest: Decimal = new Decimal(-Infinity);
     for (const point of _points) {
-      if (point.y().lt(lowest)) lowest = point.y();
-      if (point.y().gt(highest)) highest = point.y();
+      if (point.getY().lt(lowest)) lowest = point.getY();
+      if (point.getY().gt(highest)) highest = point.getY();
     }
     return highest.sub(lowest).abs();
   }
@@ -121,7 +121,7 @@ export default class Polygon {
   /**
    * Gets all equivalent Polygon representations of the Polygon.
    */
-  public representations(): Array<Polygon> {
+  public getRepresentations(): Array<Polygon> {
     const { _points } = this;
     const representations: Array<Polygon> = new Array<Polygon>();
     for (let i = 0; i < _points.length - 1; ++i) {
@@ -144,7 +144,7 @@ export default class Polygon {
    * @returns whether the Polygons are equal representations
    */
   public equals(polygon: Polygon): boolean {
-    const representationsStrings: Set<string> = new Set(this.representations()
+    const representationsStrings: Set<string> = new Set(this.getRepresentations()
       .map(polygon => JSON.stringify(polygon)));
     // compare string versions
     return representationsStrings.has(JSON.stringify(polygon));

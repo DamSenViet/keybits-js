@@ -4,8 +4,8 @@ import Decimal from "decimal.js";
 import Point, { PointJSON } from "./Point";
 
 export interface LineOptions {
-  start?: Point,
-  end?: Point,
+  start: Point,
+  end: Point,
 };
 
 export interface LineJSON {
@@ -44,23 +44,23 @@ export default class Line {
   public constructor(options?: Line | LineOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
-    const { start, end } = options;
-    if (start != null) {
-      if (!(start instanceof Point)) throw new TypeError();
-      this._start = start;
-    }
-    if (end != null) {
-      if (!(end instanceof Point)) throw new TypeError();
-      this._end = end;
-    }
-    Object.freeze(this);
+    let start: Point;
+    let end: Point;
+    if (options instanceof Line)
+      ({ _start: start, _end: end } = options as Line)
+    else
+      ({ start, end } = options as LineOptions);
+    if (!(start instanceof Point)) throw new TypeError();
+    this._start = start;
+    if (!(end instanceof Point)) throw new TypeError();
+    this._end = end;
   }
 
 
   /**
    * Gets the starting Point of the Line.
    */
-  public start(): Point {
+  public getStart(): Point {
     const { _start } = this;
     return _start;
   }
@@ -69,7 +69,7 @@ export default class Line {
   /**
    * Gets the ending Point of the Line.
    */
-  public end(): Point {
+  public getEnd(): Point {
     const { _end } = this;
     return _end;
   }
@@ -103,33 +103,33 @@ export default class Line {
     }
 
     const denominator: Decimal = Decimal.sub(
-      line._end.y().sub(line._start.y())
-        .mul(_end.x().sub(_start.x())),
-      line._end.x().sub(line._start.x())
-        .mul(_end.y().sub(_start.y()))
+      line._end.getY().sub(line._start.getY())
+        .mul(_end.getX().sub(_start.getX())),
+      line._end.getX().sub(line._start.getX())
+        .mul(_end.getY().sub(_start.getY()))
     );
 
     if (denominator.isZero()) return null;
 
     const ua: Decimal = Decimal.sub(
-      line._end.x().sub(line._start.x())
-        .mul(_start.y().sub(line._start.y())),
-      line._end.y().sub(line._start.y())
-        .mul(_start.x().sub(line._start.x()))
+      line._end.getX().sub(line._start.getX())
+        .mul(_start.getY().sub(line._start.getY())),
+      line._end.getY().sub(line._start.getY())
+        .mul(_start.getX().sub(line._start.getX()))
     ).div(denominator);
     const ub: Decimal = Decimal.sub(
-      _end.x().sub(_start.x())
-        .mul(_start.y().sub(line._start.y())),
-      _end.y().sub(_start.y())
-        .mul(_start.x().sub(line._start.x()))
+      _end.getX().sub(_start.getX())
+        .mul(_start.getY().sub(line._start.getY())),
+      _end.getY().sub(_start.getY())
+        .mul(_start.getX().sub(line._start.getX()))
     ).div(denominator);
 
     // is the intersection along the segments
     const isAlongSegment: boolean = (ua.gte(0) && ua.lte(1) && ub.gte(0) && ub.lte(1));
     if (!isAlongSegment) return null;
 
-    const x: Decimal = _start.x().add(ua.mul(_end.x().sub(_start.x())));
-    const y: Decimal = _start.y().add(ua.mul(_end.y().sub(_start.y())));
+    const x: Decimal = _start.getX().add(ua.mul(_end.getX().sub(_start.getX())));
+    const y: Decimal = _start.getY().add(ua.mul(_end.getY().sub(_start.getY())));
     return new Point({ x, y });
   }
 

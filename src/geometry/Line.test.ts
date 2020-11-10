@@ -7,18 +7,21 @@ test('constructor', () => {
     const line = new Line();
   }).not.toThrow();
   expect(() => {
+    // @ts-ignore
     const line = new Line({});
-  }).not.toThrow();
+  }).toThrow(TypeError);
   expect(() => {
+    // @ts-ignore
     const line = new Line({
       start: new Point(),
     });
-  }).not.toThrow();
+  }).toThrow(TypeError);
   expect(() => {
+    // @ts-ignore
     const line = new Line({
       end: new Point(),
     });
-  }).not.toThrow();
+  }).toThrow(TypeError);
   expect(() => {
     const line = new Line({
       start: new Point(),
@@ -31,41 +34,10 @@ test('constructor', () => {
 });
 
 
-test('start', () => {
+test('getStart', () => {
   expect(() => {
     const line = new Line();
-    expect(line.start().equals(new Point({
-      x: new Decimal(0),
-      y: new Decimal(0),
-    }))).toBe(true);
-  }).not.toThrow();
-  expect(() => {
-    const line = new Line({});
-    expect(line.start().equals(new Point({
-      x: new Decimal(0),
-      y: new Decimal(0),
-    }))).toBe(true);
-  }).not.toThrow();
-  expect(() => {
-    const line = new Line({
-      start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
-      }),
-    });
-    expect(line.start().equals(new Point({
-      x: new Decimal(7),
-      y: new Decimal(7),
-    }))).toBe(true);
-  }).not.toThrow();
-  expect(() => {
-    const line = new Line({
-      end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
-      }),
-    });
-    expect(line.start().equals(new Point({
+    expect(line.getStart().equals(new Point({
       x: new Decimal(0),
       y: new Decimal(0),
     }))).toBe(true);
@@ -81,7 +53,7 @@ test('start', () => {
         y: new Decimal(7),
       }),
     });
-    expect(line.start().equals(new Point({
+    expect(line.getStart().equals(new Point({
       x: new Decimal(7),
       y: new Decimal(7),
     }))).toBe(true);
@@ -89,43 +61,12 @@ test('start', () => {
 });
 
 
-test('end', () => {
+test('getEnd', () => {
   expect(() => {
     const line = new Line();
-    expect(line.end().equals(new Point({
+    expect(line.getEnd().equals(new Point({
       x: new Decimal(0),
       y: new Decimal(0),
-    }))).toBe(true);
-  }).not.toThrow();
-  expect(() => {
-    const line = new Line({});
-    expect(line.end().equals(new Point({
-      x: new Decimal(0),
-      y: new Decimal(0),
-    }))).toBe(true);
-  }).not.toThrow();
-  expect(() => {
-    const line = new Line({
-      start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
-      }),
-    });
-    expect(line.end().equals(new Point({
-      x: new Decimal(0),
-      y: new Decimal(0),
-    }))).toBe(true);
-  }).not.toThrow();
-  expect(() => {
-    const line = new Line({
-      end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
-      }),
-    });
-    expect(line.end().equals(new Point({
-      x: new Decimal(7),
-      y: new Decimal(7),
     }))).toBe(true);
   }).not.toThrow();
   expect(() => {
@@ -139,7 +80,7 @@ test('end', () => {
         y: new Decimal(7),
       }),
     });
-    expect(line.end().equals(new Point({
+    expect(line.getEnd().equals(new Point({
       x: new Decimal(7),
       y: new Decimal(7),
     }))).toBe(true);
@@ -148,9 +89,19 @@ test('end', () => {
 
 
 test('equals', () => {
+  // check against initial values
   expect(() => {
     const l1 = new Line();
-    const l2 = new Line({});
+    const l2 = new Line({
+      start: new Point({
+        x: new Decimal(0),
+        y: new Decimal(0),
+      }),
+      end: new Point({
+        x: new Decimal(0),
+        y: new Decimal(0),
+      }),
+    });
     const l3 = new Line({
       start: new Point({
         x: new Decimal(0),
@@ -165,6 +116,7 @@ test('equals', () => {
     expect(l1.equals(l2)).toBe(true);
     expect(l2.equals(l3)).toBe(true);
   }).not.toThrow();
+  // initial vs instantiated values
   expect(() => {
     const l1 = new Line();
     const l2 = new Line({
@@ -172,24 +124,6 @@ test('equals', () => {
         x: new Decimal(7),
         y: new Decimal(7),
       }),
-    });
-    const l3 = new Line({
-      start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
-      }),
-      end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
-      }),
-    });
-    expect(l1.equals(l2)).toBe(false);
-    expect(l1.equals(l3)).toBe(false);
-    expect(l2.equals(l3)).toBe(false);
-  }).not.toThrow();
-  expect(() => {
-    const l1 = new Line();
-    const l2 = new Line({
       end: new Point({
         x: new Decimal(7),
         y: new Decimal(7),
@@ -207,7 +141,7 @@ test('equals', () => {
     });
     expect(l1.equals(l2)).toBe(false);
     expect(l1.equals(l3)).toBe(false);
-    expect(l2.equals(l3)).toBe(false);
+    expect(l2.equals(l3)).toBe(true);
   }).not.toThrow();
   // special case, reversed start and ends
   expect(() => {
