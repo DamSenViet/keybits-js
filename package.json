@@ -1,5 +1,5 @@
 {
-  "name": "keybits",
+  "name": "@damsenviet/keybits",
   "version": "0.0.0",
   "description": "A library to serialize and deserializing keybits formatted json files.",
   "main": "build/cjs/index.js",
@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/DamSenViet/keybits-js#readme",
   "dependencies": {
+    "@types/chroma-js": "^2.1.0",
     "ajv": "^6.12.2",
-    "ajv-keywords": "^3.5.0"
+    "ajv-keywords": "^3.5.0",
+    "chroma-js": "^2.1.0"
   },
   "peerDependencies": {
     "decimal.js": "^10.2.0"

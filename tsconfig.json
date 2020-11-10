@@ -26,15 +26,15 @@
       "ESNext",
       "DOM",
     ],
-    "moduleResolution": "node"
+    "moduleResolution": "node",
 
     // ### STRICT CHECKS
-    // "alwaysStrict": true,
-    // "noImplicitAny": true,
-    // "noImplicitReturns": true,
-    // "strictPropertyInitialization": true,
-    // "strictFunctionTypes": true,
-    // "strictNullChecks": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictPropertyInitialization": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
 
     // ### ADVANCED
     // "preserveConstEnums": true,
