@@ -12,6 +12,7 @@ export default {
         points: {
           type: "array",
           items: pointSchema,
+          minItems: 3,
         },
       },
     },

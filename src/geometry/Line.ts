@@ -1,11 +1,11 @@
 import Ajv from "ajv";
 import lineSchema from "./Line.schema";
 import Decimal from "decimal.js";
-import Point, { PointOptions, PointJSON } from "./Point";
+import Point, { PointJSON } from "./Point";
 
 export interface LineOptions {
-  start?: PointOptions,
-  end?: PointOptions,
+  start?: Point,
+  end?: Point,
 };
 
 export interface LineJSON {
@@ -52,7 +52,7 @@ export default class Line {
   /**
    * Gets the starting Point of the Line.
    */
-  public get start(): Point {
+  public start(): Point {
     const { _start } = this;
     return _start;
   }
@@ -60,7 +60,7 @@ export default class Line {
   /**
    * Gets the ending Point of the Line.
    */
-  public get end(): Point {
+  public end(): Point {
     const { _end } = this;
     return _end;
   }
@@ -72,9 +72,9 @@ export default class Line {
    * @returns Whether the Lines are equal representations
    */
   public equals(line: Line): boolean {
-    const { start, end } = this;
-    return (start.equals(line.start) && end.equals(line.end)) ||
-      (start.equals(line.end) && end.equals(line.start));
+    const { _start, _end } = this;
+    return (_start.equals(line._start) && _end.equals(line._end)) ||
+      (_start.equals(line._end) && _end.equals(line._start));
   }
 
   /**
@@ -86,40 +86,40 @@ export default class Line {
    * @returns The Point at which the lines intersect and null if they don't
    */
   public intersection(line: Line): null | Point {
-    const { start, end } = this;
+    const { _start, _end } = this;
     // lines cannot be of length 0
-    if (start.equals(end) || line.start.equals(line.end)) {
+    if (_start.equals(_end) || line._start.equals(line._end)) {
       return null;
     }
 
-    const denominator = Decimal.sub(
-      line.end.y.sub(line.start.y)
-        .mul(end.x.sub(start.x)),
-      line.end.x.sub(line.start.x)
-        .mul(end.y.sub(start.y))
+    const denominator: Decimal = Decimal.sub(
+      line._end.y().sub(line._start.y())
+        .mul(_end.x().sub(_start.x())),
+      line._end.x().sub(line._start.x())
+        .mul(_end.y().sub(_start.y()))
     );
 
     if (denominator.isZero()) return null;
 
-    const ua = Decimal.sub(
-      line.end.x.sub(line.start.x)
-        .mul(start.y.sub(line.start.y)),
-      line.end.y.sub(line.start.y)
-        .mul(start.x.sub(line.start.x))
+    const ua: Decimal = Decimal.sub(
+      line._end.x().sub(line._start.x())
+        .mul(_start.y().sub(line._start.y())),
+      line._end.y().sub(line._start.y())
+        .mul(_start.x().sub(line._start.x()))
     ).div(denominator);
-    const ub = Decimal.sub(
-      end.x.sub(start.x)
-        .mul(start.y.sub(line.start.y)),
-      end.y.sub(start.y)
-        .mul(start.x.sub(line.start.x))
-    ).div(denominator)
+    const ub: Decimal = Decimal.sub(
+      _end.x().sub(_start.x())
+        .mul(_start.y().sub(line._start.y())),
+      _end.y().sub(_start.y())
+        .mul(_start.x().sub(line._start.x()))
+    ).div(denominator);
 
     // is the intersection along the segments
-    const isAlongSegment = (ua.gte(0) && ua.lte(1) && ub.gte(0) && ub.lte(1));
+    const isAlongSegment: boolean = (ua.gte(0) && ua.lte(1) && ub.gte(0) && ub.lte(1));
     if (!isAlongSegment) return null;
 
-    const x = start.x.add(ua.mul(end.x.sub(start.x)));
-    const y = start.y.add(ua.mul(end.y.sub(start.y)));
+    const x: Decimal = _start.x().add(ua.mul(_end.x().sub(_start.x())));
+    const y: Decimal = _start.y().add(ua.mul(_end.y().sub(_start.y())));
     return new Point({ x, y });
   }
 
@@ -128,7 +128,7 @@ export default class Line {
    * @param line - The Line to check against
    * @returns Whether there is an intersection
    */
-  public intersects(line): boolean {
+  public intersects(line: Line): boolean {
     return Boolean(this.intersection(line));
   }
 
@@ -143,8 +143,8 @@ export default class Line {
     const ajv = new Ajv();
     if (!ajv.validate(lineSchema, lineJSON)) throw new TypeError();
     const { start: startJSON, end: endJSON } = lineJSON.data;
-    const start = Point.fromJSON(startJSON);
-    const end = Point.fromJSON(endJSON);
+    const start: Point = Point.fromJSON(startJSON);
+    const end: Point = Point.fromJSON(endJSON);
     return new Line({ start, end });
   }
 

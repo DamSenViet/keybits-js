@@ -19,7 +19,14 @@ export interface PointJSON {
  * Immutable Point
  */
 export default class Point {
+  /**
+   * The x coordinate of the Point.
+   */
   protected _x: Decimal = new Decimal(0);
+
+  /**
+   * The y coordinate of the Point.
+   */
   protected _y: Decimal = new Decimal(0);
 
   /**
@@ -41,11 +48,10 @@ export default class Point {
     Object.freeze(this);
   }
 
-  // property
   /**
    * Gets the x coordinate of the Point.
    */
-  public get x(): Decimal {
+  public x(): Decimal {
     const { _x } = this;
     return _x;
   }
@@ -53,7 +59,7 @@ export default class Point {
   /**
    * Gets the y coordinate of the Point.
    */
-  public get y(): Decimal {
+  public y(): Decimal {
     const { _y } = this;
     return _y;
   }
@@ -65,8 +71,8 @@ export default class Point {
    * @returns Whether the Points are equal representations
    */
   public equals(point: Point): boolean {
-    const { x, y } = this;
-    return x.equals(point.x) && y.equals(point.y);
+    const { _x, _y } = this;
+    return _x.equals(point._x) && _y.equals(point._y);
   }
 
   /**
@@ -89,13 +95,13 @@ export default class Point {
    * @returns The JSON representation of the Point
    */
   public toJSON(): PointJSON {
-    const { x, y } = this;
+    const { _x, _y } = this;
     // maintain precision with strings
     return {
       className: "Point",
       data: {
-        x: x.toString(),
-        y: y.toString(),
+        x: _x.toString(),
+        y: _y.toString(),
       },
     };
   }

@@ -26,50 +26,50 @@ test('constructor', () => {
 });
 
 
-test('get x', () => {
+test('x', () => {
   expect(() => {
     const point = new Point();
-    expect(point.x.toNumber()).toBe(0);
+    expect(point.x().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({});
-    expect(point.x.toNumber()).toBe(0);
+    expect(point.x().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ x: new Decimal(7) });
-    expect(point.x.toNumber()).toBe(7);
+    expect(point.x().toNumber()).toBe(7);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ y: new Decimal(7) });
-    expect(point.x.toNumber()).toBe(0);
+    expect(point.x().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
-    expect(point.x.toNumber()).toBe(7);
+    expect(point.x().toNumber()).toBe(7);
   }).not.toThrow();
 });
 
 
-test('get y', () => {
+test('y', () => {
   expect(() => {
     const point = new Point();
-    expect(point.y.toNumber()).toBe(0);
+    expect(point.y().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({});
-    expect(point.y.toNumber()).toBe(0);
+    expect(point.y().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ x: new Decimal(7) });
-    expect(point.y.toNumber()).toBe(0);
+    expect(point.y().toNumber()).toBe(0);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ y: new Decimal(7) });
-    expect(point.y.toNumber()).toBe(7);
+    expect(point.y().toNumber()).toBe(7);
   }).not.toThrow();
   expect(() => {
     const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
-    expect(point.y.toNumber()).toBe(7);
+    expect(point.y().toNumber()).toBe(7);
   }).not.toThrow();
 });
 

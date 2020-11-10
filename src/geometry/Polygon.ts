@@ -40,6 +40,7 @@ export default class Polygon {
       for (const point of points) {
         if (!(point instanceof Point)) throw new TypeError();
       }
+      if (points.length < 3) throw new TypeError();
       // ordered points cannot construct crossing intersecting lines
       const lines: Array<Line> = new Array<Line>();
       for (let i = 0; i < points.length; ++i) {
@@ -53,10 +54,10 @@ export default class Polygon {
           const intersection = lineA.intersection(lineB);
           if (
             intersection == null ||
-            intersection.equals(lineA.start) ||
-            intersection.equals(lineA.end) ||
-            intersection.equals(lineB.start) ||
-            intersection.equals(lineB.end)
+            intersection.equals(lineA.start()) ||
+            intersection.equals(lineA.end()) ||
+            intersection.equals(lineB.start()) ||
+            intersection.equals(lineB.end())
           ) continue;
           // intersects, but not at start/end of the points, collision
           throw new TypeError();
@@ -72,21 +73,21 @@ export default class Polygon {
   /**
    * Gets the ordered Points that make up the Polygon.
    */
-  public get points(): Array<Point> {
-    return this._points;
+  public points(): Array<Point> {
+    return this._points.slice();
   }
 
   // computed properties
   /**
    * Gets the computed bounding width of the Polygon.
    */
-  public get width(): Decimal {
-    const { points } = this;
+  public width(): Decimal {
+    const { _points } = this;
     let lowest: Decimal = new Decimal(Infinity);
     let highest: Decimal = new Decimal(-Infinity);
-    for (const point of points) {
-      if (point.x.lt(lowest)) lowest = point.x;
-      if (point.x.gt(highest)) highest = point.x;
+    for (const point of _points) {
+      if (point.x().lt(lowest)) lowest = point.x();
+      if (point.x().gt(highest)) highest = point.x();
     }
     return highest.sub(lowest).abs();
   }
@@ -94,13 +95,13 @@ export default class Polygon {
   /**
    * Gets the computed bounding height of the Polygon.
    */
-  public get height(): Decimal {
-    const { points } = this;
+  public height(): Decimal {
+    const { _points } = this;
     let lowest: Decimal = new Decimal(Infinity);
     let highest: Decimal = new Decimal(-Infinity);
-    for (const point of points) {
-      if (point.y.lt(lowest)) lowest = point.y;
-      if (point.y.gt(highest)) highest = point.y;
+    for (const point of _points) {
+      if (point.y().lt(lowest)) lowest = point.y();
+      if (point.y().gt(highest)) highest = point.y();
     }
     return highest.sub(lowest).abs();
   }
@@ -109,11 +110,11 @@ export default class Polygon {
    * Gets all equivalent Polygon representations of the Polygon.
    */
   public get representations(): Array<Polygon> {
-    const { points } = this;
+    const { _points } = this;
     const representations: Array<Polygon> = new Array<Polygon>();
-    for (let i = 0; i < points.length - 1; ++i) {
+    for (let i = 0; i < _points.length - 1; ++i) {
       // rotate based on i, take from start, add to end
-      const copy = points.slice();
+      const copy = _points.slice();
       const rotating = copy.splice(0, i);
       copy.push(...rotating);
       // register as new representation
@@ -132,7 +133,7 @@ export default class Polygon {
    */
   public equals(polygon: Polygon): boolean {
     const { representations } = this;
-    const representationsStrings = new Set(representations
+    const representationsStrings: Set<string> = new Set(representations
       .map(polygon => JSON.stringify(polygon)));
     // compare string versions
     return representationsStrings.has(JSON.stringify(polygon));
@@ -157,11 +158,11 @@ export default class Polygon {
    * @returns The JSON representation of the Polygon
    */
   public toJSON(): PolygonJSON {
-    const { points } = this;
+    const { _points } = this;
     return {
       className: "Polygon",
       data: {
-        points: points.map(point => point.toJSON()),
+        points: _points.map(point => point.toJSON()),
       },
     };
   }

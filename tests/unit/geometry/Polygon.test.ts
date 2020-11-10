@@ -8,7 +8,7 @@ test('constructor', () => {
 });
 
 
-test('get points', () => {
+test('points', () => {
   expect(() => {
     const polygon = new Polygon();
     const points = [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
@@ -17,28 +17,28 @@ test('get points', () => {
         y: new Decimal(coord[1]),
       })
     });
-    expect(polygon.points).toEqual(points);
+    expect(polygon.points()).toEqual(points);
   }).not.toThrow();
 });
 
 
-test('get width', () => {
+test('width', () => {
   expect(() => {
     const polygon = new Polygon();
-    expect(polygon.width.toNumber()).toEqual(1);
+    expect(polygon.width().toNumber()).toEqual(1);
   }).not.toThrow();
 });
 
 
-test('get height', () => {
+test('height', () => {
   expect(() => {
     const polygon = new Polygon();
-    expect(polygon.height.toNumber()).toEqual(1);
+    expect(polygon.height().toNumber()).toEqual(1);
   }).not.toThrow();
 });
 
 
-test('get representations', () => {
+test('representations', () => {
 
 });
 
