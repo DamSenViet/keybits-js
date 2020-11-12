@@ -66,7 +66,7 @@ export default class Polygon {
 
 
   /**
-   * Gets the ordered Points that make up the Polygon.
+   * Gets a copy of the ordered Points that make up the Polygon.
    */
   public getPoints(): Array<Point> {
     return this._points.slice();
@@ -74,9 +74,9 @@ export default class Polygon {
 
 
   /**
-   * Get the lines from the Points of the Polygon.
+   * Computes the lines from the Points of the Polygon.
    */
-  public lines(): Array<Line> {
+  public getLines(): Array<Line> {
     const { _points } = this;
     const lines: Array<Line> = new Array<Line>();
     for (let i: number = 0; i < _points.length; ++i) {
@@ -89,7 +89,7 @@ export default class Polygon {
 
 
   /**
-   * Gets the computed bounding width of the Polygon.
+   * Computes the bounding width of the Polygon.
    */
   public getBoundingWidth(): Decimal {
     const { _points } = this;
@@ -104,7 +104,7 @@ export default class Polygon {
 
 
   /**
-   * Gets the computed bounding height of the Polygon.
+   * Computes the bounding height of the Polygon.
    */
   public getBoundingHeight(): Decimal {
     const { _points } = this;
@@ -119,7 +119,7 @@ export default class Polygon {
 
 
   /**
-   * Gets all equivalent Polygon representations of the Polygon.
+   * Computes all equivalent Polygon representations of the Polygon.
    */
   public getRepresentations(): Array<Polygon> {
     const { _points } = this;
@@ -158,8 +158,8 @@ export default class Polygon {
    */
   public overlaps(polygon: Polygon): boolean {
     if (this.equals(polygon)) return true;
-    const linesA: Array<Line> = this.lines();
-    const linesB: Array<Line> = polygon.lines();
+    const linesA: Array<Line> = this.getLines();
+    const linesB: Array<Line> = polygon.getLines();
     for (const lineA of linesA) {
       for (const lineB of linesB) {
         if (lineA.crossesOver(lineB)) return true;

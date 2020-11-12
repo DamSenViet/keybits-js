@@ -22,6 +22,8 @@ test('getPoints', () => {
   }).not.toThrow();
 });
 
+test('getLines', () => {
+});
 
 test('getBoundingWidth', () => {
   expect(() => {

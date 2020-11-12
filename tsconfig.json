@@ -1,10 +1,11 @@
 {
   "include": [
-    "./src/index.ts",
+    "./src/**/*.ts",
   ],
   "exclude": [
     "./node_modules",
-    "./tests"
+    "./tests",
+    "./src/**/*.test.ts",
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
@@ -27,7 +28,6 @@
       "DOM",
     ],
     "moduleResolution": "node",
-
     // ### STRICT CHECKS
     "alwaysStrict": true,
     "noImplicitAny": true,
@@ -35,7 +35,6 @@
     "strictPropertyInitialization": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
-
     // ### ADVANCED
     // "preserveConstEnums": true,
   },
