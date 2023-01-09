@@ -1,10 +1,9 @@
 import { Point, Polygon } from "./geometry";
-import Decimal from "decimal.js";
 
 class Key {
   public _isConvex: boolean = false;
-  public _width: Decimal = new Decimal(1.0);
-  public _height: Decimal = new Decimal(1.0);
+  public _width: number = 1.0;
+  public _height: number = 1.0;
 
   // shape for profile + row
   public _shape: Polygon = new Polygon();
