@@ -1,5 +1,4 @@
 import Point, { PointJSON } from "./Point";
-import Decimal from "decimal.js";
 
 test('constructor', () => {
   expect(() => {
@@ -11,20 +10,20 @@ test('constructor', () => {
   }).toThrow(TypeError);
   expect(() => {
     // @ts-ignore
-    const point = new Point({ x: new Decimal(7) });
+    const point = new Point({ x: 7 });
   }).toThrow(TypeError);
   expect(() => {
     // @ts-ignore
-    const point = new Point({ y: new Decimal(7) });
+    const point = new Point({ y: 7 });
   }).toThrow(TypeError);
   expect(() => {
-    const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
+    const point = new Point({ x: 7, y: 7 });
   }).not.toThrow();
   expect(() => {
     const point = new Point(undefined);
   }).toThrow(TypeError);
   expect(() => {
-    const point = new Point({ x: new Decimal(0), y: new Decimal(0) });
+    const point = new Point({ x: 0, y: 0 });
   }).not.toThrow(TypeError);
 });
 
@@ -32,11 +31,11 @@ test('constructor', () => {
 test('getX', () => {
   expect(() => {
     const point = new Point();
-    expect(point.getX().toNumber()).toBe(0);
+    expect(point.getX()).toBe(0);
   }).not.toThrow();
   expect(() => {
-    const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
-    expect(point.getX().toNumber()).toBe(7);
+    const point = new Point({ x: 7, y: 7 });
+    expect(point.getX()).toBe(7);
   }).not.toThrow();
 });
 
@@ -44,11 +43,11 @@ test('getX', () => {
 test('getY', () => {
   expect(() => {
     const point = new Point();
-    expect(point.getY().toNumber()).toBe(0);
+    expect(point.getY()).toBe(0);
   }).not.toThrow();
   expect(() => {
-    const point = new Point({ x: new Decimal(7), y: new Decimal(7) });
-    expect(point.getY().toNumber()).toBe(7);
+    const point = new Point({ x: 7, y: 7 });
+    expect(point.getY()).toBe(7);
   }).not.toThrow();
 });
 
@@ -56,24 +55,24 @@ test('getY', () => {
 test('equals', () => {
   expect(() => {
     const p1 = new Point();
-    const p2 = new Point({ x: new Decimal(0), y: new Decimal(0) });
-    const p3 = new Point({ x: new Decimal(0), y: new Decimal(0) });
+    const p2 = new Point({ x: 0, y: 0 });
+    const p3 = new Point({ x: 0, y: 0 });
     expect(p1.equals(p2)).toBe(true);
     expect(p1.equals(p3)).toBe(true);
     expect(p2.equals(p3)).toBe(true);
   }).not.toThrow();
   expect(() => {
     const p1 = new Point();
-    const p2 = new Point({ x: new Decimal(7), y: new Decimal(0) });
-    const p3 = new Point({ x: new Decimal(7), y: new Decimal(0) });
+    const p2 = new Point({ x: 7, y: 0 });
+    const p3 = new Point({ x: 7, y: 0 });
     expect(p1.equals(p2)).toBe(false);
     expect(p1.equals(p3)).toBe(false);
     expect(p2.equals(p3)).toBe(true);
   }).not.toThrow();
   expect(() => {
     const p1 = new Point();
-    const p2 = new Point({ y: new Decimal(7), x: new Decimal(0) });
-    const p3 = new Point({ y: new Decimal(7), x: new Decimal(0) });
+    const p2 = new Point({ y: 7, x: 0 });
+    const p3 = new Point({ y: 7, x: 0 });
     expect(p1.equals(p2)).toBe(false);
     expect(p1.equals(p3)).toBe(false);
     expect(p2.equals(p3)).toBe(true);
@@ -128,7 +127,7 @@ test('fromJSON', () => {
 
 test('toJSON', () => {
   expect(() => {
-    const point = new Point({ x: new Decimal(7), y: new Decimal(7) })
+    const point = new Point({ x: 7, y: 7 })
     const pointJSON = point.toJSON();
     expect(pointJSON).toHaveProperty("className", "Point");
     expect(pointJSON).toHaveProperty("data");

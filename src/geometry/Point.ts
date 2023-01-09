@@ -1,10 +1,9 @@
 import Ajv from "ajv";
 import pointSchema from "./Point.schema";
-import Decimal from "decimal.js";
-
+import { isNumber } from "lodash";
 export interface PointOptions {
-  x: Decimal,
-  y: Decimal,
+  x: number,
+  y: number,
 };
 
 export interface PointJSON {
@@ -22,30 +21,30 @@ export default class Point {
   /**
    * The x coordinate of the Point.
    */
-  protected _x: Decimal = new Decimal(0);
+  protected _x: number = 0;
 
   /**
    * The y coordinate of the Point.
    */
-  protected _y: Decimal = new Decimal(0);
+  protected _y: number = 0;
 
 
   /**
    * Instantiates a Point.
-   * @param options - a configuration Object with 'x' and 'y' as Decimals.
+   * @param options - a configuration Object with 'x' and 'y'.
    */
   public constructor(options?: Point | PointOptions) {
     if (arguments.length <= 0) return;
     if (typeof options !== "object") throw new TypeError();
-    let x: Decimal;
-    let y: Decimal;
+    let x: number;
+    let y: number;
     if (options instanceof Point)
       ({ _x: x, _y: y } = options as Point);
     else
       ({ x, y } = options as PointOptions);
-    if (!(x instanceof Decimal)) throw new TypeError();
+    if (!isNumber(x)) throw new TypeError();
     this._x = x;
-    if (!(y instanceof Decimal)) throw new TypeError();
+    if (!isNumber(y)) throw new TypeError();
     this._y = y;
   }
 
@@ -54,7 +53,7 @@ export default class Point {
    * Gets the x coordinate of the Point.
    * @returns the x coordinate
    */
-  public getX(): Decimal {
+  public getX(): number {
     const { _x } = this;
     return _x;
   }
@@ -64,7 +63,7 @@ export default class Point {
    * Gets the y coordinate of the Point.
    * @returns the y coordinate
    */
-  public getY(): Decimal {
+  public getY(): number {
     const { _y } = this;
     return _y;
   }
@@ -77,7 +76,7 @@ export default class Point {
    */
   public equals(point: Point): boolean {
     const { _x, _y } = this;
-    return _x.equals(point._x) && _y.equals(point._y);
+    return _x === point._x && _y === point._y;
   }
 
 
@@ -91,8 +90,8 @@ export default class Point {
     const ajv = new Ajv();
     if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError();
     const { x: xJSON, y: yJSON } = pointJSON.data;
-    const x = new Decimal(xJSON);
-    const y = new Decimal(yJSON);
+    const x = Number(xJSON);
+    const y = Number(yJSON);
     return new Point({ x, y });
   }
 
