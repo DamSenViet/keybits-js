@@ -13,9 +13,9 @@ enum Positions {
 class Label {
   // protected _anchor: Positions = Positions.topLeft;
 
-  // protected _horizontalOffset: Decimal = new Decimal(0);
+  // protected _horizontalOffset: number = 0;
 
-  // protected _verticalOffset: Decimal = new Decimal(0);
+  // protected _verticalOffset: number = 0;
 }
 
 class TextLabel extends Label {
