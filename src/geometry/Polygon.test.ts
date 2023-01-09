@@ -1,6 +1,5 @@
 import Polygon, { PolygonJSON } from "./Polygon";
 import Point from "./Point";
-import Decimal from "decimal.js";
 
 test('constructor', () => {
   expect(() => {
@@ -14,8 +13,8 @@ test('getPoints', () => {
     const polygon = new Polygon();
     const points = [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
       return new Point({
-        x: new Decimal(coord[0]),
-        y: new Decimal(coord[1]),
+        x: coord[0],
+        y: coord[1],
       })
     });
     expect(polygon.getPoints()).toEqual(points);
@@ -28,7 +27,7 @@ test('getLines', () => {
 test('getBoundingWidth', () => {
   expect(() => {
     const polygon = new Polygon();
-    expect(polygon.getBoundingWidth().toNumber()).toEqual(1);
+    expect(polygon.getBoundingWidth()).toEqual(1);
   }).not.toThrow();
 });
 
@@ -36,7 +35,7 @@ test('getBoundingWidth', () => {
 test('getBoundingHeight', () => {
   expect(() => {
     const polygon = new Polygon();
-    expect(polygon.getBoundingHeight().toNumber()).toEqual(1);
+    expect(polygon.getBoundingHeight()).toEqual(1);
   }).not.toThrow();
 });
 
@@ -52,16 +51,16 @@ test('equals', () => {
     const polygon2 = new Polygon({
       points: [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
         return new Point({
-          x: new Decimal(coord[0]),
-          y: new Decimal(coord[1]),
+          x: coord[0],
+          y: coord[1],
         })
       }),
     });
     const polygon3 = new Polygon({
       points: [[0, 0], [0, 1], [1, 1], [1, 0]].map((coord) => {
         return new Point({
-          x: new Decimal(coord[0]),
-          y: new Decimal(coord[1]),
+          x: coord[0],
+          y: coord[1],
         })
       }),
     });
@@ -172,8 +171,8 @@ test('toJSON', () => {
     const points = [[0, 0], [0, 1], [1, 1], [1, 0]]
       .map(([x, y]) => {
         return new Point({
-          x: new Decimal(x),
-          y: new Decimal(y),
+          x,
+          y,
         })
       });
     const polygon = new Polygon({

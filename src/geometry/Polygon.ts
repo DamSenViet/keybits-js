@@ -1,6 +1,5 @@
 import Ajv from "ajv";
 import polygonSchema from "./Polygon.schema";
-import Decimal from "decimal.js";
 import Point, { PointJSON } from "./Point";
 import Line from "./Line";
 
@@ -23,10 +22,10 @@ export default class Polygon {
    * The ordered points of the Polygon.
    */
   protected _points: Array<Point> = new Array<Point>(
-    new Point({ x: new Decimal(0), y: new Decimal(0) }),
-    new Point({ x: new Decimal(0), y: new Decimal(1) }),
-    new Point({ x: new Decimal(1), y: new Decimal(1) }),
-    new Point({ x: new Decimal(1), y: new Decimal(0) }),
+    new Point({ x: 0, y: 0 }),
+    new Point({ x: 0, y: 1 }),
+    new Point({ x: 1, y: 1 }),
+    new Point({ x: 1, y: 0 }),
   );
 
 
@@ -91,30 +90,30 @@ export default class Polygon {
   /**
    * Computes the bounding width of the Polygon.
    */
-  public getBoundingWidth(): Decimal {
+  public getBoundingWidth(): number {
     const { _points } = this;
-    let lowest: Decimal = new Decimal(Infinity);
-    let highest: Decimal = new Decimal(-Infinity);
+    let lowest: number = Infinity;
+    let highest: number = -Infinity;
     for (const point of _points) {
-      if (point.getX().lt(lowest)) lowest = point.getX();
-      if (point.getX().gt(highest)) highest = point.getX();
+      if (point.getX() < lowest) lowest = point.getX();
+      if (point.getX() > highest) highest = point.getX();
     }
-    return highest.sub(lowest).abs();
+    return Math.abs(highest - lowest);
   }
 
 
   /**
    * Computes the bounding height of the Polygon.
    */
-  public getBoundingHeight(): Decimal {
+  public getBoundingHeight(): number {
     const { _points } = this;
-    let lowest: Decimal = new Decimal(Infinity);
-    let highest: Decimal = new Decimal(-Infinity);
+    let lowest: number = Infinity;
+    let highest: number = -Infinity;
     for (const point of _points) {
-      if (point.getY().lt(lowest)) lowest = point.getY();
-      if (point.getY().gt(highest)) highest = point.getY();
+      if (point.getY() < lowest) lowest = point.getY();
+      if (point.getY() > highest) highest = point.getY();
     }
-    return highest.sub(lowest).abs();
+    return Math.abs(highest - lowest);
   }
 
 
