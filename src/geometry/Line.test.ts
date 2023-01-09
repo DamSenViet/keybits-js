@@ -1,6 +1,5 @@
 import Line, { LineJSON } from "./Line";
 import Point from "./Point";
-import Decimal from "decimal.js";
 
 test('constructor', () => {
   expect(() => {
@@ -38,24 +37,24 @@ test('getStart', () => {
   expect(() => {
     const line = new Line();
     expect(line.getStart().equals(new Point({
-      x: new Decimal(0),
-      y: new Decimal(0),
+      x: 0,
+      y: 0,
     }))).toBe(true);
   }).not.toThrow();
   expect(() => {
     const line = new Line({
       start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
     });
     expect(line.getStart().equals(new Point({
-      x: new Decimal(7),
-      y: new Decimal(7),
+      x: 7,
+      y: 7,
     }))).toBe(true);
   }).not.toThrow();
 });
@@ -65,24 +64,24 @@ test('getEnd', () => {
   expect(() => {
     const line = new Line();
     expect(line.getEnd().equals(new Point({
-      x: new Decimal(0),
-      y: new Decimal(0),
+      x: 0,
+      y: 0,
     }))).toBe(true);
   }).not.toThrow();
   expect(() => {
     const line = new Line({
       start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
     });
     expect(line.getEnd().equals(new Point({
-      x: new Decimal(7),
-      y: new Decimal(7),
+      x: 7,
+      y: 7,
     }))).toBe(true);
   }).not.toThrow();
 });
@@ -94,22 +93,22 @@ test('equals', () => {
     const l1 = new Line();
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
     });
     const l3 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
     });
     expect(l1.equals(l2)).toBe(true);
@@ -121,22 +120,22 @@ test('equals', () => {
     const l1 = new Line();
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
     });
     const l3 = new Line({
       start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
     });
     expect(l1.equals(l2)).toBe(false);
@@ -147,22 +146,22 @@ test('equals', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
     });
     expect(l1.equals(l2)).toBe(true);
@@ -181,27 +180,27 @@ test('intersection', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(1),
+        x: 0,
+        y: 1,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(1),
+        x: 0,
+        y: 1,
       }),
       end: new Point({
-        x: new Decimal(1),
-        y: new Decimal(1),
+        x: 1,
+        y: 1,
       }),
     });
     expect(l1.intersection(l2)).toEqual(new Point({
-      x: new Decimal(0),
-      y: new Decimal(1),
+      x: 0,
+      y: 1,
     }));
   }).not.toThrow();
   // overlapping, parallel
@@ -214,22 +213,22 @@ test('intersection', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(7),
+        x: 0,
+        y: 7,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(1),
-        y: new Decimal(0),
+        x: 1,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(1),
-        y: new Decimal(7),
+        x: 1,
+        y: 7,
       }),
     });
     expect(l1.intersection(l2)).toBe(null);
@@ -238,22 +237,22 @@ test('intersection', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(-7),
-        y: new Decimal(0),
+        x: -7,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(0),
+        x: 7,
+        y: 0,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(-7),
+        x: 0,
+        y: -7,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(7),
+        x: 0,
+        y: 7,
       }),
     });
     expect(l1.intersection(l2)).toEqual(new Point());
@@ -272,22 +271,22 @@ test('intersects', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(1),
+        x: 0,
+        y: 1,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(1),
+        x: 0,
+        y: 1,
       }),
       end: new Point({
-        x: new Decimal(1),
-        y: new Decimal(1),
+        x: 1,
+        y: 1,
       }),
     });
     expect(l1.intersects(l2)).toBe(true);
@@ -302,22 +301,22 @@ test('intersects', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(7),
+        x: 0,
+        y: 7,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(1),
-        y: new Decimal(0),
+        x: 1,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(1),
-        y: new Decimal(7),
+        x: 1,
+        y: 7,
       }),
     });
     expect(l1.intersects(l2)).toBe(false);
@@ -326,22 +325,22 @@ test('intersects', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(-7),
-        y: new Decimal(0),
+        x: -7,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(0),
+        x: 7,
+        y: 0,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(-7),
+        x: 0,
+        y: -7,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(7),
+        x: 0,
+        y: 7,
       }),
     });
     expect(l1.intersects(l2)).toBe(true);
@@ -354,22 +353,22 @@ test('crossesOver', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(0),
+        x: 0,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(1),
+        x: 0,
+        y: 1,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(1),
+        x: 0,
+        y: 1,
       }),
       end: new Point({
-        x: new Decimal(1),
-        y: new Decimal(1),
+        x: 1,
+        y: 1,
       }),
     });
     expect(l1.crossesOver(l2)).toBe(false);
@@ -378,22 +377,22 @@ test('crossesOver', () => {
   expect(() => {
     const l1 = new Line({
       start: new Point({
-        x: new Decimal(-7),
-        y: new Decimal(0),
+        x: -7,
+        y: 0,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(0),
+        x: 7,
+        y: 0,
       }),
     });
     const l2 = new Line({
       start: new Point({
-        x: new Decimal(0),
-        y: new Decimal(-7),
+        x: 0,
+        y: -7,
       }),
       end: new Point({
-        x: new Decimal(0),
-        y: new Decimal(7),
+        x: 0,
+        y: 7,
       }),
     });
     expect(l1.intersects(l2)).toBe(true);
@@ -487,12 +486,12 @@ test('toJSON', () => {
   expect(() => {
     const line = new Line({
       start: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
       end: new Point({
-        x: new Decimal(7),
-        y: new Decimal(7),
+        x: 7,
+        y: 7,
       }),
     });
     const lineJSON = line.toJSON();

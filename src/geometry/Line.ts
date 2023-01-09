@@ -1,6 +1,5 @@
 import Ajv from "ajv";
 import lineSchema from "./Line.schema";
-import Decimal from "decimal.js";
 import Point, { PointJSON } from "./Point";
 
 export interface LineOptions {
@@ -24,16 +23,16 @@ export default class Line {
    * The starting Point of the Line.
    */
   protected _start: Point = new Point({
-    x: new Decimal(0),
-    y: new Decimal(0),
+    x: 0,
+    y: 0,
   });
 
   /**
    * The ending Point of the Line.
    */
   protected _end: Point = new Point({
-    x: new Decimal(0),
-    y: new Decimal(0),
+    x: 0,
+    y: 0,
   });
 
 
@@ -102,34 +101,37 @@ export default class Line {
       return null;
     }
 
-    const denominator: Decimal = Decimal.sub(
-      line._end.getY().sub(line._start.getY())
-        .mul(_end.getX().sub(_start.getX())),
-      line._end.getX().sub(line._start.getX())
-        .mul(_end.getY().sub(_start.getY()))
-    );
+    const denominator: number = (
+      (line._end.getY() - line._start.getY()) *
+      (_end.getX() - _start.getX())
+    ) - (
+        (line._end.getX() - line._start.getX()) *
+        (_end.getY() - _start.getY())
+      );
 
-    if (denominator.isZero()) return null;
+    if (denominator === 0) return null;
 
-    const ua: Decimal = Decimal.sub(
-      line._end.getX().sub(line._start.getX())
-        .mul(_start.getY().sub(line._start.getY())),
-      line._end.getY().sub(line._start.getY())
-        .mul(_start.getX().sub(line._start.getX()))
-    ).div(denominator);
-    const ub: Decimal = Decimal.sub(
-      _end.getX().sub(_start.getX())
-        .mul(_start.getY().sub(line._start.getY())),
-      _end.getY().sub(_start.getY())
-        .mul(_start.getX().sub(line._start.getX()))
-    ).div(denominator);
+    const ua: number = ((
+      (line._end.getX() - line._start.getX()) *
+      (_start.getY() - line._start.getY())
+    ) - (
+        (line._end.getY() - line._start.getY()) *
+        (_start.getX() - line._start.getX())
+      )) / denominator;
+    const ub: number = ((
+      (_end.getX() - _start.getX()) *
+      (_start.getY() - line._start.getY())
+    ) - (
+        (_end.getY() - _start.getY()) *
+        (_start.getX() - line._start.getX())
+      )) / denominator;
 
     // is the intersection along the segments
-    const isAlongSegment: boolean = (ua.gte(0) && ua.lte(1) && ub.gte(0) && ub.lte(1));
+    const isAlongSegment: boolean = (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1);
     if (!isAlongSegment) return null;
 
-    const x: Decimal = _start.getX().add(ua.mul(_end.getX().sub(_start.getX())));
-    const y: Decimal = _start.getY().add(ua.mul(_end.getY().sub(_start.getY())));
+    const x: number = _start.getX() + ua * (_end.getX() - _start.getX());
+    const y: number = _start.getY() + ua * (_end.getY() - _start.getY());
     return new Point({ x, y });
   }
 
