@@ -29,7 +29,8 @@
     "ajv": "^6.12.2",
     "ajv-keywords": "^3.5.0",
     "chroma-js": "^2.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "points-on-path": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
