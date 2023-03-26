@@ -1,35 +1,47 @@
-import { Point, Polygon } from "./geometry";
+import { Label } from "./Label";
+
+export interface MatrixOptions {
+  row: number,
+  column: number,
+};
+
+export interface KeyOptions {
+  path: string,
+  matrixPosition: MatrixOptions,
+  color: string,
+  labels: Label[],
+};
+
+export interface KeyJSON {
+  className: "Key",
+  data: {
+    path: string,
+    matrixPosition: MatrixOptions,
+    color: string,
+    labels: unknown[],
+  },
+}
 
 class Key {
-  public _isConvex: boolean = false;
-  public _width: number = 1.0;
-  public _height: number = 1.0;
-
-  // shape for profile + row
-  public _shape: Polygon = new Polygon();
+  // the shape of the key represented as an svg path string
+  protected path: string = "";
 
   // electrical data
-  public _matrixPosition = {
+  protected _matrixPosition = {
     row: 0,
     column: 0,
   };
 
-  protected _stepped: Polygon = new Polygon();
-
   protected _color = "#FFFFFF";
-  protected _labels = new Array();
-  protected _tags: Set<string> = new Set<string>();
+  protected _labels: Array<Label> = new Array();
 
-  // only showed when active
-  // displayed with lower opacity
-  protected _freeActiveTransform = "";
-  protected _freeInactiveTransform = "";
-  // for QMK / VIA compatibility
-  protected _orthogonalActiveTransform = "";
-  protected _orthogonalInactiveTransform = "";
-
-  public constructor() {
-
+  /**
+   * Instantiates a Key.
+   * @param options - a configuration Object.
+   */
+  public constructor(options?: Key | KeyOptions) {
+    if (arguments.length <= 0) return;
+    if (typeof options !== "object") throw new TypeError();
   }
 };
 
