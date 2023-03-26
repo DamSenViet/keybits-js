@@ -10,7 +10,7 @@ enum Positions {
   bottomCenter,
   bottomRight,
 };
-class Label {
+export class Label {
   // protected _anchor: Positions = Positions.topLeft;
 
   // protected _horizontalOffset: number = 0;
@@ -18,18 +18,14 @@ class Label {
   // protected _verticalOffset: number = 0;
 }
 
-class TextLabel extends Label {
+export class TextLabel extends Label {
   protected _text: string = "";
-  protected _textSize: number = 12;
-  protected _textColor: string = "#FFFFFF";
-
-
-  public text = "";
-  public size = "";
+  protected _fontSize: number = 12;
+  protected _color: string = "#FFFFFF";
 };
 
-class IconLabel extends Label {
-  public constructor() {
-    super();
-  }
-}
+export class IconLabel extends Label {
+};
+
+
+export default Label;
