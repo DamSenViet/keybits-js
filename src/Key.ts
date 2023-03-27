@@ -1,4 +1,5 @@
 import { Label } from "./Label";
+import { isObject, isArray, isString } from "lodash";
 
 export interface MatrixOptions {
   row: number,
@@ -24,7 +25,7 @@ export interface KeyJSON {
 
 class Key {
   // the shape of the key represented as an svg path string
-  protected path: string = "";
+  protected _path: string = "";
 
   // electrical data
   protected _matrixPosition = {
@@ -41,7 +42,28 @@ class Key {
    */
   public constructor(options?: Key | KeyOptions) {
     if (arguments.length <= 0) return;
-    if (typeof options !== "object") throw new TypeError();
+    if (!isObject(options)) throw new TypeError();
+    let path; // generate default path
+    let color: string;
+    let labels: Label[];
+    if (options instanceof Key)
+      ({
+        _path: path,
+        _color: color,
+        _labels: labels
+      } = options as Key)
+    else
+      ({
+        path,
+        color,
+        labels,
+      } = options as KeyOptions)
+    if (!isString(path)) throw new TypeError();
+    this._path = path;
+    if (!isString(color)) throw new TypeError();
+    this._color = color;
+    if (!isArray(labels)) throw new TypeError();
+    this._labels = labels;
   }
 };
 
