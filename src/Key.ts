@@ -1,4 +1,6 @@
+import Ajv from "ajv";
 import { Label } from "./Label";
+import keySchema from "./Key.schema";
 import { isObject, isArray, isString } from "lodash";
 
 export interface MatrixOptions {
@@ -40,7 +42,7 @@ class Key {
    * Instantiates a Key.
    * @param options - a configuration Object.
    */
-  public constructor(options?: Key | KeyOptions) {
+  public constructor(options?: Key | Partial<KeyOptions>) {
     if (arguments.length <= 0) return;
     if (!isObject(options)) throw new TypeError();
     let path; // generate default path
@@ -64,6 +66,53 @@ class Key {
     this._color = color;
     if (!isArray(labels)) throw new TypeError();
     this._labels = labels;
+  }
+
+
+  /**
+   * Creates a Point from a JSON object
+   * @param pointJSON the Key formatted JSON
+   * @returns The Key represented by the JSON
+   */
+  public static fromJSON(keyJSON: KeyJSON): Key {
+    const ajv = new Ajv();
+    if (!ajv.validate(keySchema, keyJSON)) throw new TypeError();
+    const {
+      path,
+      color,
+      matrixPosition,
+      labels: labelsJSON,
+    } = keyJSON.data;
+    // need to implement labels fromJSON
+    const labels: Label[] = [];
+    return new Key({
+      path,
+      color,
+      matrixPosition,
+    });
+  }
+
+
+  /**
+   * Creates a JSON object from invoking Key.
+   * @returns the JSON representation of the Key
+   */
+  toJSON(): KeyJSON {
+    const {
+      _path,
+      _color,
+      _matrixPosition,
+      _labels,
+    } = this;
+    return {
+      className: "Key",
+      data: {
+        path: _path,
+        color: _color,
+        matrixPosition: _matrixPosition,
+        labels: _labels,
+      }
+    }
   }
 };
 
