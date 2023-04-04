@@ -19,6 +19,8 @@ export interface KeyJSON {
   className: "Key",
   data: {
     path: string,
+    stabilized: boolean,
+    stabilizerPath: string,
     matrixPosition: MatrixOptions,
     color: string,
     labels: unknown[],
@@ -28,6 +30,10 @@ export interface KeyJSON {
 class Key {
   // the shape of the key represented as an svg path string
   protected _path: string = "";
+
+  protected _stabilized: boolean = false;
+
+  protected _stabilizerPath: string = "";
 
   // electrical data
   protected _matrixPosition = {
@@ -100,6 +106,8 @@ class Key {
   toJSON(): KeyJSON {
     const {
       _path,
+      _stabilized,
+      _stabilizerPath,
       _color,
       _matrixPosition,
       _labels,
@@ -108,6 +116,8 @@ class Key {
       className: "Key",
       data: {
         path: _path,
+        stabilized: _stabilized,
+        stabilizerPath: _stabilizerPath,
         color: _color,
         matrixPosition: _matrixPosition,
         labels: _labels,
