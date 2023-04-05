@@ -46,7 +46,7 @@ class Key {
 
   /**
    * Instantiates a Key.
-   * @param options - a configuration Object.
+   * @param options A configuration Object.
    */
   public constructor(options?: Key | Partial<KeyOptions>) {
     if (arguments.length <= 0) return;
@@ -76,9 +76,9 @@ class Key {
 
 
   /**
-   * Creates a Point from a JSON object
-   * @param pointJSON the Key formatted JSON
-   * @returns The Key represented by the JSON
+   * Creates a Point from a JSON object.
+   * @param pointJSON The Key formatted JSON.
+   * @returns The Key represented by the JSON.
    */
   public static fromJSON(keyJSON: KeyJSON): Key {
     const ajv = new Ajv();
@@ -101,7 +101,7 @@ class Key {
 
   /**
    * Creates a JSON object from invoking Key.
-   * @returns the JSON representation of the Key
+   * @returns The JSON representation of the Key.
    */
   toJSON(): KeyJSON {
     const {
