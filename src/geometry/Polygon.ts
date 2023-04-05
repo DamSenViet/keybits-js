@@ -31,7 +31,7 @@ export default class Polygon {
 
   /**
    * Instantiates a Polygon.
-   * @param options - a configuration Object with 'points' as an Array of Points
+   * @param options A configuration Object with 'points' as an Array of Points.
    */
   constructor(options?: Polygon | PolygonOptions) {
     if (arguments.length <= 0) return;
@@ -139,8 +139,8 @@ export default class Polygon {
 
   /**
    * Determines whether invoking Polygon is equivalent to passed Polygon.
-   * @param polygon - the Polygon to compare against
-   * @returns whether the Polygons are equal representations
+   * @param polygon The Polygon to compare against.
+   * @returns Whether the Polygons are equal representations.
    */
   public equals(polygon: Polygon): boolean {
     const representationsStrings: Set<string> = new Set(this.getRepresentations()
@@ -152,8 +152,8 @@ export default class Polygon {
 
   /**
    * Determines whether invoking Polygon overlaps the passed Polygon
-   * @param polygon - the Polygon to compare against
-   * @returns whether the Polygons overlap
+   * @param polygon The Polygon to compare against.
+   * @returns Whether the Polygons overlap.
    */
   public overlaps(polygon: Polygon): boolean {
     if (this.equals(polygon)) return true;
@@ -171,8 +171,8 @@ export default class Polygon {
   /**
    * Creates a Polygon from a JSON object. The JSON must match the Polygon
    * schema for the method to succeed.
-   * @param polygonJSON - the polygon formatted JSON
-   * @returns the Polygon represented by the JSON
+   * @param polygonJSON The polygon formatted JSON.
+   * @returns The Polygon represented by the JSON.
    */
   public static fromJSON(polygonJSON: PolygonJSON): Polygon {
     const ajv = new Ajv();
@@ -185,7 +185,7 @@ export default class Polygon {
 
   /**
    * Creates a JSON object from invoking Polygon.
-   * @returns the JSON representation of the Polygon
+   * @returns The JSON representation of the Polygon.
    */
   public toJSON(): PolygonJSON {
     const { _points } = this;

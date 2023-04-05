@@ -38,7 +38,7 @@ export default class Line {
 
   /**
    * Instantiates a Line.
-   * @param options - a configuration Object with 'start' and 'end' as Points.
+   * @param options A configuration Object with 'start' and 'end' as Points.
    */
   public constructor(options?: Line | LineOptions) {
     if (arguments.length <= 0) return;
@@ -76,8 +76,8 @@ export default class Line {
 
   /**
    * Determines whether invoking Line is equivalent to passed Line.
-   * @param line - The Line to compare against
-   * @returns whether the Lines are equal representations
+   * @param line The Line to compare against.
+   * @returns Whether the Lines are equal representations.
    */
   public equals(line: Line): boolean {
     const { _start, _end } = this;
@@ -91,8 +91,8 @@ export default class Line {
    * @remarks
    * line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
    * https://stackoverflow.com/a/60368757/8625882
-   * @param line - the Line to check for intersection against
-   * @returns the Point at which the lines intersect and null if they don't
+   * @param line The Line to check for intersection against.
+   * @returns The Point at which the lines intersect and null if they don't.
    */
   public intersection(line: Line): null | Point {
     const { _start, _end } = this;
@@ -138,8 +138,8 @@ export default class Line {
 
   /**
    * Determines whether invoking Line has an intersection with passed Line.
-   * @param line - the Line to check against
-   * @returns whether there is an intersection
+   * @param line The Line to check against.
+   * @returns Whether there is an intersection.
    */
   public intersects(line: Line): boolean {
     return Boolean(this.intersection(line));
@@ -148,8 +148,8 @@ export default class Line {
 
   /**
    * Determines whether invoking Line crosses over with passed Line.
-   * @param line the Line to check against
-   * @returns whether lines intersection
+   * @param line The Line to check against.
+   * @returns Whether lines cross over each other.
    */
   public crossesOver(line: Line): boolean {
     const { _start, _end } = this;
@@ -167,8 +167,8 @@ export default class Line {
   /**
    * Creates a Line from a JSON object. The JSON must match Line schema
    * for the method to succeed.
-   * @param lineJSON - the Line formatted JSON
-   * @returns the Line represented by the JSON
+   * @param lineJSON The Line formatted JSON.
+   * @returns The Line represented by the JSON.
    */
   public static fromJSON(lineJSON: LineJSON): Line {
     // verify with ajv
@@ -183,7 +183,7 @@ export default class Line {
 
   /**
    * Creates a JSON object from invoking  Line.
-   * @returns the JSON representation of the Line.
+   * @returns The JSON representation of the Line.
    */
   public toJSON(): LineJSON {
     const { _start, _end } = this;

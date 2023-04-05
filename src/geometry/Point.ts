@@ -31,7 +31,7 @@ export default class Point {
 
   /**
    * Instantiates a Point.
-   * @param options - a configuration Object with 'x' and 'y'.
+   * @param options A configuration Object with 'x' and 'y'.
    */
   public constructor(options?: Point | PointOptions) {
     if (arguments.length <= 0) return;
@@ -51,7 +51,7 @@ export default class Point {
 
   /**
    * Gets the x coordinate of the Point.
-   * @returns the x coordinate
+   * @returns The x coordinate.
    */
   public getX(): number {
     const { _x } = this;
@@ -61,7 +61,7 @@ export default class Point {
 
   /**
    * Gets the y coordinate of the Point.
-   * @returns the y coordinate
+   * @returns The y coordinate.
    */
   public getY(): number {
     const { _y } = this;
@@ -71,8 +71,8 @@ export default class Point {
 
   /**
    * Determines whether invoking Point is equivalent to the passed Point.
-   * @param point - the Point to compare against
-   * @returns whether the Points are equal representations
+   * @param point The Point to compare against.
+   * @returns Whether the Points are equal representations.
    */
   public equals(point: Point): boolean {
     const { _x, _y } = this;
@@ -83,8 +83,8 @@ export default class Point {
   /**
    * Creates a Point from a JSON object. The JSON must match Point schema
    * for the method to succeed.
-   * @param pointJSON - the Point formatted JSON
-   * @returns the Point represented by the JSON
+   * @param pointJSON The Point formatted JSON.
+   * @returns The Point represented by the JSON.
    */
   public static fromJSON(pointJSON: PointJSON): Point {
     const ajv = new Ajv();
@@ -98,7 +98,7 @@ export default class Point {
 
   /**
    * Creates a JSON object from invoking Point.
-   * @returns the JSON representation of the Point
+   * @returns The JSON representation of the Point.
    */
   public toJSON(): PointJSON {
     const { _x, _y } = this;
