@@ -3,14 +3,14 @@ import { Label } from "./Label";
 import keySchema from "./Key.schema";
 import { isObject, isArray, isString } from "lodash";
 
-export interface MatrixOptions {
+export interface MatrixPosition {
   row: number,
   column: number,
 };
 
 export interface KeyOptions {
   path: string,
-  matrixPosition: MatrixOptions,
+  matrixPosition: MatrixPosition,
   color: string,
   labels: Label[],
 };
@@ -21,27 +21,77 @@ export interface KeyJSON {
     path: string,
     stabilized: boolean,
     stabilizerPath: string,
-    matrixPosition: MatrixOptions,
+    matrixPosition: MatrixPosition,
     color: string,
     labels: unknown[],
   },
 }
 
+/**
+ * A Key representing the cap, switch, associated stabilizers and styles.
+ */
 class Key {
-  // the shape of the key represented as an svg path string
+  /**
+   * The shape of the key.
+   * Uses key units.
+   */
   protected _path: string = "";
 
+  /**
+   * The switch plate cutout 0.
+   * Uses real units.
+   * Set at export time.
+   */
+  protected _switchPath: string = "";
+
+  /**
+   * Minimum spacing required around this switch.
+   * Uses real units.
+   * Set at export time.
+   */
+  protected _switchSpacing: number = 0;
+
+  /**
+   * The id of the footprint associated with the switch.
+   * Set at export time.
+   */
+  protected _switchFootprintId: string = "";
+
+  /**
+   * Whether or not the key is stabilized.
+   * Any key 2u or more should be stabilized.
+   */
   protected _stabilized: boolean = false;
 
+  /**
+   * The stabilizer plate cutout.
+   * Uses real units.
+   * Set at export time.
+   */
   protected _stabilizerPath: string = "";
 
-  // electrical data
-  protected _matrixPosition = {
+  /**
+   * The id of the footprint associated with the stabilizer.
+   * Set at export time.
+   */
+  protected _stabilizerFootprintId: string = "";
+
+  /**
+   * The associated matrix position of the key.
+   */
+  protected _matrixPosition: MatrixPosition = {
     row: 0,
     column: 0,
   };
 
+  /**
+   * The color of the cap.
+   */
   protected _color = "#FFFFFF";
+
+  /**
+   * The labels on the cap.
+   */
   protected _labels: Array<Label> = new Array();
 
   /**
@@ -73,7 +123,6 @@ class Key {
     if (!isArray(labels)) throw new TypeError();
     this._labels = labels;
   }
-
 
   /**
    * Creates a Point from a JSON object.
