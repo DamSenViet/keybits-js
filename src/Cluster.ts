@@ -1,10 +1,10 @@
 import Key from "./Key";
 import Swappable from "./Swappable";
 
-type KeyItems = Key | Cluster | Swappable;
+export type ClusterItems = Key | Cluster | Swappable;
 
 class Cluster {
-  protected _items: Array<KeyItems> = new Array<KeyItems>();
+  protected _items: Array<ClusterItems> = new Array<ClusterItems>();
 }
 
 export default Cluster;
