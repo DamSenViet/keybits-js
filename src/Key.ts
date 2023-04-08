@@ -9,7 +9,7 @@ export interface MatrixPosition {
 };
 
 export interface KeyOptions {
-  path: string,
+  capPath: string,
   matrixPosition: MatrixPosition,
   color: string,
   labels: Label[],
@@ -18,7 +18,7 @@ export interface KeyOptions {
 export interface KeyJSON {
   className: "Key",
   data: {
-    path: string,
+    capPath: string,
     stabilized: boolean,
     stabilizerPath: string,
     matrixPosition: MatrixPosition,
@@ -35,7 +35,7 @@ class Key {
    * The shape of the key.
    * Uses key units.
    */
-  protected _path: string = "";
+  protected _capPath: string = "";
 
   /**
    * The switch plate cutout 0.
@@ -101,23 +101,23 @@ class Key {
   public constructor(options?: Key | Partial<KeyOptions>) {
     if (arguments.length <= 0) return;
     if (!isObject(options)) throw new TypeError();
-    let path; // generate default path
+    let capPath: string;
     let color: string;
     let labels: Label[];
     if (options instanceof Key)
       ({
-        _path: path,
+        _capPath: capPath,
         _color: color,
         _labels: labels
       } = options as Key)
     else
       ({
-        path,
+        capPath,
         color,
         labels,
       } = options as KeyOptions)
-    if (!isString(path)) throw new TypeError();
-    this._path = path;
+    if (!isString(capPath)) throw new TypeError();
+    this._capPath = capPath;
     if (!isString(color)) throw new TypeError();
     this._color = color;
     if (!isArray(labels)) throw new TypeError();
@@ -133,7 +133,7 @@ class Key {
     const ajv = new Ajv();
     if (!ajv.validate(keySchema, keyJSON)) throw new TypeError();
     const {
-      path,
+      capPath,
       color,
       matrixPosition,
       labels: labelsJSON,
@@ -141,7 +141,7 @@ class Key {
     // need to implement labels fromJSON
     const labels: Label[] = [];
     return new Key({
-      path,
+      capPath,
       color,
       matrixPosition,
     });
@@ -154,7 +154,7 @@ class Key {
    */
   toJSON(): KeyJSON {
     const {
-      _path,
+      _capPath,
       _stabilized,
       _stabilizerPath,
       _color,
@@ -164,7 +164,7 @@ class Key {
     return {
       className: "Key",
       data: {
-        path: _path,
+        capPath: _capPath,
         stabilized: _stabilized,
         stabilizerPath: _stabilizerPath,
         color: _color,
