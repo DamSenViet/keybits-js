@@ -30,7 +30,7 @@ class Key {
   /**
    * The associated matrix position of the key.
    */
-  protected _matrixPosition: MatrixPosition = {
+  public matrixPosition: MatrixPosition = {
     row: 0,
     column: 0,
   };
@@ -38,12 +38,12 @@ class Key {
   /**
    * The color of the cap.
    */
-  protected _capColor = "#FFFFFF";
+  public capColor = "#FFFFFF";
 
   /**
    * The labels on the cap.
    */
-  protected _capLabels: Array<Label> = new Array();
+  public capLabels: Array<Label> = new Array();
 
   /**
    * Instantiates a Key.
@@ -57,20 +57,20 @@ class Key {
     let capLabels: Label[];
     if (options instanceof Key)
       ({
-        _matrixPosition: matrixPosition,
-        _capColor: capColor,
-        _capLabels: capLabels,
+        matrixPosition,
+        capColor,
+        capLabels,
       } = options as Key)
     else
       ({
         matrixPosition,
-        capColor: capColor,
-        capLabels: capLabels,
+        capColor,
+        capLabels,
       } = options as KeyOptions)
     if (!isString(capColor)) throw new TypeError();
-    this._capColor = capColor;
+    this.capColor = capColor;
     if (!isArray(capLabels)) throw new TypeError();
-    this._capLabels = capLabels;
+    this.capLabels = capLabels;
   }
 
   /**
@@ -83,14 +83,14 @@ class Key {
     if (!ajv.validate(keySchema, keyJSON)) throw new TypeError();
     const {
       matrixPosition,
-      capColor: capColor,
+      capColor,
       capLabels: labelsJSON,
     } = keyJSON.data;
     // need to implement labels fromJSON
     const labels: Label[] = [];
     return new Key({
       matrixPosition,
-      capColor: capColor,
+      capColor,
     });
   }
 
@@ -101,16 +101,16 @@ class Key {
    */
   toJSON(): KeyJSON {
     const {
-      _matrixPosition,
-      _capColor,
-      _capLabels,
+      matrixPosition,
+      capColor,
+      capLabels,
     } = this;
     return {
       className: "Key",
       data: {
-        matrixPosition: _matrixPosition,
-        capColor: _capColor,
-        capLabels: _capLabels,
+        matrixPosition,
+        capColor,
+        capLabels,
       }
     }
   }
