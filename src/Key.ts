@@ -53,7 +53,6 @@ class Key {
     if (arguments.length <= 0) return;
     if (!isObject(options)) throw new TypeError();
     let matrixPosition: MatrixPosition;
-    let capPath: string;
     let capColor: string;
     let capLabels: Label[];
     if (options instanceof Key)
