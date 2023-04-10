@@ -10,16 +10,16 @@ export interface MatrixPosition {
 
 export interface KeyOptions {
   matrixPosition: MatrixPosition,
-  color: string,
-  labels: Label[],
+  capColor: string,
+  capLabels: Label[],
 };
 
 export interface KeyJSON {
   className: "Key",
   data: {
     matrixPosition: MatrixPosition,
-    color: string,
-    labels: unknown[],
+    capColor: string,
+    capLabels: unknown[],
   },
 }
 
@@ -38,12 +38,12 @@ class Key {
   /**
    * The color of the cap.
    */
-  protected _color = "#FFFFFF";
+  protected _capColor = "#FFFFFF";
 
   /**
    * The labels on the cap.
    */
-  protected _labels: Array<Label> = new Array();
+  protected _capLabels: Array<Label> = new Array();
 
   /**
    * Instantiates a Key.
@@ -52,26 +52,26 @@ class Key {
   public constructor(options?: Key | Partial<KeyOptions>) {
     if (arguments.length <= 0) return;
     if (!isObject(options)) throw new TypeError();
-    let capPath: string;
-    let color: string;
-    let labels: Label[];
     let matrixPosition: MatrixPosition;
+    let capPath: string;
+    let capColor: string;
+    let capLabels: Label[];
     if (options instanceof Key)
       ({
         _matrixPosition: matrixPosition,
-        _color: color,
-        _labels: labels,
+        _capColor: capColor,
+        _capLabels: capLabels,
       } = options as Key)
     else
       ({
         matrixPosition,
-        color,
-        labels,
+        capColor: capColor,
+        capLabels: capLabels,
       } = options as KeyOptions)
-    if (!isString(color)) throw new TypeError();
-    this._color = color;
-    if (!isArray(labels)) throw new TypeError();
-    this._labels = labels;
+    if (!isString(capColor)) throw new TypeError();
+    this._capColor = capColor;
+    if (!isArray(capLabels)) throw new TypeError();
+    this._capLabels = capLabels;
   }
 
   /**
@@ -83,15 +83,15 @@ class Key {
     const ajv = new Ajv();
     if (!ajv.validate(keySchema, keyJSON)) throw new TypeError();
     const {
-      color,
       matrixPosition,
-      labels: labelsJSON,
+      capColor: capColor,
+      capLabels: labelsJSON,
     } = keyJSON.data;
     // need to implement labels fromJSON
     const labels: Label[] = [];
     return new Key({
-      color,
       matrixPosition,
+      capColor: capColor,
     });
   }
 
@@ -103,15 +103,15 @@ class Key {
   toJSON(): KeyJSON {
     const {
       _matrixPosition,
-      _color,
-      _labels,
+      _capColor,
+      _capLabels,
     } = this;
     return {
       className: "Key",
       data: {
         matrixPosition: _matrixPosition,
-        color: _color,
-        labels: _labels,
+        capColor: _capColor,
+        capLabels: _capLabels,
       }
     }
   }
