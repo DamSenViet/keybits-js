@@ -9,7 +9,6 @@ export interface MatrixPosition {
 };
 
 export interface KeyOptions {
-  capPath: string,
   matrixPosition: MatrixPosition,
   color: string,
   labels: Label[],
@@ -18,9 +17,6 @@ export interface KeyOptions {
 export interface KeyJSON {
   className: "Key",
   data: {
-    capPath: string,
-    stabilized: boolean,
-    stabilizerPath: string,
     matrixPosition: MatrixPosition,
     color: string,
     labels: unknown[],
@@ -31,51 +27,6 @@ export interface KeyJSON {
  * A Key representing the cap, switch, associated stabilizers and styles.
  */
 class Key {
-  /**
-   * The shape of the key.
-   * Uses key units.
-   */
-  protected _capPath: string = "";
-
-  /**
-   * The switch plate cutout 0.
-   * Uses real units.
-   * Set at export time.
-   */
-  protected _switchPath: string = "";
-
-  /**
-   * Minimum spacing required around this switch.
-   * Uses real units.
-   * Set at export time.
-   */
-  protected _switchSpacing: number = 0;
-
-  /**
-   * The id of the footprint associated with the switch.
-   * Set at export time.
-   */
-  protected _switchFootprintId: string = "";
-
-  /**
-   * Whether or not the key is stabilized.
-   * Any key 2u or more should be stabilized.
-   */
-  protected _stabilized: boolean = false;
-
-  /**
-   * The stabilizer plate cutout.
-   * Uses real units.
-   * Set at export time.
-   */
-  protected _stabilizerPath: string = "";
-
-  /**
-   * The id of the footprint associated with the stabilizer.
-   * Set at export time.
-   */
-  protected _stabilizerFootprintId: string = "";
-
   /**
    * The associated matrix position of the key.
    */
@@ -104,20 +55,19 @@ class Key {
     let capPath: string;
     let color: string;
     let labels: Label[];
+    let matrixPosition: MatrixPosition;
     if (options instanceof Key)
       ({
-        _capPath: capPath,
+        _matrixPosition: matrixPosition,
         _color: color,
-        _labels: labels
+        _labels: labels,
       } = options as Key)
     else
       ({
-        capPath,
+        matrixPosition,
         color,
         labels,
       } = options as KeyOptions)
-    if (!isString(capPath)) throw new TypeError();
-    this._capPath = capPath;
     if (!isString(color)) throw new TypeError();
     this._color = color;
     if (!isArray(labels)) throw new TypeError();
@@ -133,7 +83,6 @@ class Key {
     const ajv = new Ajv();
     if (!ajv.validate(keySchema, keyJSON)) throw new TypeError();
     const {
-      capPath,
       color,
       matrixPosition,
       labels: labelsJSON,
@@ -141,7 +90,6 @@ class Key {
     // need to implement labels fromJSON
     const labels: Label[] = [];
     return new Key({
-      capPath,
       color,
       matrixPosition,
     });
@@ -154,21 +102,15 @@ class Key {
    */
   toJSON(): KeyJSON {
     const {
-      _capPath,
-      _stabilized,
-      _stabilizerPath,
-      _color,
       _matrixPosition,
+      _color,
       _labels,
     } = this;
     return {
       className: "Key",
       data: {
-        capPath: _capPath,
-        stabilized: _stabilized,
-        stabilizerPath: _stabilizerPath,
-        color: _color,
         matrixPosition: _matrixPosition,
+        color: _color,
         labels: _labels,
       }
     }
