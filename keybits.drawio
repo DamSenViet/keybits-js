@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="Zx-dt7DG9LgxkGhazVlm" name="Page-1">
-        <mxGraphModel dx="1146" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="3000" math="0" shadow="0">
+        <mxGraphModel dx="835" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="3000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -60,7 +60,7 @@
                         <mxPoint x="440" y="220" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="33" value="Cap Dimensions &amp;amp;&lt;br&gt;Cap Options" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="41" vertex="1">
+                <mxCell id="33" value="Cap Shape &amp;amp;&lt;br&gt;Cap Options" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" parent="41" vertex="1">
                     <mxGeometry x="40" y="190" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="43" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="41" source="35" target="36" edge="1">
@@ -135,7 +135,7 @@
                 <mxCell id="98" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="41" source="97" target="34" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="97" value="Dims &amp;amp; Options&lt;br&gt;Mapping&lt;br&gt;Templates&lt;br&gt;Pre-configured by hand" style="rounded=1;whiteSpace=wrap;html=1;" parent="41" vertex="1">
+                <mxCell id="97" value="Dims &amp;amp; Options Mapping&lt;br&gt;&lt;br&gt;Pre-configured per Switch Type and Cap Size" style="rounded=1;whiteSpace=wrap;html=1;" parent="41" vertex="1">
                     <mxGeometry x="240" y="180" width="160" height="80" as="geometry"/>
                 </mxCell>
             </root>

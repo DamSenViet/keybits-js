@@ -10,6 +10,7 @@ export interface MatrixPosition {
 
 export interface KeyOptions {
   matrixPosition: MatrixPosition,
+  capShape: string,
   capColor: string,
   capLabels: Label[],
 };
@@ -18,6 +19,7 @@ export interface KeyJSON {
   className: "Key",
   data: {
     matrixPosition: MatrixPosition,
+    capShape: string,
     capColor: string,
     capLabels: unknown[],
   },
@@ -34,6 +36,12 @@ class Key {
     row: 0,
     column: 0,
   };
+
+  /**
+   * The svg path data of the cap shape.
+   * Path data units are key units.
+   */
+  public capShape: string = "";
 
   /**
    * The color of the cap.
@@ -53,20 +61,25 @@ class Key {
     if (arguments.length <= 0) return;
     if (!isObject(options)) throw new TypeError();
     let matrixPosition: MatrixPosition;
+    let capShape: string;
     let capColor: string;
     let capLabels: Label[];
     if (options instanceof Key)
       ({
         matrixPosition,
+        capShape,
         capColor,
         capLabels,
       } = options as Key)
     else
       ({
         matrixPosition,
+        capShape,
         capColor,
         capLabels,
       } = options as KeyOptions)
+    if (!isString(capShape)) throw new TypeError();
+    this.capShape = capColor;
     if (!isString(capColor)) throw new TypeError();
     this.capColor = capColor;
     if (!isArray(capLabels)) throw new TypeError();
@@ -102,6 +115,7 @@ class Key {
   toJSON(): KeyJSON {
     const {
       matrixPosition,
+      capShape,
       capColor,
       capLabels,
     } = this;
@@ -109,6 +123,7 @@ class Key {
       className: "Key",
       data: {
         matrixPosition,
+        capShape,
         capColor,
         capLabels,
       }
