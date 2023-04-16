@@ -30,6 +30,11 @@ export interface KeyJSON {
  */
 class Key {
   /**
+   * The name/alias of the Key.
+   */
+  public name: string = "";
+  
+  /**
    * The associated matrix position of the key.
    */
   public matrixPosition: MatrixPosition = {

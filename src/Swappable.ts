@@ -4,7 +4,13 @@ import Cluster from "./Cluster";
 export type SwappableItem = Key | Cluster | Swappable;
 
 class Swappable {
+  /**
+   * The name/alias of the Swappable.
+   */
+  public name: string = "";
+  
   public options: Array<SwappableItem> = new Array<SwappableItem>();
+  
   public defaultIndex = 0;
 }
 
