@@ -1,4 +1,4 @@
-import { KeyItem } from "./KeyItems";
+import { KeyItem } from "./KeyItem";
 
 
 interface KeyboardOptions {
