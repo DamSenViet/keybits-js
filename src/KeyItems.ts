@@ -2,7 +2,7 @@ import Key from "./Key";
 import Cluster from "./Cluster";
 import Swappable from "./Swappable";
 
-export type KeyItems = (
+export type KeyItem = (
   Key |
   Cluster |
   Swappable

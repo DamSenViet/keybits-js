@@ -1,4 +1,4 @@
-import { KeyItems } from "./KeyItems";
+import { KeyItem } from "./KeyItems";
 
 
 interface KeyboardOptions {
@@ -45,7 +45,7 @@ class Keyboard {
   /**
    * The list of keys, rotaries, and clusters.
    */
-  public keyItems: Array<KeyItems> = [];
+  public keyItems: Array<KeyItem> = [];
 
   /**
    * Instantiates a Keyboard.

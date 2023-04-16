@@ -1,10 +1,10 @@
 import Key from "./Key";
 import Swappable from "./Swappable";
 
-export type ClusterItems = Key | Cluster | Swappable;
+export type ClusterItem = Key | Cluster | Swappable;
 
 class Cluster {
-  public items: Array<ClusterItems> = new Array<ClusterItems>();
+  public items: Array<ClusterItem> = new Array<ClusterItem>();
 }
 
 export default Cluster;
