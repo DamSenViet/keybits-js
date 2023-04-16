@@ -1,7 +1,4 @@
-import Key from "./Key";
 import Cluster from "./Cluster";
-
-export type SwappableItem = Key | Cluster | Swappable;
 
 class Swappable {
   /**
@@ -9,9 +6,15 @@ class Swappable {
    */
   public name: string = "";
   
-  public options: Array<SwappableItem> = new Array<SwappableItem>();
+  /**
+   * Exclusive Optional selections as clusters.
+   */
+  public options: Cluster[] = [];
   
-  public defaultIndex = 0;
+  /**
+   * The index at which the default option is set to.
+   */
+  public defaultOptionIndex = 0;
 }
 
 export default Swappable;
