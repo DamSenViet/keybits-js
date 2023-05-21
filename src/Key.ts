@@ -1,27 +1,55 @@
 import Ajv from "ajv";
 import { Label } from "./Label";
 import keySchema from "./Key.schema";
-import { isObject, isArray, isString } from "lodash";
+import { isObject } from "lodash";
+import { CapName } from "./utils/caps";
 
 export interface MatrixPosition {
   row: number,
   column: number,
 };
 
+export interface Cap {
+  /**
+   * The svg path data of the cap shape.
+   * Path data units are key units.
+   */
+  shape: string,
+  /**
+   * The cap name of the cap type.
+   * Also determines the switch type.
+   */
+  type: CapName,
+  /**
+   * The css 6 digit hex color of the cap.
+   */
+  color: string,
+  /**
+   * The labels on the cap.
+   */
+  labels: Label[],
+};
+
+export interface Transform {
+  originX: number,
+  originY: number,
+  rotate: number;
+  translateX: number,
+  translateY: number,
+};
+
 export interface KeyOptions {
   matrixPosition: MatrixPosition,
-  capShape: string,
-  capColor: string,
-  capLabels: Label[],
+  transform: Transform,
+  cap: Cap,
 };
 
 export interface KeyJSON {
   className: "Key",
   data: {
     matrixPosition: MatrixPosition,
-    capShape: string,
-    capColor: string,
-    capLabels: unknown[],
+    transform: Transform,
+    cap: Cap,
   },
 }
 
@@ -33,7 +61,7 @@ class Key {
    * The name/alias of the Key.
    */
   public name: string = "";
-  
+
   /**
    * The associated matrix position of the key.
    */
@@ -43,20 +71,25 @@ class Key {
   };
 
   /**
-   * The svg path data of the cap shape.
-   * Path data units are key units.
+   * The physical transofmration of the key.
    */
-  public capShape: string = "";
+  public transform: Transform = {
+    originX: 0,
+    originY: 0,
+    rotate: 0,
+    translateX: 0,
+    translateY: 0,
+  }
 
   /**
-   * The color of the cap.
+   * Grouped cap related properties of the Key.
    */
-  public capColor = "#FFFFFF";
-
-  /**
-   * The labels on the cap.
-   */
-  public capLabels: Array<Label> = new Array();
+  public cap: Cap = {
+    type: CapName.cherry,
+    shape: "",
+    color: "#FFFFFF",
+    labels: [],
+  };
 
   /**
    * Instantiates a Key.
@@ -66,29 +99,24 @@ class Key {
     if (arguments.length <= 0) return;
     if (!isObject(options)) throw new TypeError();
     let matrixPosition: MatrixPosition;
-    let capShape: string;
-    let capColor: string;
-    let capLabels: Label[];
+    let cap: Cap;
+    let transform: Transform;
     if (options instanceof Key)
       ({
         matrixPosition,
-        capShape,
-        capColor,
-        capLabels,
+        transform,
+        cap,
       } = options as Key)
     else
       ({
         matrixPosition,
-        capShape,
-        capColor,
-        capLabels,
+        transform,
+        cap,
       } = options as KeyOptions)
-    if (!isString(capShape)) throw new TypeError();
-    this.capShape = capColor;
-    if (!isString(capColor)) throw new TypeError();
-    this.capColor = capColor;
-    if (!isArray(capLabels)) throw new TypeError();
-    this.capLabels = capLabels;
+    if (!isObject(cap)) throw new TypeError();
+    this.matrixPosition = matrixPosition;
+    this.transform = transform;
+    this.cap = cap;
   }
 
   /**
@@ -101,14 +129,13 @@ class Key {
     if (!ajv.validate(keySchema, keyJSON)) throw new TypeError();
     const {
       matrixPosition,
-      capColor,
-      capLabels: labelsJSON,
+      transform,
+      cap,
     } = keyJSON.data;
-    // need to implement labels fromJSON
-    const labels: Label[] = [];
     return new Key({
       matrixPosition,
-      capColor,
+      transform,
+      cap,
     });
   }
 
@@ -120,17 +147,15 @@ class Key {
   toJSON(): KeyJSON {
     const {
       matrixPosition,
-      capShape,
-      capColor,
-      capLabels,
+      transform,
+      cap,
     } = this;
     return {
       className: "Key",
       data: {
         matrixPosition,
-        capShape,
-        capColor,
-        capLabels,
+        transform,
+        cap,
       }
     }
   }
