@@ -8,18 +8,22 @@ import { KeyItem } from "./KeyItem";
 import Key from "./Key";
 import Swappable from "./Swappable";
 
-type KeyCollector = (keyboard: Keyboard) => Key[];
 
-/**
- * Depth-first traversal of the items.
- */
-export const dftKeys = (
+type Traversal = (
   items: (
     KeyItem[] |
     ClusterItem[]
   ),
   callback: (key: Key) => any,
-): void => {
+) => void;
+
+/**
+ * Depth-first traversal of the items.
+ */
+export const dftKeys: Traversal = (
+  items,
+  callback,
+) => {
   for (const item of items) {
     if (item instanceof Cluster)
       dftKeys(item.items, callback);
@@ -34,13 +38,10 @@ export const dftKeys = (
 /**
  * Breadth-first traversal of the items.
  */
-export const bftKeys = (
-  items: (
-    KeyItem[] |
-    ClusterItem[]
-  ),
-  callback: (key: Key) => any,
-): void => {
+export const bftKeys: Traversal = (
+  items,
+  callback,
+) => {
   const queue = [];
   for (const item of items)
     queue.push(item);
@@ -58,9 +59,14 @@ export const bftKeys = (
 };
 
 
-const defaultKeyCollector: KeyCollector = (keyboard) => {
+type KeyCollector = (keyboard: Keyboard, traversal: Traversal) => Key[];
+
+const collectKeys: KeyCollector = (
+  keyboard,
+  traversal = dftKeys,
+) => {
   const keys: Key[] = [];
-  dftKeys(
+  traversal(
     keyboard.keyItems,
     (key) => { keys.push(key); }
   );
