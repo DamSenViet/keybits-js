@@ -85,8 +85,8 @@ test('fromJSON', () => {
     const pointJSON = {
       className: "Point",
       data: {
-        x: "7",
-        y: "7",
+        x: 7,
+        y: 7,
       },
     };
     const point = Point.fromJSON(<PointJSON>pointJSON);
@@ -96,8 +96,8 @@ test('fromJSON', () => {
     const pointJSON = {
       className: "",
       data: {
-        x: "7",
-        y: "7",
+        x: 7,
+        y: 7,
       },
     }
     const point = Point.fromJSON(<PointJSON>pointJSON);
@@ -107,7 +107,7 @@ test('fromJSON', () => {
     const pointJSON = {
       className: "Point",
       data: {
-        x: "7",
+        x: 7,
       },
     };
     const point = Point.fromJSON(<PointJSON>pointJSON);
@@ -117,7 +117,7 @@ test('fromJSON', () => {
     const pointJSON = {
       className: "Point",
       data: {
-        y: "7",
+        y: 7,
       },
     };
     const point = Point.fromJSON(<PointJSON>pointJSON);

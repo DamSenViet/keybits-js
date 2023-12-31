@@ -18,13 +18,13 @@ export interface TransformationOptions {
 export interface TransformationJSON {
   className: "Transformation",
   data: {
-    originX: string,
-    originY: string,
-    translateX: string,
-    translateY: string,
-    rotation: string,
-    scaleX: string,
-    scaleY: string,
+    originX: number,
+    originY: number,
+    translateX: number,
+    translateY: number,
+    rotation: number,
+    scaleX: number,
+    scaleY: number,
   }
 }
 
@@ -438,13 +438,13 @@ class Transformation {
     return {
       className: "Transformation",
       data: {
-        originX: _originX.toString(),
-        originY: _originY.toString(),
-        translateX: _translateX.toString(),
-        translateY: _translateY.toString(),
-        rotation: _rotation.toString(),
-        scaleX: _scaleX.toString(),
-        scaleY: _scaleY.toString(),
+        originX: _originX,
+        originY: _originY,
+        translateX: _translateX,
+        translateY: _translateY,
+        rotation: _rotation,
+        scaleX: _scaleX,
+        scaleY: _scaleY,
       },
     };
   }

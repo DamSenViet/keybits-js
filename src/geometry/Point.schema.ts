@@ -7,8 +7,8 @@ export default {
       type: "object",
       required: ["x", "y"],
       properties: {
-        x: { type: "string" },
-        y: { type: "string" },
+        x: { type: "number" },
+        y: { type: "number" },
       },
     },
   },

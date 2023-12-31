@@ -9,8 +9,8 @@ export interface PointOptions {
 export interface PointJSON {
   className: "Point",
   data: {
-    x: string,
-    y: string,
+    x: number,
+    y: number,
   },
 };
 
@@ -90,8 +90,8 @@ export default class Point {
     const ajv = new Ajv();
     if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError();
     const { x: xJSON, y: yJSON } = pointJSON.data;
-    const x = Number(xJSON);
-    const y = Number(yJSON);
+    const x = xJSON;
+    const y = yJSON;
     return new Point({ x, y });
   }
 
@@ -102,12 +102,11 @@ export default class Point {
    */
   public toJSON(): PointJSON {
     const { _x, _y } = this;
-    // maintain precision with strings
     return {
       className: "Point",
       data: {
-        x: _x.toString(),
-        y: _y.toString(),
+        x: _x,
+        y: _y,
       },
     };
   }

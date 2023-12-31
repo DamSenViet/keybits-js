@@ -409,15 +409,15 @@ test('fromJSON', () => {
         start: {
           className: "Point",
           data: {
-            x: "7",
-            y: "7",
+            x: 7,
+            y: 7,
           },
         },
         end: {
           className: "Point",
           data: {
-            x: "7",
-            y: "7",
+            x: 7,
+            y: 7,
           },
         },
       },
@@ -432,15 +432,15 @@ test('fromJSON', () => {
         start: {
           className: "Point",
           data: {
-            x: "7",
-            y: "7",
+            x: 7,
+            y: 7,
           },
         },
         end: {
           className: "Point",
           data: {
-            x: "7",
-            y: "7",
+            x: 7,
+            y: 7,
           },
         },
       },
@@ -455,8 +455,8 @@ test('fromJSON', () => {
         end: {
           className: "Point",
           data: {
-            x: "7",
-            y: "7",
+            x: 7,
+            y: 7,
           },
         },
       },
@@ -471,8 +471,8 @@ test('fromJSON', () => {
         start: {
           className: "Point",
           data: {
-            x: "7",
-            y: "7",
+            x: 7,
+            y: 7,
           },
         },
       },
