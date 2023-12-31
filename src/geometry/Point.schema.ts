@@ -1,16 +1,16 @@
 export default {
-  type: "object",
-  required: ["className", "data",],
+  type: 'object',
+  required: ['className', 'data'],
   properties: {
-    className: { const: "Point" },
+    className: { const: 'Point' },
     data: {
-      type: "object",
-      required: ["x", "y"],
+      type: 'object',
+      required: ['x', 'y'],
       properties: {
-        x: { type: "number" },
-        y: { type: "number" },
+        x: { type: 'number' },
+        y: { type: 'number' },
       },
     },
   },
   additionalProperties: false,
-};
+}

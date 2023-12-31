@@ -5,6 +5,7 @@ A JavaScript library for interacting with Keybits data structures and files.
 ## Installation
 
 At the root of the project directory:
+
 ```bash
 npm install
 ```

@@ -1,6 +1,3 @@
-class Rotary {
+class Rotary {}
 
-
-}
-
-export default Rotary;
+export default Rotary

@@ -1,128 +1,104 @@
-"use strict";
+'use strict'
 const {
   pathToBuild,
   pathToBuildCJS,
   pathToBuildUMD,
   pathToNodeModules,
   pathToSrcIndex,
-} = require('../etc/paths');
-const {
-  babelDevConfig,
-  babelProdConfig
-} = require('./babel.config');
+} = require('../etc/paths')
+const { babelDevConfig, babelProdConfig } = require('./babel.config')
 
-
-const entry = pathToSrcIndex;
+const entry = pathToSrcIndex
 
 const output = {
   path: pathToBuild,
-  filename: "index.js",
-};
+  filename: 'index.js',
+}
 
 // for node environments
 const outputCJS = {
   ...output,
-  libraryTarget: "commonjs",
+  libraryTarget: 'commonjs',
   path: pathToBuildCJS,
-};
+}
 
 // for browser environments
 const outputUMD = {
   ...output,
   // global name in browser
-  library: "keybits",
-  libraryTarget: "umd",
+  library: 'keybits',
+  libraryTarget: 'umd',
   path: pathToBuildUMD,
-};
+}
 
 const babelLoaderDev = {
   loader: 'babel-loader',
-  options: babelDevConfig
-};
-
+  options: babelDevConfig,
+}
 
 const babelLoaderProd = {
   ...babelLoaderDev,
-  options: babelProdConfig
-};
-
+  options: babelProdConfig,
+}
 
 const jsRuleDev = {
   test: /\.tsx?$/i,
-  use: [
-    babelLoaderDev,
-    'ts-loader',
-  ],
+  use: [babelLoaderDev, 'ts-loader'],
   exclude: pathToNodeModules,
-};
-
+}
 
 const jsRuleProd = {
   ...jsRuleDev,
-  use: [
-    babelLoaderProd,
-    'ts-loader',
-  ],
-};
+  use: [babelLoaderProd, 'ts-loader'],
+}
 
+const rulesDev = [jsRuleDev]
 
-const rulesDev = [
-  jsRuleDev,
-];
-
-
-const rulesProd = [
-  jsRuleProd,
-];
-
+const rulesProd = [jsRuleProd]
 
 const resolve = {
-  extensions: [".ts", ".js"],
-};
+  extensions: ['.ts', '.js'],
+}
 
 const webpackDevConfigCJS = {
-  target: "node",
-  mode: "development",
-  devtool: "source-map",
+  target: 'node',
+  mode: 'development',
+  devtool: 'source-map',
   entry,
   output: outputCJS,
   module: {
-    rules: rulesDev
+    rules: rulesDev,
   },
   resolve,
-};
-
+}
 
 const webpackProdConfigCJS = {
-  target: "node",
-  mode: "production",
+  target: 'node',
+  mode: 'production',
   devtool: false,
   entry,
   output: outputCJS,
   module: {
-    rules: rulesProd
+    rules: rulesProd,
   },
   resolve,
-};
-
+}
 
 const webpackDevConfigUMD = {
   ...webpackDevConfigCJS,
-  target: "web",
+  target: 'web',
   output: outputUMD,
-};
-
+}
 
 const webpackProdConfigUMD = {
   ...webpackProdConfigCJS,
-  target: "web",
+  target: 'web',
   output: outputUMD,
-};
-
+}
 
 module.exports = {
   webpackDevConfigCJS,
   webpackProdConfigCJS,
   webpackDevConfigUMD,
   webpackProdConfigUMD,
-};
+}

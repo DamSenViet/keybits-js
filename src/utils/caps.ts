@@ -2,36 +2,31 @@
  * @file Information on various cap types to aid drawing generation.
  */
 
-import {
-  values,
-} from "lodash";
-import {
-  SwitchType,
-  mx as mxSwitch,
-} from "./switches";
+import { values } from 'lodash'
+import { SwitchType, mx as mxSwitch } from './switches'
 
 /**
  * Valid cap names.
  */
 export enum CapName {
-  cherry = "Cherry",
-  sa = "SA",
-  kat = "KAT",
-  kam = "KAM",
+  cherry = 'Cherry',
+  sa = 'SA',
+  kat = 'KAT',
+  kam = 'KAM',
 }
 
 /**
  * Cap data represented as an object.
  */
 export interface CapType {
-  name: CapName, // must be unique across caps
-  switchType: SwitchType,
+  name: CapName // must be unique across caps
+  switchType: SwitchType
 }
 
 export const cherry: CapType = {
   name: CapName.cherry,
   switchType: mxSwitch,
-};
+}
 
 // export const sa: CapType = {
 //   name: CapName.sa,
@@ -51,7 +46,7 @@ export const cherry: CapType = {
 /**
  * List of all valid cap names.
  */
-export const capNames: CapName[] = values(CapName);
+export const capNames: CapName[] = values(CapName)
 
 /**
  * List of all cap types.
@@ -61,11 +56,11 @@ export const capTypes: CapType[] = [
   // sa,
   // kat,
   // kam,
-];
+]
 
 /**
  * Mapping for CapName to CapType.
  */
 export const capNameToCapType: Map<CapName, CapType> = new Map(
-  capTypes.map(capType => [capType.name, capType])
-);
+  capTypes.map((capType) => [capType.name, capType])
+)

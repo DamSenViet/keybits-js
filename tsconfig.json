@@ -1,12 +1,6 @@
 {
-  "include": [
-    "./src/**/*.ts",
-  ],
-  "exclude": [
-    "./node_modules",
-    "./tests",
-    "./src/**/*.test.ts",
-  ],
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./node_modules", "./tests", "./src/**/*.test.ts"],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": true,
@@ -23,10 +17,7 @@
     // webpack needs this to generate source maps
     "sourceMap": true,
     // "declaration": true,
-    "lib": [
-      "ESNext",
-      "DOM",
-    ],
+    "lib": ["ESNext", "DOM"],
     "moduleResolution": "node",
     // ### STRICT CHECKS
     "alwaysStrict": true,
@@ -34,8 +25,8 @@
     "noImplicitReturns": true,
     "strictPropertyInitialization": true,
     "strictFunctionTypes": true,
-    "strictNullChecks": true,
+    "strictNullChecks": true
     // ### ADVANCED
     // "preserveConstEnums": true,
-  },
+  }
 }

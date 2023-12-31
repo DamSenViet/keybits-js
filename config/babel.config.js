@@ -1,19 +1,16 @@
-"use strict";
-const { pathToSrc } = require('../etc/paths');
+'use strict'
+const { pathToSrc } = require('../etc/paths')
 
 const babelDevConfig = {
   presets: ['@babel/preset-env'],
-  plugins: [
-    ['@babel/plugin-transform-runtime', {}],
-  ]
-};
-
+  plugins: [['@babel/plugin-transform-runtime', {}]],
+}
 
 const babelProdConfig = {
-  ...babelDevConfig
-};
+  ...babelDevConfig,
+}
 
 module.exports = {
   babelDevConfig,
-  babelProdConfig
-};
+  babelProdConfig,
+}

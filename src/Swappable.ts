@@ -1,20 +1,20 @@
-import Cluster from "./Cluster";
+import Cluster from './Cluster'
 
 class Swappable {
   /**
    * The name/alias of the Swappable.
    */
-  public name: string = "";
-  
+  public name: string = ''
+
   /**
    * Exclusive Optional selections as clusters.
    */
-  public options: Cluster[] = [];
-  
+  public options: Cluster[] = []
+
   /**
    * The index at which the default option is set to.
    */
-  public defaultOptionIndex = 0;
+  public defaultOptionIndex = 0
 }
 
-export default Swappable;
+export default Swappable

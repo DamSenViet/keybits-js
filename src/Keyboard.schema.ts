@@ -1,15 +1,13 @@
 export default {
-  type: "object",
-  required: ["className", "data"],
+  type: 'object',
+  required: ['className', 'data'],
   properties: {
-    className: { const: "Keyboard" },
+    className: { const: 'Keyboard' },
     data: {
-      type: "object",
+      type: 'object',
       required: [],
-      properties: {
-        
-      },
+      properties: {},
     },
   },
   additionalProperties: false,
-};
+}

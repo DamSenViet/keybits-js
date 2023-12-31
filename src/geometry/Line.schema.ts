@@ -1,13 +1,13 @@
-import pointSchema from "./Point.schema";
+import pointSchema from './Point.schema'
 
 export default {
-  type: "object",
-  required: ["className", "data",],
+  type: 'object',
+  required: ['className', 'data'],
   properties: {
-    className: { const: "Line" },
+    className: { const: 'Line' },
     data: {
-      type: "object",
-      required: ["start", "end"],
+      type: 'object',
+      required: ['start', 'end'],
       properties: {
         start: pointSchema,
         end: pointSchema,
@@ -15,4 +15,4 @@ export default {
     },
   },
   additionalProperties: false,
-};
+}

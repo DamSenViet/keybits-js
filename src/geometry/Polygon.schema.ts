@@ -1,16 +1,16 @@
-import pointSchema from "./Point.schema";
+import pointSchema from './Point.schema'
 
 export default {
-  type: "object",
-  required: ["className", "data",],
+  type: 'object',
+  required: ['className', 'data'],
   properties: {
-    className: { const: "Polygon" },
+    className: { const: 'Polygon' },
     data: {
-      type: "object",
-      required: ["points"],
+      type: 'object',
+      required: ['points'],
       properties: {
         points: {
-          type: "array",
+          type: 'array',
           items: pointSchema,
           minItems: 3,
         },
@@ -18,4 +18,4 @@ export default {
     },
   },
   additionalProperties: false,
-};
+}

@@ -2,18 +2,16 @@
  * @file Information on various switch types to aid drawing generation.
  */
 
-import {
-  values,
-} from "lodash";
+import { values } from 'lodash'
 
 /**
  * Valid switch names.
  */
 export enum SwitchName {
-  mx = "Cherry MX",
-  alps = "Alps SKCM/SKCL",
-  chocV1 = "Kailh Low Profile Choc V1",
-  chocV2 = "Kailh Low Profile Choc V2",
+  mx = 'Cherry MX',
+  alps = 'Alps SKCM/SKCL',
+  chocV1 = 'Kailh Low Profile Choc V1',
+  chocV2 = 'Kailh Low Profile Choc V2',
 }
 
 /**
@@ -23,31 +21,30 @@ export interface SwitchType {
   /**
    * The name of the switch type.
    */
-  name: SwitchName,
+  name: SwitchName
   /**
    * The svg path data for the plate cutout. Specified in millimeters.
    */
-  switchPlateCutout: string,
+  switchPlateCutout: string
   /**
    * The margin reserved around the keycap. Specified in millimeters.
    * Definitions must be ((keycap width - tolerance) - switch cutout bounding width) / 2.
    */
-  marginX: number,
+  marginX: number
   /**
    * The margin reserved around the keycap. Specified in millimeters.
    * Definitions must be ((keycap height - tolerance) - switch cutout bounding height) / 2.
    */
-  marginY: number,
-};
-
+  marginY: number
+}
 
 // https://matt3o.com/anatomy-of-a-keyboard/
 export const mx: SwitchType = {
   name: SwitchName.mx,
-  switchPlateCutout: "TODO",
-  marginX: ((18.00 + 1.05) - 14.00) / 2,
-  marginY: ((18.00 + 1.05) - 14.00) / 2,
-};
+  switchPlateCutout: 'TODO',
+  marginX: (18.0 + 1.05 - 14.0) / 2,
+  marginY: (18.0 + 1.05 - 14.0) / 2,
+}
 
 // export const alps: SwitchType = {
 //   name: SwitchName.alps,
@@ -73,7 +70,7 @@ export const mx: SwitchType = {
 /**
  * List of all valid switch names.
  */
-export const switchNames: SwitchName[] = values(SwitchName);
+export const switchNames: SwitchName[] = values(SwitchName)
 
 /**
  * List of all valid cap names.
@@ -83,11 +80,11 @@ export const switchTypes: SwitchType[] = [
   // alps,
   // chocV1,
   // chocV2,
-];
+]
 
 /**
  * Mapping for SwitchName to SwitchType.
  */
 export const switchNameToSwitchType: Map<SwitchName, SwitchType> = new Map(
-  switchTypes.map(switchType => [switchType.name, switchType])
-);
+  switchTypes.map((switchType) => [switchType.name, switchType])
+)
