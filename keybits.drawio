@@ -1,22 +1,11 @@
 <mxfile host="65bd71144e">
     <diagram id="Zx-dt7DG9LgxkGhazVlm" name="Page-1">
-        <mxGraphModel dx="835" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="3000" math="0" shadow="0">
+        <mxGraphModel dx="747" dy="698" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="4000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="8" value="Keybits File Format" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="80" width="380" height="680" as="geometry">
-                        <mxRectangle x="30" y="50" width="140" height="30" as="alternateBounds"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="2" value="PCB (Keyboard)" style="rounded=1;whiteSpace=wrap;html=1;" parent="8" vertex="1">
-                    <mxGeometry x="120" y="40" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="20" value="KeyItems" style="rounded=1;whiteSpace=wrap;html=1;perimeterSpacing=30;" parent="8" vertex="1">
-                    <mxGeometry x="97.5" y="130" width="165" height="60" as="geometry"/>
-                </mxCell>
                 <mxCell id="11" value="Export: Vial.json" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="630" y="80" width="200" height="200" as="geometry">
+                    <mxGeometry x="1080" y="800" width="200" height="200" as="geometry">
                         <mxRectangle x="580" y="40" width="130" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -24,31 +13,31 @@
                     <mxGeometry x="40" y="40" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="12" value="Export: Via.json" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="630" y="320" width="200" height="200" as="geometry"/>
+                    <mxGeometry x="1080" y="1040" width="200" height="200" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="KLE Positioning" style="rounded=1;whiteSpace=wrap;html=1;" parent="12" vertex="1">
                     <mxGeometry x="40" y="40" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="13" value="Export: QMK info.json" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="630" y="560" width="200" height="200" as="geometry"/>
+                    <mxGeometry x="1080" y="1280" width="200" height="200" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="Abs Positioning&lt;br&gt;Rotations removed" style="rounded=1;whiteSpace=wrap;html=1;" parent="13" vertex="1">
                     <mxGeometry x="40" y="50" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="14" value="Export: Kicad Schematic" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="890" y="80" width="200" height="200" as="geometry"/>
+                    <mxGeometry x="1320" y="800" width="200" height="200" as="geometry"/>
                 </mxCell>
                 <mxCell id="31" value="Footprints" style="rounded=1;whiteSpace=wrap;html=1;" parent="14" vertex="1">
                     <mxGeometry x="40" y="40" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="Export: QMK Keymap.c" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="890" y="560" width="200" height="200" as="geometry"/>
+                    <mxGeometry x="1320" y="1280" width="200" height="200" as="geometry"/>
                 </mxCell>
                 <mxCell id="32" value="Keycodes in matrix position" style="rounded=1;whiteSpace=wrap;html=1;" parent="15" vertex="1">
                     <mxGeometry x="40" y="40" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="28" value="Export: KLE" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="890" y="320" width="200" height="200" as="geometry"/>
+                    <mxGeometry x="1320" y="1040" width="200" height="200" as="geometry"/>
                 </mxCell>
                 <mxCell id="41" value="Drawing Generation Pipeline" style="swimlane;" parent="1" vertex="1">
                     <mxGeometry x="80" y="800" width="960" height="440" as="geometry">
@@ -75,7 +64,7 @@
                 <mxCell id="36" value="Cap Placement &amp;amp;&lt;br&gt;Spacing" style="rounded=1;whiteSpace=wrap;html=1;" parent="41" vertex="1">
                     <mxGeometry x="760" y="70" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="46" value="Switch Footprint" style="rounded=1;whiteSpace=wrap;html=1;" parent="41" vertex="1">
+                <mxCell id="46" value="Stabilizer Plate Cutout" style="rounded=1;whiteSpace=wrap;html=1;" parent="41" vertex="1">
                     <mxGeometry x="520" y="310" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="66" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;shape=link;" parent="41" source="34" target="46" edge="1">
@@ -96,10 +85,10 @@
                 <mxCell id="82" value="Center Aligned Offset" style="edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;" parent="81" connectable="0" vertex="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="84" value="Stabilizer Footprint" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;" parent="41" vertex="1">
+                <mxCell id="84" value="Switch Footprint" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;" parent="41" vertex="1">
                     <mxGeometry x="760" y="310" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="83" value="Stabilizer Cutout" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;" parent="41" vertex="1">
+                <mxCell id="83" value="Switch Footprint" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;" parent="41" vertex="1">
                     <mxGeometry x="760" y="190" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="87" value="" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;shape=link;" parent="41" source="34" target="83" edge="1">
@@ -137,6 +126,54 @@
                 </mxCell>
                 <mxCell id="97" value="Dims &amp;amp; Options Mapping&lt;br&gt;&lt;br&gt;Pre-configured per Switch Type and Cap Size" style="rounded=1;whiteSpace=wrap;html=1;" parent="41" vertex="1">
                     <mxGeometry x="240" y="180" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="187" value="Key" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;swimlaneFillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="470" width="160" height="206" as="geometry"/>
+                </mxCell>
+                <mxCell id="188" value="Unique ID" style="text;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fillColor=default;" parent="187" vertex="1">
+                    <mxGeometry y="26" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="189" value="Name" style="text;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fillColor=default;" parent="187" vertex="1">
+                    <mxGeometry y="56" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="191" value="Matrix Position" style="text;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fillColor=default;" parent="187" vertex="1">
+                    <mxGeometry y="86" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="196" value="Cap Entry Name" style="text;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fillColor=default;" parent="187" vertex="1">
+                    <mxGeometry y="116" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="193" value="Legend(s) / Label (s)" style="text;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fillColor=default;" parent="187" vertex="1">
+                    <mxGeometry y="146" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="190" value="Transform" style="text;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;fillColor=default;" parent="187" vertex="1">
+                    <mxGeometry y="176" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="211" value="Cap Entry" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;fillColor=default;gradientColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="470" width="200" height="176" as="geometry"/>
+                </mxCell>
+                <mxCell id="212" value="Name (e.g. 1ux1u)" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="211" vertex="1">
+                    <mxGeometry y="26" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="214" value="Switch Cutout &amp; Offset(s)" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="211" vertex="1">
+                    <mxGeometry y="56" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="215" value="Stabilizer Cutout &amp; Offset(s)" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="211" vertex="1">
+                    <mxGeometry y="86" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="230" value="Bounding Shape" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="211" vertex="1">
+                    <mxGeometry y="116" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="216" value="Margin" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="211" vertex="1">
+                    <mxGeometry y="146" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="224" value="Cutout" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="470" width="160" height="86" as="geometry"/>
+                </mxCell>
+                <mxCell id="225" value="Name" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="224" vertex="1">
+                    <mxGeometry y="26" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="226" value="Cutout&#10;" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;" parent="224" vertex="1">
+                    <mxGeometry y="56" width="160" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

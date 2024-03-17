@@ -1,34 +1,31 @@
+import { merge } from 'lodash'
 import { KeyItem } from './KeyItem'
-
-interface KeyboardOptions {}
-
-interface KeyboardJSON {}
 
 /**
  * A keyboard representing the physical layout of the PCB.
  */
-class Keyboard {
+interface KeyboardOptions {
   /**
    * The name of the physical layout.
    */
-  public name: string = ''
+  name: string
 
   /**
    * The maintainer's name or alias.
    */
-  public maintainer: string = ''
+  maintainer: string
 
   /**
    * A URL to the maintainer's profile.
    */
-  public maintainerUrl: string = ''
+  maintainerUrl: string
 
   /**
    * The PCB matrix. Keys will be assigned matrix positions.
    */
-  public matrix = {
-    rows: 0,
-    columns: 0,
+  matrix: {
+    rows: number
+    columns: number
   }
 
   /**
@@ -37,36 +34,33 @@ class Keyboard {
    * matrix position. Multiple keys can map onto the same matrix position and
    * all those keys must source the keycodes from the same matrix position.
    */
-  private keycodesIndex: string[][][] = []
+  keycodesIndex: string[][][]
 
   /**
    * The list of keys, rotaries, and clusters.
    */
-  public keyItems: Array<KeyItem> = []
+  keyItems: Array<KeyItem>
+}
 
-  /**
-   * Instantiates a Keyboard.
-   * @param options A configuration Object.
-   */
-  public constructor(options?: Keyboard | Partial<KeyboardOptions>) {}
+interface Keyboard {
+  type: 'Keyboard'
+  data: KeyboardOptions
+}
 
-  /**
-   * Creates a Keyboard from a JSON object. The JSON must match Keyboard schema
-   * for the method to succeed.
-   * @param keyboardJSON The Keyboard formatted JSON.
-   * @returns The Point represented by the JSON.
-   */
-  public static fromJSON(keyboardJSON: KeyboardJSON) {
-    return new Keyboard()
+export function createKeyboard(options: Partial<KeyboardOptions> = {}) {
+  const defaultKeyboard: KeyboardOptions = {
+    name: '',
+    maintainer: '',
+    maintainerUrl: '',
+    matrix: {
+      rows: 0,
+      columns: 0,
+    },
+    keycodesIndex: [],
+    keyItems: [],
   }
 
-  /**
-   * Creates a JSON object from the invoking Keyboard.
-   * @returns The JSON representation of the Point.
-   */
-  public toJSON(): KeyboardJSON {
-    return {}
-  }
+  return merge({}, defaultKeyboard, options)
 }
 
 export default Keyboard

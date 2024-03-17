@@ -1,5 +1,6 @@
 /**
  * @file Information on various switch types to aid drawing generation.
+ * UNUSED... BRAINSTORMING
  */
 
 import { values } from 'lodash'

@@ -1,9 +1,10 @@
 /**
  * @file Information on various cap types to aid drawing generation.
+ * UNUSED... BRAINSTORMING
  */
 
 import { values } from 'lodash'
-import { SwitchType, mx as mxSwitch } from './switches'
+import { SwitchType, mx as mxSwitch } from './switchTypes'
 
 /**
  * Valid cap names.
