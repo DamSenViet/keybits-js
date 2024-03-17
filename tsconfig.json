@@ -10,7 +10,7 @@
     "module": "ES6",
     // target javascript version
     "target": "ES6",
-    "outDir": "./build/esm/",
+    "outDir": "./dist",
     // lib needs to be all ts
     "allowJs": false,
     "removeComments": false,

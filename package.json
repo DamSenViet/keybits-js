@@ -7,9 +7,9 @@
   "browser": "build/umd/build.js",
   "scripts": {
     "clean": "node scripts/clean.js",
-    "watch": "node scripts/watch.js",
+    "watch": "vite",
     "watch:esm": "tsc -w",
-    "build": "node scripts/build.js",
+    "build": "vite build",
     "build:esm": "tsc",
     "test": "jest --passWithNoTests"
   },
@@ -32,7 +32,10 @@
     "chroma-js": "^2.1.0",
     "d3-path": "^3.1.0",
     "lodash": "^4.17.21",
-    "points-on-path": "^0.2.1"
+    "points-on-path": "^0.2.1",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -49,7 +52,6 @@
     "signale": "^1.4.0",
     "ts-jest": "^26.1.1",
     "ts-loader": "^7.0.4",
-    "typescript": "^3.9.2",
     "webpack": "^4.46.0",
     "webpack-format-messages": "^2.0.6",
     "yargs": "^15.3.1"
