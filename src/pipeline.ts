@@ -3,49 +3,40 @@
  */
 
 import Keyboard from './Keyboard'
-import Cluster, { ClusterItem } from './Cluster'
-import { KeyItem } from './KeyItem'
+import { ClusterItem } from './Cluster'
 import Key from './Key'
-import Swappable from './Swappable'
 
-type Traversal = (
-  items: KeyItem[] | ClusterItem[],
-  callback: (key: Key) => any
-) => void
+type Traverse = (items: ClusterItem[], callback: (key: Key) => any) => void
 
 /**
  * Depth-first traversal of the items.
  */
-export const dftKeys: Traversal = (items, callback) => {
+export const dftKeys: Traverse = (items, callback) => {
   for (const item of items) {
-    if (item instanceof Cluster) dftKeys(item.items, callback)
-    else if (item instanceof Swappable) {
-      dftKeys(item.options, callback)
-    } else if (item instanceof Key) callback(item)
+    if (item.className === 'Cluster') dftKeys(item.data.items, callback)
+    else if (item.className === 'Key') callback(item)
   }
 }
 
 /**
  * Breadth-first traversal of the items.
  */
-export const bftKeys: Traversal = (items, callback) => {
-  const queue = []
+export const bftKeys: Traverse = (items, callback) => {
+  const queue: typeof items = []
   for (const item of items) queue.push(item)
   while (queue.length > 0) {
-    const item = queue.shift()
-    if (item instanceof Cluster)
-      for (const clusterItem of item.items) queue.push(clusterItem)
-    else if (item instanceof Swappable)
-      for (const swappableOption of item.options) queue.push(swappableOption)
-    else if (item instanceof Key) callback(item)
+    const item = queue.shift()!
+    if (item.className === 'Cluster')
+      for (const clusterItem of item.data.items) queue.push(clusterItem)
+    else if (item.className === 'Key') callback(item)
   }
 }
 
-type KeyCollector = (keyboard: Keyboard, traversal: Traversal) => Key[]
+type KeyCollector = (keyboard: Keyboard, traverse: Traverse) => Key[]
 
-const collectKeys: KeyCollector = (keyboard, traversal = dftKeys) => {
+const collectKeys: KeyCollector = (keyboard, traverse = dftKeys) => {
   const keys: Key[] = []
-  traversal(keyboard.keyItems, (key) => {
+  traverse(keyboard.data.keyItems, (key) => {
     keys.push(key)
   })
   return keys
