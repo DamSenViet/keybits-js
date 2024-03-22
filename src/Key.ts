@@ -21,12 +21,23 @@ export interface Transform {
 }
 
 /**
- * Information about the Cap.
+ * Cap information..
  */
 interface Cap {
+  /**
+   * A reference by name to the cap entry.
+   * Will be resolved at computation time to a CapResolver.
+   */
+  name: CapEntry['name']
+  /**
+   * Valid CSS color to apply to the Cap.
+   * Relative colors (e.g. cap shadows) will be computed with this as the base color.
+   */
   color: string
+  /**
+   * A list of labels to be rendered on top of the Key.
+   */
   labels: string[]
-  capEntry: CapEntry['name']
 }
 
 /**
@@ -69,7 +80,7 @@ export const createKey = (options: Partial<KeyOptions> = {}): Key => {
     cap: {
       color: '#ffffff',
       labels: [],
-      capEntry: cherry0100uX0100u.name,
+      name: cherry0100uX0100u.name,
     },
   }
   return {

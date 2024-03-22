@@ -5,8 +5,13 @@
 import Keyboard from './Keyboard'
 import { ClusterItem } from './Cluster'
 import Key from './Key'
+import { CapEntry, CapResolver } from './utils/capEntries'
+import { isUndefined } from 'lodash'
 
-type Traverse = (items: ClusterItem[], callback: (key: Key) => any) => void
+export type Traverse = (
+  items: ClusterItem[],
+  callback: (key: Key) => any,
+) => void
 
 /**
  * Depth-first traversal of the items.
@@ -32,7 +37,7 @@ export const bftKeys: Traverse = (items, callback) => {
   }
 }
 
-type KeyCollector = (keyboard: Keyboard, traverse: Traverse) => Key[]
+export type KeyCollector = (keyboard: Keyboard, traverse: Traverse) => Key[]
 
 const collectKeys: KeyCollector = (keyboard, traverse = dftKeys) => {
   const keys: Key[] = []
@@ -40,4 +45,41 @@ const collectKeys: KeyCollector = (keyboard, traverse = dftKeys) => {
     keys.push(key)
   })
   return keys
+}
+
+// take the collected keys and transform them into coordinates
+
+// need a cap resolver
+
+const calcKeyCapCoords = (key: Key, capResolver: CapResolver): number[][] => {
+  // for every key
+
+  // compute the set of closed shaped coordinates for every key
+  const capLookup = capResolver.get(key.data.cap.name)
+  // skip if lookup is unsuccessful
+  if (isUndefined(capLookup)) return []
+  // get coordinate list of cap shape
+
+  // apply transform to the coordinates
+
+  const capCoords = calculateCapCoords(capLookup)
+
+  return capCoords
+}
+
+const calculateCapCoords = (capEntry: CapEntry): number[][] => {
+  // transform the bounding shape (which is an svg) into a set of coordinate points
+  return capEntry.boundingShape
+}
+
+/**
+ * Takes an svg string and transforms it into a list of coordinate points.
+ * @param svgStr
+ * @returns []
+ */
+const svgStrToCoords = (svgStr: string): number[][] => {
+  // pathologize
+
+  // scale these points to arbitrary u unit.
+  return []
 }

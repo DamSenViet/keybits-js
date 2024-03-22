@@ -1,9 +1,16 @@
+/**
+ * A reusable CapEntry storing information about a Cap.
+ * Referenced in the Key by name & resolved via Map.
+ */
 export interface CapEntry {
+  /** The name of the CapEntry */
   name: string
+  /** The reference of the switchCutout. */
   // switchCutout: string
   // switchCutoutOffset: [number, number]
-  stabilizerCutout?: string
-  stabilizerCutoutOffset?: [number, number]
+  // stabilizerCutout?: string
+  // stabilizerCutoutOffset?: [number, number]
+  /** The bounding shape of the CapEntry represented as a closed set of coordinates. */
   boundingShape: [number, number][]
 }
 
@@ -25,6 +32,8 @@ const createCherryCap = (width: number, height: number): CapEntry => {
   }
 }
 
+// standard library of cap entries
+
 export const cherry0100uX0100u = createCherryCap(1.0, 1.0)
 
 export const cherry0125ux0100u = createCherryCap(1.25, 1.0)
@@ -43,4 +52,22 @@ export const cherry0275ux0100u = createCherryCap(2.75, 1.0)
 
 export const cherry0300ux0100u = createCherryCap(3.0, 1.0)
 
-export default [cherry0100uX0100u]
+export const defaultCaps = [
+  cherry0100uX0100u,
+  cherry0125ux0100u,
+  cherry0150ux0100u,
+  cherry0175ux0100u,
+  cherry0200ux0100u,
+  cherry0225ux0100u,
+  cherry0250ux0100u,
+  cherry0275ux0100u,
+  cherry0300ux0100u,
+]
+
+export type CapResolver = Map<string, CapEntry>
+
+export const defaultCapResolver: CapResolver = new Map(
+  defaultCaps.map((capEntry) => [capEntry.name, capEntry]),
+)
+
+export default defaultCaps
