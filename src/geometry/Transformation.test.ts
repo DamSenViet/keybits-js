@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import Transformation from './Transformation'
 import Point from './Point'
 

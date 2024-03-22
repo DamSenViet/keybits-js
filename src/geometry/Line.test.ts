@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import Line, { LineJSON } from './Line'
 import Point from './Point'
 

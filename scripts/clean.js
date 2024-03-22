@@ -1,15 +1,11 @@
-'use strict'
-const fse = require('fs-extra')
-const signale = require('signale')
+import fs from 'node:fs'
+import signale from 'signale'
 
-const { pathToBuild } = require('../etc/paths')
+import { pathToBuild } from '../etc/paths.js'
 
-;['SIGINT', 'SIGTERM'].forEach((signal) => {
-  process.on(signal, () => {
-    console.log('')
-    process.exit()
-  })
+fs.rmSync(pathToBuild, {
+  recursive: true,
+  force: true
 })
 
-fse.removeSync(pathToBuild)
 signale.success(`Build directory cleaned successfully!`)

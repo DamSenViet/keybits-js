@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import Point, { PointJSON } from './Point'
 
 test('constructor', () => {

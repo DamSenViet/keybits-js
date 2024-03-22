@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import Polygon, { PolygonJSON } from './Polygon'
 import Point from './Point'
 
