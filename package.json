@@ -11,7 +11,8 @@
     "watch:esm": "tsc -w",
     "build": "vite build",
     "build:esm": "tsc",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
