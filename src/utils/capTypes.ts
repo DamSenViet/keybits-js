@@ -63,5 +63,5 @@ export const capTypes: CapType[] = [
  * Mapping for CapName to CapType.
  */
 export const capNameToCapType: Map<CapName, CapType> = new Map(
-  capTypes.map((capType) => [capType.name, capType])
+  capTypes.map((capType) => [capType.name, capType]),
 )

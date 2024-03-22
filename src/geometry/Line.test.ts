@@ -40,8 +40,8 @@ test('getStart', () => {
         new Point({
           x: 0,
           y: 0,
-        })
-      )
+        }),
+      ),
     ).toBe(true)
   }).not.toThrow()
   expect(() => {
@@ -60,8 +60,8 @@ test('getStart', () => {
         new Point({
           x: 7,
           y: 7,
-        })
-      )
+        }),
+      ),
     ).toBe(true)
   }).not.toThrow()
 })
@@ -74,8 +74,8 @@ test('getEnd', () => {
         new Point({
           x: 0,
           y: 0,
-        })
-      )
+        }),
+      ),
     ).toBe(true)
   }).not.toThrow()
   expect(() => {
@@ -94,8 +94,8 @@ test('getEnd', () => {
         new Point({
           x: 7,
           y: 7,
-        })
-      )
+        }),
+      ),
     ).toBe(true)
   }).not.toThrow()
 })
@@ -214,7 +214,7 @@ test('intersection', () => {
       new Point({
         x: 0,
         y: 1,
-      })
+      }),
     )
   }).not.toThrow()
   // overlapping, parallel

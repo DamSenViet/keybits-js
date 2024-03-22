@@ -25,7 +25,7 @@ export default class Polygon {
     new Point({ x: 0, y: 0 }),
     new Point({ x: 0, y: 1 }),
     new Point({ x: 1, y: 1 }),
-    new Point({ x: 1, y: 0 })
+    new Point({ x: 1, y: 0 }),
   )
 
   /**
@@ -123,7 +123,7 @@ export default class Polygon {
       representations.push(
         new Polygon({
           points: copy,
-        })
+        }),
       )
     }
     return representations
@@ -136,7 +136,7 @@ export default class Polygon {
    */
   public equals(polygon: Polygon): boolean {
     const representationsStrings: Set<string> = new Set(
-      this.getRepresentations().map((polygon) => JSON.stringify(polygon))
+      this.getRepresentations().map((polygon) => JSON.stringify(polygon)),
     )
     // compare string versions
     return representationsStrings.has(JSON.stringify(polygon))

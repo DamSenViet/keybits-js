@@ -72,7 +72,7 @@ class Transformation {
    * @param options - a configuration Object with values as numbers.
    */
   public constructor(
-    options?: Readonly<Transformation | TransformationOptions>
+    options?: Readonly<Transformation | TransformationOptions>,
   ) {
     if (arguments.length <= 0) return
     if (typeof options !== 'object') throw new TypeError()
@@ -219,7 +219,7 @@ class Transformation {
    * @returns the geometry with the transformation applied
    */
   public apply(
-    geometry: Readonly<Point | Line | Polygon | Transformation>
+    geometry: Readonly<Point | Line | Polygon | Transformation>,
   ): any {
     const {
       _originX,
@@ -296,7 +296,7 @@ class Transformation {
    * @returns the geometry with the transformation applied
    */
   public unapply(
-    geometry: Readonly<Point | Line | Polygon | Transformation>
+    geometry: Readonly<Point | Line | Polygon | Transformation>,
   ): any {
     const {
       _originX,
@@ -354,7 +354,7 @@ class Transformation {
    * @param transformationJSON
    */
   public static fromJSON(
-    transformationJSON: Readonly<TransformationJSON>
+    transformationJSON: Readonly<TransformationJSON>,
   ): Transformation {
     const ajv = new Ajv()
     if (!ajv.validate(transformationSchema, transformationJSON))

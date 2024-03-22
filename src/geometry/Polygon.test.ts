@@ -192,7 +192,7 @@ test('toJSON', () => {
       'points',
       points.map((point) => {
         return point.toJSON()
-      })
+      }),
     )
   }).not.toThrow()
 })

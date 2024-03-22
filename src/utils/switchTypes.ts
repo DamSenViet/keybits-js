@@ -87,5 +87,5 @@ export const switchTypes: SwitchType[] = [
  * Mapping for SwitchName to SwitchType.
  */
 export const switchNameToSwitchType: Map<SwitchName, SwitchType> = new Map(
-  switchTypes.map((switchType) => [switchType.name, switchType])
+  switchTypes.map((switchType) => [switchType.name, switchType]),
 )

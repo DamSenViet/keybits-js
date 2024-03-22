@@ -19,7 +19,7 @@ export interface Cluster {
  * @returns The cluster with overridden options.
  */
 export const createCluster = (
-  options: Partial<ClusterOptions> = {}
+  options: Partial<ClusterOptions> = {},
 ): Cluster => {
   const defaultClusterOptions: ClusterOptions = {
     name: '',
