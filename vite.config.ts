@@ -1,6 +1,6 @@
-// vite.config.js
-import { resolve } from 'path'
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 import dtsPlugin from 'vite-plugin-dts'
 
 export default defineConfig({
