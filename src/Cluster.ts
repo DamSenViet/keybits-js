@@ -1,4 +1,3 @@
-import { merge } from 'lodash'
 import Key from './Key'
 
 export type ClusterItem = Key | Cluster
@@ -8,9 +7,8 @@ export interface ClusterOptions {
   items: ClusterItem[]
 }
 
-export interface Cluster {
+export interface Cluster extends ClusterOptions {
   className: 'Cluster'
-  data: ClusterOptions
 }
 
 /**
@@ -27,7 +25,8 @@ export const createCluster = (
   }
   return {
     className: 'Cluster',
-    data: merge({}, defaultClusterOptions, options),
+    ...defaultClusterOptions,
+    ...options,
   }
 }
 

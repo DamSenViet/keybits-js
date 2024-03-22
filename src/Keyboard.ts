@@ -42,12 +42,13 @@ interface KeyboardOptions {
   keyItems: Array<KeyItem>
 }
 
-interface Keyboard {
-  type: 'Keyboard'
-  data: KeyboardOptions
+interface Keyboard extends KeyboardOptions {
+  className: 'Keyboard'
 }
 
-export function createKeyboard(options: Partial<KeyboardOptions> = {}) {
+export function createKeyboard(
+  options: Partial<KeyboardOptions> = {},
+): Keyboard {
   const defaultKeyboard: KeyboardOptions = {
     name: '',
     maintainer: '',
@@ -60,7 +61,11 @@ export function createKeyboard(options: Partial<KeyboardOptions> = {}) {
     keyItems: [],
   }
 
-  return merge({}, defaultKeyboard, options)
+  return {
+    className: 'Keyboard',
+    ...defaultKeyboard,
+    ...options,
+  }
 }
 
 export default Keyboard

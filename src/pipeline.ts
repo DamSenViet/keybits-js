@@ -18,7 +18,7 @@ export type Traverse = (
  */
 export const dftKeys: Traverse = (items, callback) => {
   for (const item of items) {
-    if (item.className === 'Cluster') dftKeys(item.data.items, callback)
+    if (item.className === 'Cluster') dftKeys(item.items, callback)
     else if (item.className === 'Key') callback(item)
   }
 }
@@ -32,7 +32,7 @@ export const bftKeys: Traverse = (items, callback) => {
   while (queue.length > 0) {
     const item = queue.shift()!
     if (item.className === 'Cluster')
-      for (const clusterItem of item.data.items) queue.push(clusterItem)
+      for (const clusterItem of item.items) queue.push(clusterItem)
     else if (item.className === 'Key') callback(item)
   }
 }
@@ -41,7 +41,7 @@ export type KeyCollector = (keyboard: Keyboard, traverse: Traverse) => Key[]
 
 const collectKeys: KeyCollector = (keyboard, traverse = dftKeys) => {
   const keys: Key[] = []
-  traverse(keyboard.data.keyItems, (key) => {
+  traverse(keyboard.keyItems, (key) => {
     keys.push(key)
   })
   return keys
@@ -55,7 +55,7 @@ const calcKeyCapCoords = (key: Key, capResolver: CapResolver): number[][] => {
   // for every key
 
   // compute the set of closed shaped coordinates for every key
-  const capLookup = capResolver.get(key.data.cap.name)
+  const capLookup = capResolver.get(key.cap.name)
   // skip if lookup is unsuccessful
   if (isUndefined(capLookup)) return []
   // get coordinate list of cap shape

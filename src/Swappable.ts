@@ -1,20 +1,25 @@
 import Cluster from './Cluster'
 
-class Swappable {
-  /**
-   * The name/alias of the Swappable.
-   */
-  public name: string = ''
-
-  /**
-   * Exclusive Optional selections as clusters.
-   */
-  public options: Cluster[] = []
-
-  /**
-   * The index at which the default option is set to.
-   */
-  public defaultOptionIndex = 0
+interface SwappableOptions {
+  name: string
+  options: Cluster[]
+  defaultOptionIndex: number
 }
 
-export default Swappable
+interface Swappable extends SwappableOptions {
+  className: 'Swappable'
+}
+
+export function createSwappable(options: Partial<SwappableOptions>): Swappable {
+  const defaultOptions: SwappableOptions = {
+    name: 'Swappable',
+    options: [],
+    defaultOptionIndex: 0,
+  }
+
+  return {
+    className: 'Swappable',
+    ...defaultOptions,
+    ...options,
+  }
+}

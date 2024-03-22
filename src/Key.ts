@@ -1,4 +1,3 @@
-import { merge } from 'lodash'
 import { CapEntry, cherry0100uX0100u } from './utils/capEntries'
 
 /**
@@ -53,9 +52,8 @@ export interface KeyOptions {
 /**
  * A Key representing the cap, switch, associated stabilizers and styles.
  */
-export interface Key {
+export interface Key extends KeyOptions {
   className: 'Key'
-  data: KeyOptions
 }
 
 /**
@@ -85,7 +83,8 @@ export const createKey = (options: Partial<KeyOptions> = {}): Key => {
   }
   return {
     className: 'Key',
-    data: merge({}, defaultKeyOptions, options),
+    ...defaultKeyOptions,
+    ...options,
   }
 }
 
