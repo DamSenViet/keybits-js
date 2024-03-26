@@ -1,5 +1,3 @@
-import Ajv from 'ajv'
-import polygonSchema from './Polygon.schema'
 import Point, { PointJSON } from './Point'
 import Line from './Line'
 
@@ -157,33 +155,5 @@ export default class Polygon {
       }
     }
     return false
-  }
-
-  /**
-   * Creates a Polygon from a JSON object. The JSON must match the Polygon
-   * schema for the method to succeed.
-   * @param polygonJSON The polygon formatted JSON.
-   * @returns The Polygon represented by the JSON.
-   */
-  public static fromJSON(polygonJSON: PolygonJSON): Polygon {
-    const ajv = new Ajv()
-    if (!ajv.validate(polygonSchema, polygonJSON)) throw new TypeError()
-    const { points: pointsJSON } = polygonJSON.data
-    const points = pointsJSON.map((pointJSON) => Point.fromJSON(pointJSON))
-    return new Polygon({ points })
-  }
-
-  /**
-   * Creates a JSON object from invoking Polygon.
-   * @returns The JSON representation of the Polygon.
-   */
-  public toJSON(): PolygonJSON {
-    const { _points } = this
-    return {
-      className: 'Polygon',
-      data: {
-        points: _points.map((point) => point.toJSON()),
-      },
-    }
   }
 }

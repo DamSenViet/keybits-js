@@ -1,5 +1,3 @@
-import Ajv from 'ajv'
-import transformationSchema from './Transformation.schema'
 import Point from './Point'
 import Line from './Line'
 import Polygon from './Polygon'
@@ -347,71 +345,6 @@ class Transformation {
         }),
       })
     } else throw new TypeError()
-  }
-
-  /**
-   * Creates a Transformation from a JSON object.
-   * @param transformationJSON
-   */
-  public static fromJSON(
-    transformationJSON: Readonly<TransformationJSON>,
-  ): Transformation {
-    const ajv = new Ajv()
-    if (!ajv.validate(transformationSchema, transformationJSON))
-      throw new TypeError()
-    const {
-      originX: originXJSON,
-      originY: originYJSON,
-      translateX: translateXJSON,
-      translateY: translateYJSON,
-      rotation: rotationJSON,
-      scaleX: scaleXJSON,
-      scaleY: scaleYJSON,
-    } = transformationJSON.data
-    const originX = Number(originXJSON)
-    const originY = Number(originYJSON)
-    const translateX = Number(translateXJSON)
-    const translateY = Number(translateYJSON)
-    const rotation = Number(rotationJSON)
-    const scaleX = Number(scaleXJSON)
-    const scaleY = Number(scaleYJSON)
-    return new Transformation({
-      originX,
-      originY,
-      translateX,
-      translateY,
-      rotation,
-      scaleX,
-      scaleY,
-    })
-  }
-
-  /**
-   * Creates a JSON object from invoking Transformation.
-   * @returns the JSON representation of the Transformation
-   */
-  public toJSON(): TransformationJSON {
-    const {
-      _originX,
-      _originY,
-      _translateX,
-      _translateY,
-      _rotation,
-      _scaleX,
-      _scaleY,
-    } = this
-    return {
-      className: 'Transformation',
-      data: {
-        originX: _originX,
-        originY: _originY,
-        translateX: _translateX,
-        translateY: _translateY,
-        rotation: _rotation,
-        scaleX: _scaleX,
-        scaleY: _scaleY,
-      },
-    }
   }
 }
 

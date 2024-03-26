@@ -1,5 +1,3 @@
-import Ajv from 'ajv'
-import lineSchema from './Line.schema'
 import Point, { PointJSON } from './Point'
 
 export interface LineOptions {
@@ -149,36 +147,5 @@ export default class Line {
     )
       return false
     return true
-  }
-
-  /**
-   * Creates a Line from a JSON object. The JSON must match Line schema
-   * for the method to succeed.
-   * @param lineJSON The Line formatted JSON.
-   * @returns The Line represented by the JSON.
-   */
-  public static fromJSON(lineJSON: LineJSON): Line {
-    // verify with ajv
-    const ajv = new Ajv()
-    if (!ajv.validate(lineSchema, lineJSON)) throw new TypeError()
-    const { start: startJSON, end: endJSON } = lineJSON.data
-    const start: Point = Point.fromJSON(startJSON)
-    const end: Point = Point.fromJSON(endJSON)
-    return new Line({ start, end })
-  }
-
-  /**
-   * Creates a JSON object from invoking  Line.
-   * @returns The JSON representation of the Line.
-   */
-  public toJSON(): LineJSON {
-    const { _start, _end } = this
-    return {
-      className: 'Line',
-      data: {
-        start: _start.toJSON(),
-        end: _end.toJSON(),
-      },
-    }
   }
 }

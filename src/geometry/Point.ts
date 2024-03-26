@@ -1,5 +1,3 @@
-import Ajv from 'ajv'
-import pointSchema from './Point.schema'
 import { isNumber } from 'lodash'
 export interface PointOptions {
   x: number
@@ -71,35 +69,5 @@ export default class Point {
   public equals(point: Point): boolean {
     const { _x, _y } = this
     return _x === point._x && _y === point._y
-  }
-
-  /**
-   * Creates a Point from a JSON object. The JSON must match Point schema
-   * for the method to succeed.
-   * @param pointJSON The Point formatted JSON.
-   * @returns The Point represented by the JSON.
-   */
-  public static fromJSON(pointJSON: PointJSON): Point {
-    const ajv = new Ajv()
-    if (!ajv.validate(pointSchema, pointJSON)) throw new TypeError()
-    const { x: xJSON, y: yJSON } = pointJSON.data
-    const x = xJSON
-    const y = yJSON
-    return new Point({ x, y })
-  }
-
-  /**
-   * Creates a JSON object from invoking Point.
-   * @returns The JSON representation of the Point.
-   */
-  public toJSON(): PointJSON {
-    const { _x, _y } = this
-    return {
-      className: 'Point',
-      data: {
-        x: _x,
-        y: _y,
-      },
-    }
   }
 }
