@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import Point, { PointJSON } from './Point'
+import Point from './Point'
 
 test('constructor', () => {
   expect(() => {
@@ -74,60 +74,5 @@ test('equals', () => {
     expect(p1.equals(p2)).toBe(false)
     expect(p1.equals(p3)).toBe(false)
     expect(p2.equals(p3)).toBe(true)
-  }).not.toThrow()
-})
-
-test('fromJSON', () => {
-  expect(() => {
-    const pointJSON = {
-      className: 'Point',
-      data: {
-        x: 7,
-        y: 7,
-      },
-    }
-    const point = Point.fromJSON(<PointJSON>pointJSON)
-  }).not.toThrow()
-  expect(() => {
-    // wrong className
-    const pointJSON = {
-      className: '',
-      data: {
-        x: 7,
-        y: 7,
-      },
-    }
-    const point = Point.fromJSON(<PointJSON>pointJSON)
-  }).toThrow(TypeError)
-  expect(() => {
-    // missing y
-    const pointJSON = {
-      className: 'Point',
-      data: {
-        x: 7,
-      },
-    }
-    const point = Point.fromJSON(<PointJSON>pointJSON)
-  }).toThrow(TypeError)
-  expect(() => {
-    // missing x
-    const pointJSON = {
-      className: 'Point',
-      data: {
-        y: 7,
-      },
-    }
-    const point = Point.fromJSON(<PointJSON>pointJSON)
-  }).toThrow(TypeError)
-})
-
-test('toJSON', () => {
-  expect(() => {
-    const point = new Point({ x: 7, y: 7 })
-    const pointJSON = point.toJSON()
-    expect(pointJSON).toHaveProperty('className', 'Point')
-    expect(pointJSON).toHaveProperty('data')
-    expect(pointJSON.data).toHaveProperty('x')
-    expect(pointJSON.data).toHaveProperty('y')
   }).not.toThrow()
 })
