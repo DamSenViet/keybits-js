@@ -1,3 +1,5 @@
+import { Point } from '../geometry'
+
 /**
  * A reusable CapEntry storing information about a Cap.
  * Referenced in the Key by name & resolved via Map.
@@ -11,7 +13,7 @@ export interface CapEntry {
   // stabilizerCutout?: string
   // stabilizerCutoutOffset?: [number, number]
   /** The bounding shape of the CapEntry represented as a closed set of coordinates. */
-  boundingShape: [number, number][]
+  boundingShape: Point[]
 }
 
 /**
@@ -24,10 +26,10 @@ const createCherryCap = (width: number, height: number): CapEntry => {
   return {
     name: `Cherry ${width * 100}u X ${height * 100}u`,
     boundingShape: [
-      [0, 0],
-      [width, 0],
-      [width, height],
-      [0, height],
+      { x: 0, y: 0 },
+      { x: width, y: 0 },
+      { x: width, y: height },
+      { x: 0, y: height },
     ],
   }
 }

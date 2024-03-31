@@ -1,11 +1,8 @@
-/**
- * @file The pipeline from a keyboard to a modular line drawing.
- */
-
 import Keyboard from './Keyboard'
 import { ClusterItem } from './Cluster'
 import Key from './Key'
 import { CapEntry, CapResolver } from './utils/capEntries'
+import { Point } from './geometry'
 import { isUndefined } from 'lodash-es'
 
 export type Traverse = (
@@ -51,7 +48,7 @@ const collectKeys: KeyCollector = (keyboard, traverse = dftKeys) => {
 
 // need a cap resolver
 
-const calcKeyCapCoords = (key: Key, capResolver: CapResolver): number[][] => {
+const calcKeyCapCoords = (key: Key, capResolver: CapResolver): Point[] => {
   // for every key
 
   // compute the set of closed shaped coordinates for every key
@@ -67,7 +64,7 @@ const calcKeyCapCoords = (key: Key, capResolver: CapResolver): number[][] => {
   return capCoords
 }
 
-const calculateCapCoords = (capEntry: CapEntry): number[][] => {
+const calculateCapCoords = (capEntry: CapEntry): Point[] => {
   // transform the bounding shape (which is an svg) into a set of coordinate points
   return capEntry.boundingShape
 }
@@ -77,7 +74,7 @@ const calculateCapCoords = (capEntry: CapEntry): number[][] => {
  * @param svgStr
  * @returns []
  */
-const svgStrToCoords = (svgStr: string): number[][] => {
+const svgStrToCoords = (svgStr: string): Point[] => {
   // pathologize
 
   // scale these points to arbitrary u unit.
