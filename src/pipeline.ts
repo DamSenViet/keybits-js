@@ -6,7 +6,7 @@ import Keyboard from './Keyboard'
 import { ClusterItem } from './Cluster'
 import Key from './Key'
 import { CapEntry, CapResolver } from './utils/capEntries'
-import { isUndefined } from 'lodash'
+import { isUndefined } from 'lodash-es'
 
 export type Traverse = (
   items: ClusterItem[],

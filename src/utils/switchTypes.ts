@@ -3,7 +3,7 @@
  * UNUSED... BRAINSTORMING
  */
 
-import { values } from 'lodash'
+import { values } from 'lodash-es'
 
 /**
  * Valid switch names.

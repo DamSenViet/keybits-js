@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash-es'
 import { createPoint } from './Point'
 import {
   createLine,

@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 import Point, { createPoint, isPoint } from './Point'
 import Line, { createLine, isLine } from './Line'
 import Polygon, { createPolygon, isPolygon } from './Polygon'

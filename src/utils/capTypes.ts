@@ -3,7 +3,7 @@
  * UNUSED... BRAINSTORMING
  */
 
-import { values } from 'lodash'
+import { values } from 'lodash-es'
 import { SwitchType, mx as mxSwitch } from './switchTypes'
 
 /**

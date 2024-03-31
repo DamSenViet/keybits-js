@@ -1,4 +1,4 @@
-import { has, merge } from 'lodash'
+import { has, merge } from 'lodash-es'
 import Point from './Point'
 import Line, { lineCrossesOver } from './Line'
 

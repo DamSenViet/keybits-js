@@ -1,4 +1,4 @@
-import { isEqual, has, merge } from 'lodash'
+import { isEqual, has, merge } from 'lodash-es'
 import Point, { createPoint } from './Point'
 
 /**
