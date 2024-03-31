@@ -1,4 +1,5 @@
 import { CapEntry, cherry0100uX0100u } from './utils/capEntries'
+import Transform from './geometry/Transform'
 
 /**
  * The 0 index value of the electrical matrix position mapped to the key.
@@ -6,17 +7,6 @@ import { CapEntry, cherry0100uX0100u } from './utils/capEntries'
 export interface MatrixPosition {
   row: number
   column: number
-}
-
-/**
- * The transformation (including the position) of the key.
- */
-export interface Transform {
-  originX: number
-  originY: number
-  rotate: number
-  translateX: number
-  translateY: number
 }
 
 /**
@@ -71,9 +61,11 @@ export const createKey = (options: Partial<KeyOptions> = {}): Key => {
     transform: {
       originX: 0,
       originY: 0,
-      rotate: 0,
+      rotation: 0,
       translateX: 0,
       translateY: 0,
+      scaleX: 1,
+      scaleY: 1,
     },
     cap: {
       color: '#ffffff',
