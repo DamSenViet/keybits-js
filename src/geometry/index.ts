@@ -1,3 +1,3 @@
-export { default as Point, PointOptions, PointJSON } from './Point'
-export { default as Line, LineOptions, LineJSON } from './Line'
-export { default as Polygon, PolygonOptions, PolygonJSON } from './Polygon'
+export { default as Point } from './Point'
+export { default as Line } from './Line'
+export { default as Polygon } from './Polygon'

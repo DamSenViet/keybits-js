@@ -1,151 +1,100 @@
-import Point, { PointJSON } from './Point'
+import { isEqual, has, merge } from 'lodash'
+import Point, { createPoint } from './Point'
 
-export interface LineOptions {
+/**
+ * Immutable Simple Line.
+ */
+export default interface Line {
   start: Point
   end: Point
 }
 
-export interface LineJSON {
-  className: 'Line'
-  data: {
-    start: PointJSON
-    end: PointJSON
-  }
+/**
+ * Discrimination helper identifying a Line.
+ * @param obj
+ * @returns Whether obj is a Line.
+ */
+export function isLine(obj: any): obj is Line {
+  return has(obj, ['start', 'end'])
 }
 
 /**
- * Immutable Line
+ * Creates a default Line with overridable options.
+ * @param options The overiddable options.
+ * @returns The Line with overriden options.
  */
-export default class Line {
-  /**
-   * The starting Point of the Line.
-   */
-  protected _start: Point = new Point({
-    x: 0,
-    y: 0,
-  })
+export function createLine(options: Partial<Line> = {}): Line {
+  const defaultOptions: Line = {
+    start: createPoint(),
+    end: createPoint(),
+  }
+  return merge({}, defaultOptions, options)
+}
 
-  /**
-   * The ending Point of the Line.
-   */
-  protected _end: Point = new Point({
-    x: 0,
-    y: 0,
-  })
-
-  /**
-   * Instantiates a Line.
-   * @param options A configuration Object with 'start' and 'end' as Points.
-   */
-  public constructor(options?: Line | LineOptions) {
-    if (arguments.length <= 0) return
-    if (typeof options !== 'object') throw new TypeError()
-    let start: Point
-    let end: Point
-    if (options instanceof Line)
-      ({ _start: start, _end: end } = options as Line)
-    else ({ start, end } = options as LineOptions)
-    if (!(start instanceof Point)) throw new TypeError()
-    this._start = start
-    if (!(end instanceof Point)) throw new TypeError()
-    this._end = end
+/**
+ * Calculates the intersection between invoking Line and passed Line.
+ * @remarks
+ * line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
+ * https://stackoverflow.com/a/60368757/8625882
+ * @param lineA The base Line.
+ * @param lineB The Line to check for intersection against.
+ * @returns The Point at which the lines intersect and null if they don't.
+ */
+export function lineIntersection(lineA: Line, lineB: Line): null | Point {
+  // lines cannot be of length 0
+  if (lineA.start === lineA.end || lineB.start === lineB.end) {
+    return null
   }
 
-  /**
-   * Gets the starting Point of the Line.
-   */
-  public getStart(): Point {
-    const { _start } = this
-    return _start
-  }
+  const denominator: number =
+    (lineB.end.y - lineB.start.y) * (lineA.end.x - lineA.start.x) -
+    (lineB.end.x - lineB.start.x) * (lineA.end.y - lineA.start.y)
 
-  /**
-   * Gets the ending Point of the Line.
-   */
-  public getEnd(): Point {
-    const { _end } = this
-    return _end
-  }
+  if (denominator === 0) return null
 
-  /**
-   * Determines whether invoking Line is equivalent to passed Line.
-   * @param line The Line to compare against.
-   * @returns Whether the Lines are equal representations.
-   */
-  public equals(line: Line): boolean {
-    const { _start, _end } = this
-    return (
-      (_start.equals(line._start) && _end.equals(line._end)) ||
-      (_start.equals(line._end) && _end.equals(line._start))
-    )
-  }
+  const ua: number =
+    ((lineB.end.x - lineB.start.x) * (lineA.start.y - lineB.start.y) -
+      (lineB.end.y - lineB.start.y) * (lineA.start.x - lineB.start.x)) /
+    denominator
+  const ub: number =
+    ((lineA.end.x - lineA.start.x) * (lineA.start.y - lineB.start.y) -
+      (lineA.end.y - lineA.start.y) * (lineA.start.x - lineB.start.x)) /
+    denominator
 
-  /**
-   * Calculates the intersection between invoking Line and passed Line.
-   * @remarks
-   * line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
-   * https://stackoverflow.com/a/60368757/8625882
-   * @param line The Line to check for intersection against.
-   * @returns The Point at which the lines intersect and null if they don't.
-   */
-  public intersection(line: Line): null | Point {
-    const { _start, _end } = this
-    // lines cannot be of length 0
-    if (_start.equals(_end) || line._start.equals(line._end)) {
-      return null
-    }
+  // is the intersection along the segments
+  const isAlongSegment: boolean = ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1
+  if (!isAlongSegment) return null
 
-    const denominator: number =
-      (line._end.getY() - line._start.getY()) * (_end.getX() - _start.getX()) -
-      (line._end.getX() - line._start.getX()) * (_end.getY() - _start.getY())
+  const x: number = lineA.start.x + ua * (lineA.end.x - lineA.start.x)
+  const y: number = lineA.start.y + ua * (lineA.end.y - lineA.start.y)
+  return { x, y }
+}
 
-    if (denominator === 0) return null
+/**
+ * Determines whether invoking Line has an intersection with passed Line.
+ * @param lineA The base Line.
+ * @param lineB The Line to check against.
+ * @returns Whether there is an intersection.
+ */
+export function lineIntersects(lineA: Line, lineB: Line): boolean {
+  return Boolean(lineIntersection(lineA, lineB))
+}
 
-    const ua: number =
-      ((line._end.getX() - line._start.getX()) *
-        (_start.getY() - line._start.getY()) -
-        (line._end.getY() - line._start.getY()) *
-          (_start.getX() - line._start.getX())) /
-      denominator
-    const ub: number =
-      ((_end.getX() - _start.getX()) * (_start.getY() - line._start.getY()) -
-        (_end.getY() - _start.getY()) * (_start.getX() - line._start.getX())) /
-      denominator
-
-    // is the intersection along the segments
-    const isAlongSegment: boolean = ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1
-    if (!isAlongSegment) return null
-
-    const x: number = _start.getX() + ua * (_end.getX() - _start.getX())
-    const y: number = _start.getY() + ua * (_end.getY() - _start.getY())
-    return new Point({ x, y })
-  }
-
-  /**
-   * Determines whether invoking Line has an intersection with passed Line.
-   * @param line The Line to check against.
-   * @returns Whether there is an intersection.
-   */
-  public intersects(line: Line): boolean {
-    return Boolean(this.intersection(line))
-  }
-
-  /**
-   * Determines whether invoking Line crosses over with passed Line.
-   * @param line The Line to check against.
-   * @returns Whether lines cross over each other.
-   */
-  public crossesOver(line: Line): boolean {
-    const { _start, _end } = this
-    const intersection = this.intersection(line)
-    if (intersection == null) return false
-    if (
-      intersection.equals(_start) ||
-      intersection.equals(_end) ||
-      intersection.equals(line._start) ||
-      intersection.equals(line._end)
-    )
-      return false
-    return true
-  }
+/**
+ * Determines whether invoking Line crosses over with passed Line.
+ * @param lineA The base Line.
+ * @param lineB The Line to check against.
+ * @returns Whether lines cross over each other.
+ */
+export function lineCrossesOver(lineA: Line, lineB: Line): boolean {
+  const intersection = lineIntersection(lineA, lineB)
+  if (intersection == null) return false
+  if (
+    isEqual(intersection, lineA.start) ||
+    isEqual(intersection, lineA.end) ||
+    isEqual(intersection, lineB.start) ||
+    isEqual(intersection, lineB.end)
+  )
+    return false
+  return true
 }

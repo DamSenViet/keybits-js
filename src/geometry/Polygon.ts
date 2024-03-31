@@ -1,159 +1,87 @@
-import Point, { PointJSON } from './Point'
-import Line from './Line'
-
-export interface PolygonOptions {
-  points: Array<Point>
-}
-
-export interface PolygonJSON {
-  className: 'Polygon'
-  data: {
-    points: Array<PointJSON>
-  }
-}
+import { has, merge } from 'lodash'
+import Point from './Point'
+import Line, { lineCrossesOver } from './Line'
 
 /**
  * Immutable Simple Polygon
  */
-export default class Polygon {
-  /**
-   * The ordered points of the Polygon.
-   */
-  protected _points: Array<Point> = new Array<Point>(
-    new Point({ x: 0, y: 0 }),
-    new Point({ x: 0, y: 1 }),
-    new Point({ x: 1, y: 1 }),
-    new Point({ x: 1, y: 0 }),
-  )
+export default interface Polygon {
+  points: Point[]
+}
 
-  /**
-   * Instantiates a Polygon.
-   * @param options A configuration Object with 'points' as an Array of Points.
-   */
-  constructor(options?: Polygon | PolygonOptions) {
-    if (arguments.length <= 0) return
-    if (typeof options !== 'object') throw new TypeError()
-    let points: Array<Point>
-    if (options instanceof Polygon) ({ _points: points } = options as Polygon)
-    else ({ points } = options as PolygonOptions)
-    if (!(points instanceof Array)) throw new TypeError()
-    for (const point of points) {
-      if (!(point instanceof Point)) throw new TypeError()
-    }
-    if (points.length < 3) throw new TypeError()
-    // ordered points cannot construct crossing lines that cross over
-    const lines: Array<Line> = new Array<Line>()
-    for (let i = 0; i < points.length; ++i) {
-      const start: Point = points[i]
-      const end: Point = points[(i + 1) % points.length]
-      lines.push(new Line({ start, end }))
-    }
-    for (const lineA of lines) {
-      for (const lineB of lines) {
-        if (lineA === lineB) continue
-        if (lineA.crossesOver(lineB)) throw new TypeError()
-      }
-    }
-    this._points = <Array<Point>>points.slice()
-  }
+/**
+ * Discrimination helper identifying a Polygon}.
+ * @param obj
+ * @returns Whether obj is a Polygon.
+ */
+export function isPolygon(obj: any): obj is Polygon {
+  return has(obj, ['start', 'end'])
+}
 
-  /**
-   * Gets a copy of the ordered Points that make up the Polygon.
-   */
-  public getPoints(): Array<Point> {
-    return this._points.slice()
+/**
+ * Creates a default Polygon with overridable options.
+ * @param options The overridable options.
+ * @returns The Point with overriden options.
+ */
+export function createPolygon(options: Partial<Polygon> = {}): Polygon {
+  const defaultOptions: Polygon = {
+    points: [],
   }
+  return merge({}, defaultOptions, options)
+}
 
-  /**
-   * Computes the lines from the Points of the Polygon.
-   */
-  public getLines(): Array<Line> {
-    const { _points } = this
-    const lines: Array<Line> = new Array<Line>()
-    for (let i: number = 0; i < _points.length; ++i) {
-      const start: Point = _points[i]
-      const end: Point = _points[(i + 1) % _points.length]
-      lines.push(new Line({ start, end }))
+/**
+ * Computes the lines from the Points of the Polygon.
+ */
+export function polygonLines(polygon: Polygon): Line[] {
+  const lines: Line[] = []
+  for (let i: number = 0; i < polygon.points.length; ++i) {
+    const start: Point = polygon.points[i]
+    const end: Point = polygon.points[(i + 1) % polygon.points.length]
+    lines.push({ start, end })
+  }
+  return lines
+}
+
+/**
+ * Computes the bounding width of the Polygon.
+ */
+export function polygonBoundingWidth(polygon: Polygon): number {
+  let lowest: number = Infinity
+  let highest: number = -Infinity
+  for (const point of polygon.points) {
+    if (point.x < lowest) lowest = point.x
+    if (point.x > highest) highest = point.x
+  }
+  return highest - lowest
+}
+
+/**
+ * Computes the bounding height of the Polygon.
+ */
+export function polygonBoundingHeight(polygon: Polygon): number {
+  let lowest: number = Infinity
+  let highest: number = -Infinity
+  for (const point of polygon.points) {
+    if (point.y < lowest) lowest = point.y
+    if (point.y > highest) highest = point.y
+  }
+  return highest - lowest
+}
+
+/**
+ * Determines whether invoking Polygon overlaps the passed Polygon
+ * @param polygonA The base Polygon.
+ * @param polygonB The Polygon to compare against.
+ * @returns Whether the Polygons overlap.
+ */
+export function polygonOverlaps(polygonA: Polygon, polygonB: Polygon): boolean {
+  const linesA: Array<Line> = polygonLines(polygonA)
+  const linesB: Array<Line> = polygonLines(polygonB)
+  for (const lineA of linesA) {
+    for (const lineB of linesB) {
+      if (lineCrossesOver(lineA, lineB)) return true
     }
-    return lines
   }
-
-  /**
-   * Computes the bounding width of the Polygon.
-   */
-  public getBoundingWidth(): number {
-    const { _points } = this
-    let lowest: number = Infinity
-    let highest: number = -Infinity
-    for (const point of _points) {
-      if (point.getX() < lowest) lowest = point.getX()
-      if (point.getX() > highest) highest = point.getX()
-    }
-    return Math.abs(highest - lowest)
-  }
-
-  /**
-   * Computes the bounding height of the Polygon.
-   */
-  public getBoundingHeight(): number {
-    const { _points } = this
-    let lowest: number = Infinity
-    let highest: number = -Infinity
-    for (const point of _points) {
-      if (point.getY() < lowest) lowest = point.getY()
-      if (point.getY() > highest) highest = point.getY()
-    }
-    return Math.abs(highest - lowest)
-  }
-
-  /**
-   * Computes all equivalent Polygon representations of the Polygon.
-   */
-  public getRepresentations(): Array<Polygon> {
-    const { _points } = this
-    const representations: Array<Polygon> = new Array<Polygon>()
-    for (let i = 0; i < _points.length - 1; ++i) {
-      // rotate based on i, take from start, add to end
-      const copy: Array<Point> = _points.slice()
-      const rotating: Array<Point> = copy.splice(0, i)
-      copy.push(...rotating)
-      // register as new representation
-      representations.push(
-        new Polygon({
-          points: copy,
-        }),
-      )
-    }
-    return representations
-  }
-
-  /**
-   * Determines whether invoking Polygon is equivalent to passed Polygon.
-   * @param polygon The Polygon to compare against.
-   * @returns Whether the Polygons are equal representations.
-   */
-  public equals(polygon: Polygon): boolean {
-    const representationsStrings: Set<string> = new Set(
-      this.getRepresentations().map((polygon) => JSON.stringify(polygon)),
-    )
-    // compare string versions
-    return representationsStrings.has(JSON.stringify(polygon))
-  }
-
-  /**
-   * Determines whether invoking Polygon overlaps the passed Polygon
-   * @param polygon The Polygon to compare against.
-   * @returns Whether the Polygons overlap.
-   */
-  public overlaps(polygon: Polygon): boolean {
-    if (this.equals(polygon)) return true
-    const linesA: Array<Line> = this.getLines()
-    const linesB: Array<Line> = polygon.getLines()
-    for (const lineA of linesA) {
-      for (const lineB of linesB) {
-        if (lineA.crossesOver(lineB)) return true
-      }
-    }
-    return false
-  }
+  return false
 }

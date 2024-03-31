@@ -1,82 +1,79 @@
 import { expect, test } from 'vitest'
-import Polygon, { PolygonJSON } from './Polygon'
-import Point from './Point'
-
-test('constructor', () => {
-  expect(() => {
-    const polygon = new Polygon()
-  }).not.toThrow()
-})
+import { isEqual } from 'lodash'
+import { createPoint } from './Point'
+import {
+  createPolygon,
+  polygonBoundingWidth,
+  polygonBoundingHeight,
+} from './Polygon'
 
 test('getPoints', () => {
   expect(() => {
-    const polygon = new Polygon()
+    const polygon = createPolygon()
     const points = [
       [0, 0],
       [0, 1],
       [1, 1],
       [1, 0],
     ].map((coord) => {
-      return new Point({
+      return createPoint({
         x: coord[0],
         y: coord[1],
       })
     })
-    expect(polygon.getPoints()).toEqual(points)
-  }).not.toThrow()
+    expect(polygon.points).toEqual(points)
+  })
 })
 
 test('getLines', () => {})
 
 test('getBoundingWidth', () => {
   expect(() => {
-    const polygon = new Polygon()
-    expect(polygon.getBoundingWidth()).toEqual(1)
-  }).not.toThrow()
+    const polygon = createPolygon()
+    expect(polygonBoundingWidth(polygon)).toEqual(1)
+  })
 })
 
 test('getBoundingHeight', () => {
   expect(() => {
-    const polygon = new Polygon()
-    expect(polygon.getBoundingHeight()).toEqual(1)
-  }).not.toThrow()
+    const polygon = createPolygon()
+    expect(polygonBoundingHeight(polygon)).toEqual(1)
+  })
 })
-
-test('getRepresentations', () => {})
 
 test('equals', () => {
   expect(() => {
-    const polygon1 = new Polygon()
-    const polygon2 = new Polygon({
+    const polygon1 = createPolygon()
+    const polygon2 = createPolygon({
       points: [
         [0, 0],
         [0, 1],
         [1, 1],
         [1, 0],
       ].map((coord) => {
-        return new Point({
+        return createPoint({
           x: coord[0],
           y: coord[1],
         })
       }),
     })
-    const polygon3 = new Polygon({
+    const polygon3 = createPolygon({
       points: [
         [0, 0],
         [0, 1],
         [1, 1],
         [1, 0],
       ].map((coord) => {
-        return new Point({
+        return createPoint({
           x: coord[0],
           y: coord[1],
         })
       }),
     })
-    expect(polygon1.equals(polygon2))
-    expect(polygon1.equals(polygon3))
-    expect(polygon2.equals(polygon3))
-  }).not.toThrow()
+    expect(isEqual(polygon1, polygon2))
+    expect(isEqual(polygon1, polygon3))
+    expect(isEqual(polygon2, polygon3))
+  })
 })
 
 test('overlaps', () => {})

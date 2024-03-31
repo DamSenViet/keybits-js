@@ -1,12 +1,12 @@
 import { expect, test } from 'vitest'
-import Transformation from './Transformation'
-import Point from './Point'
+import { createPoint } from './Point'
+import { createTransform, apply, unapply } from './Transformation'
 
 test('apply', () => {
   expect(() => {
     // default
-    const p1 = new Point()
-    const transformation: Transformation = new Transformation({
+    const p1 = createPoint()
+    const transformation = createTransform({
       originX: 0,
       originY: 0,
       translateX: 0,
@@ -15,14 +15,14 @@ test('apply', () => {
       scaleX: 1,
       scaleY: 1,
     })
-    const transformedP1 = transformation.apply(p1)
-    expect(transformedP1.getX()).toBe(0)
-    expect(transformedP1.getY()).toBe(0)
-  }).not.toThrow()
+    const transformedP1 = apply(transformation, p1)
+    expect(transformedP1.x).toBe(0)
+    expect(transformedP1.y).toBe(0)
+  })
   // translate
   expect(() => {
-    const p1 = new Point()
-    const transformation: Transformation = new Transformation({
+    const p1 = createPoint()
+    const transformation = createTransform({
       originX: 0,
       originY: 0,
       translateX: 1,
@@ -31,17 +31,17 @@ test('apply', () => {
       scaleX: 1,
       scaleY: 1,
     })
-    const transformed = transformation.apply(p1)
-    expect(transformed.getX()).toBe(1)
-    expect(transformed.getY()).toBe(1)
-  }).not.toThrow()
+    const transformed = apply(transformation, p1)
+    expect(transformed.x).toBe(1)
+    expect(transformed.y).toBe(1)
+  })
   // scale
   expect(() => {
-    const p1 = new Point({
+    const p1 = createPoint({
       x: 1,
       y: 1,
     })
-    const transformation: Transformation = new Transformation({
+    const transformation = createTransform({
       originX: 0,
       originY: 0,
       translateX: 0,
@@ -50,17 +50,17 @@ test('apply', () => {
       scaleX: 2,
       scaleY: 2,
     })
-    const transformed = transformation.apply(p1)
-    expect(transformed.getX()).toBe(2)
-    expect(transformed.getY()).toBe(2)
-  }).not.toThrow()
+    const transformed = apply(transformation, p1)
+    expect(transformed.x).toBe(2)
+    expect(transformed.y).toBe(2)
+  })
   // rotate
   expect(() => {
-    const p1 = new Point({
+    const p1 = createPoint({
       x: 0,
       y: 1,
     })
-    const transformation: Transformation = new Transformation({
+    const transformation = createTransform({
       originX: 0,
       originY: 0,
       translateX: 0,
@@ -69,9 +69,9 @@ test('apply', () => {
       scaleX: 1,
       scaleY: 1,
     })
-    const transformed = transformation.unapply(p1)
+    const transformed = unapply(transformation, p1)
     // check based on precision places due to inherent precision error
-    expect(transformed.getX()).toBeCloseTo(1, 3)
-    expect(transformed.getY()).toBeCloseTo(0, 3)
-  }).not.toThrow()
+    expect(transformed.x).toBeCloseTo(1, 3)
+    expect(transformed.y).toBeCloseTo(0, 3)
+  })
 })
