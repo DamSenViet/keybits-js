@@ -6,7 +6,7 @@ import Polygon, { createPolygon, isPolygon } from './Polygon'
 /**
  * Composite Transformation.
  */
-export interface Transform {
+export default interface Transform {
   /**
    * Origin X component of the Transformation.
    */
