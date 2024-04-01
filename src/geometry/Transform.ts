@@ -6,6 +6,7 @@ import {
   createLine,
   Polygon,
   createPolygon,
+  SpatialGeometry,
   isPoint,
   isLine,
   isPolygon,
@@ -89,7 +90,7 @@ export function apply(transform: Transform, polygon: Readonly<Polygon>): Polygon
  */
 export function apply(
   transform: Transform,
-  geometry: Readonly<Point | Line | Polygon>,
+  geometry: Readonly<SpatialGeometry>,
 ): any {
   if (isPoint(geometry)) {
     const translated = createPoint({
