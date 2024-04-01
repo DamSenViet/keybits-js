@@ -5,7 +5,7 @@ import {
   createPolygon,
   polygonBoundingWidth,
   polygonBoundingHeight,
-} from './Polygon'
+} from './polygon'
 
 test('getPoints', () => {
   expect(() => {

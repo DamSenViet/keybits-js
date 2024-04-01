@@ -1,21 +1,12 @@
 import { isEqual, has, merge } from 'lodash-es'
-import Point, { createPoint } from './Point'
+import { Point, createPoint } from './point'
 
 /**
  * Immutable Simple Line.
  */
-export default interface Line {
+export interface Line {
   start: Point
   end: Point
-}
-
-/**
- * Discrimination helper identifying a Line.
- * @param obj
- * @returns Whether obj is a Line.
- */
-export function isLine(obj: any): obj is Line {
-  return has(obj, ['start', 'end'])
 }
 
 /**

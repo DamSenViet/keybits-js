@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { createPoint } from './Point'
+import { createPoint } from './spatial'
 import { createTransform, apply, unapply } from './Transform'
 
 test('apply', () => {

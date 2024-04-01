@@ -1,21 +1,12 @@
-import { has, merge } from 'lodash-es'
-import Point from './Point'
-import Line, { lineCrossesOver } from './Line'
+import { merge } from 'lodash-es'
+import { Point } from './point'
+import { Line, lineCrossesOver } from './line'
 
 /**
  * Immutable Simple Polygon
  */
-export default interface Polygon {
+export interface Polygon {
   points: Point[]
-}
-
-/**
- * Discrimination helper identifying a Polygon}.
- * @param obj
- * @returns Whether obj is a Polygon.
- */
-export function isPolygon(obj: any): obj is Polygon {
-  return has(obj, ['start', 'end'])
 }
 
 /**

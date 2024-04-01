@@ -1,9 +1,9 @@
-import { isEqual, has, merge } from 'lodash-es'
+import { has, merge } from 'lodash-es'
 
 /**
  * Immutable Point.
  */
-export default interface Point {
+export interface Point {
   /**
    * The x coordinate of the Point.
    */
@@ -12,15 +12,6 @@ export default interface Point {
    * The y coordinate the Point.
    */
   y: number
-}
-
-/**
- * Discrimation helper identifying a Point.
- * @param obj
- * @returns Whether obj is a Point.
- */
-export function isPoint(obj: any): obj is Point {
-  return has(obj, ['x', 'y'])
 }
 
 /**
