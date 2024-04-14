@@ -6,7 +6,6 @@ import {
   createLine,
   Polygon,
   createPolygon,
-  SpatialGeometry,
   isPoint,
   isLine,
   isPolygon,

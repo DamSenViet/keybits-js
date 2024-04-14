@@ -1,4 +1,4 @@
-import { Point } from '../geometry'
+import { Point } from '../geometry/spatial/point'
 
 /**
  * A reusable CapEntry storing information about a Cap.
