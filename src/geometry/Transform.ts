@@ -1,5 +1,6 @@
 import { merge } from 'lodash-es'
 import {
+  SpatialGeometry,
   Point,
   createPoint,
   Line,
