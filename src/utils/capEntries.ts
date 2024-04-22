@@ -66,8 +66,17 @@ export const defaultCaps = [
   cherry0300ux0100u,
 ]
 
+/**
+ * A cap resolver is responsible for mapping cap entry names to their actual
+ * entry information. This allows keys to store the cap information simply
+ * as a string and be dynamically be resolved at compute time.
+ */
 export type CapResolver = Map<string, CapEntry>
 
+/**
+ * The default cap resolver for the keybits-js library. Includes all standard
+ * cap entries.
+ */
 export const defaultCapResolver: CapResolver = new Map(
   defaultCaps.map((capEntry) => [capEntry.name, capEntry]),
 )
