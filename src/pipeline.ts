@@ -1,10 +1,13 @@
 import Keyboard from './Keyboard'
 import { ClusterItem } from './Cluster'
 import Key from './Key'
-import { CapEntry, CapResolver } from './utils/capEntries'
-import { Point } from './geometry'
-import { isUndefined } from 'lodash-es'
+import { CapResolver, defaultCapResolver } from './utils/capEntries'
+import { Point, Transform, apply } from './geometry'
+import { flow, isUndefined } from 'lodash-es'
 
+/**
+ * Traversee of the keyboard item tree.
+ */
 export type Traverse = (
   items: ClusterItem[],
   callback: (key: Key) => any,
@@ -44,39 +47,28 @@ const collectKeys: KeyCollector = (keyboard, traverse = dftKeys) => {
   return keys
 }
 
-// take the collected keys and transform them into coordinates
-
-// need a cap resolver
-
-const calcKeyCapCoords = (key: Key, capResolver: CapResolver): Point[] => {
-  // for every key
-
-  // compute the set of closed shaped coordinates for every key
-  const capLookup = capResolver.get(key.cap.name)
-  // skip if lookup is unsuccessful
-  if (isUndefined(capLookup)) return []
-  // get coordinate list of cap shape
-
-  // apply transform to the coordinates
-
-  const capCoords = calculateCapCoords(capLookup)
-
-  return capCoords
-}
-
-const calculateCapCoords = (capEntry: CapEntry): Point[] => {
-  // transform the bounding shape (which is an svg) into a set of coordinate points
-  return capEntry.boundingShape
-}
-
 /**
- * Takes an svg string and transforms it into a list of coordinate points.
- * @param svgStr
- * @returns []
+ * Also need to apply every set of transformations up until the key.
+ * @param key The keycap to calculate
+ * @param capResolver Cap resolver to use, automatically set to {@link defaultCapResolver}
+ * @param transforms Optional additional transforms to apply to the key coordsinates.
+ * @returns The points
  */
-const svgStrToCoords = (svgStr: string): Point[] => {
-  // pathologize
+export const calcKeyCapCoords = (
+  key: Key,
+  capResolver: CapResolver = defaultCapResolver,
+  transforms: Transform[] = [],
+): Point[] => {
+  const capLookup = capResolver.get(key.cap.name)
+  if (isUndefined(capLookup)) return []
 
-  // scale these points to arbitrary u unit.
-  return []
+  const capCoords = capLookup.boundingShape
+
+  const transformer = flow(
+    transforms.map(
+      (transform) => (capCoord: Point) => apply(transform, capCoord),
+    ),
+  )
+
+  return capCoords.map(transformer)
 }
