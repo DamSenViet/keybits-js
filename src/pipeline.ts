@@ -3,7 +3,9 @@ import { ClusterItem } from './Cluster'
 import Key from './Key'
 import { CapResolver, defaultCapResolver } from './utils/capEntries'
 import { Point, Transform, apply } from './geometry'
-import { flow, isUndefined } from 'lodash-es'
+import { first, flow, isUndefined, last } from 'lodash-es'
+import { IModel, IPathLine } from 'makerjs'
+import { toWindows } from './utils/array'
 
 /**
  * Traversee of the keyboard item tree.
@@ -71,4 +73,30 @@ export const calcKeyCapCoords = (
   )
 
   return capCoords.map(transformer)
+}
+
+/**
+ * Creates a makerjs model to be utilized for export.
+ * @param keyCapCoords The set of representative coordinates per keycap.
+ */
+const keyCapCoordsToModel = (keyCapsCoords: Point[][]): IModel => {
+  const rootModel: IModel = { models: {} }
+  for (let i = 0; i < keyCapsCoords.length; ++i) {
+    const keyCapCoords = keyCapsCoords[i]
+    const keyCapLines = toWindows(keyCapCoords)
+    const pathModel: MakerJs.IModel = { paths: {} }
+    for (let j = 0; j < keyCapLines.length; ++j) {
+      const keyCapLine = keyCapLines[j]
+      const lineStart = first(keyCapLine)!
+      const lineEnd = last(keyCapLine)!
+      const lineModel: IPathLine = {
+        type: 'line',
+        origin: [lineStart.x, lineStart.y],
+        end: [lineEnd.x, lineEnd.y],
+      }
+      pathModel.paths![`line${j}`] = lineModel
+    }
+    rootModel.models![`key${i}`] = pathModel
+  }
+  return rootModel
 }
