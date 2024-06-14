@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { isEqual } from 'lodash-es'
-import { createPoint } from './Point'
+import { createPoint } from './point'
 import {
   createPolygon,
   polygonBoundingWidth,

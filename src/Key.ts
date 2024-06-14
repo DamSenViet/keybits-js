@@ -1,5 +1,5 @@
 import { CapEntry, cherry0100uX0100u } from './utils/capEntries'
-import Transform from './geometry/Transform'
+import Transform from './geometry/transform'
 
 /**
  * The 0 index value of the electrical matrix position mapped to the key.

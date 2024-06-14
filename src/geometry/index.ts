@@ -4,4 +4,4 @@ export {
   createTransform,
   apply,
   unapply,
-} from './Transform'
+} from './transform'
