@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "description": "A library to serialize and deserializing keybits formatted json files.",
   "type": "module",
-  "main": "build/keybits.umd.cjs",
-  "module": "build/keybits.js",
-  "browser": "build/umd/keybits.umd.cjs",
+  "main": "dist/keybits.umd.cjs",
+  "module": "dist/keybits.js",
+  "browser": "dist/keybits.umd.cjs",
   "files": [
     "dist"
   ],
