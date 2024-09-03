@@ -1,6 +1,6 @@
 {
   "name": "@damsenviet/keybits",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A library to serialize and deserializing keybits formatted json files.",
   "type": "module",
   "main": "dist/keybits.umd.cjs",
