@@ -1,11 +1,12 @@
 {
   "name": "@damsenviet/keybits",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A library to serialize and deserializing keybits formatted json files.",
   "type": "module",
-  "main": "dist/keybits.umd.cjs",
+  "main": "dist/keybits.js",
   "module": "dist/keybits.js",
   "browser": "dist/keybits.umd.cjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
