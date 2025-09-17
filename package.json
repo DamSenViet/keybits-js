@@ -30,22 +30,22 @@
   },
   "homepage": "https://github.com/DamSenViet/keybits-js#readme",
   "dependencies": {
-    "@types/d3-path": "^3.0.0",
-    "@types/lodash-es": "^4.17.12",
     "ajv": "^6.12.2",
     "ajv-keywords": "^3.5.0",
     "d3-path": "^3.1.0",
     "lodash-es": "^4.17.21",
     "makerjs": "^0.18.1",
     "points-on-path": "^0.2.1",
-    "typescript": "^5.4.2",
-    "vite": "^5.1.6",
-    "vite-plugin-dts": "^3.7.3"
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "@types/d3-path": "^3.0.0",
+    "@types/lodash-es": "^4.17.12",
     "prettier": "^3.1.1",
     "signale": "^1.4.0",
-    "ts-loader": "^7.0.4",
-    "vitest": "^1.4.0"
+    "ts-loader": "^9.5.4",
+    "vite": "^7.1.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
   }
 }
